@@ -16,7 +16,7 @@ namespace Travelley
         private Double Discount;
         private string Type;
         private string Trip_ID;
-        private Dictionary<string, int> NumberrOfSeats;
+        private Dictionary<string, int> NumberOfSeats;
         private Dictionary<string, double> PriceOfSeat;
         private List<Ticket> Tickets;
 
@@ -31,7 +31,7 @@ namespace Travelley
 
         public void AddSeats(string Type, int Number, double Price)
         {
-            NumberrOfSeats[Type] = Number;
+            NumberOfSeats[Type] = Number;
             PriceOfSeat[Type] = Price;
         }
 
@@ -45,7 +45,7 @@ namespace Travelley
             this.Discount = Discount;
             this.Type = Type;
             this.Trip_ID = Trip_ID;
-            NumberrOfSeats = new Dictionary<string, int>();
+            NumberOfSeats = new Dictionary<string, int>();
             PriceOfSeat = new Dictionary<string, double>();
             Tickets = new List<Ticket>();
         }
@@ -56,10 +56,19 @@ namespace Travelley
             return;
         }
 
-        public Ticket ReserveTicket(string Type)
+        public Ticket ReserveTicket(string Type, int NumberOfOrderedSeats)
         {
-            return null;
+            if (NumberOfSeats[Type] == 0 || NumberOfOrderedSeats > NumberOfSeats[Type])
+                return null;
+
+            Guid g = new Guid();
+            string serial = g.ToString();
+            NumberOfSeats[Type] -= NumberOfOrderedSeats;
+
+            Ticket T = new Ticket(Type, NumberOfOrderedSeats, serial, PriceOfSeat[Type] * NumberOfOrderedSeats, this);
+
+            return T;
         }
-        
+
     }
 }
