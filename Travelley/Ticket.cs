@@ -14,7 +14,7 @@ namespace Travelley
         private double Price;
         private Trip TicketTrip;
         
-       Ticket(string TicketType, int NumberOfSeats, string SerialNumber, double Price,Trip TicketTrip)
+        public Ticket(string TicketType, int NumberOfSeats, string SerialNumber, double Price,Trip TicketTrip)
         {
             this.TicketType1 = TicketType;
             this.NumberOfSeats1 = NumberOfSeats;

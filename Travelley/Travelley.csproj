@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Customer.cs" />
+    <Compile Include="DataBase.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="TourGuide.cs" />
     <Compile Include="Trip.cs" />
