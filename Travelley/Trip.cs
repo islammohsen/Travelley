@@ -8,26 +8,29 @@ namespace Travelley
 {
     class Trip
     {
-        private DateTime Start;
-        private DateTime End;
-        private string Departure;
-        private string Destination;
-        private TourGuide Tour;
-        private Double Discount;
-        private string Type;
-        private string Trip_ID;
-        private Dictionary<string, int> NumberOfSeats;
-        private Dictionary<string, double> PriceOfSeat;
-        private List<Ticket> Tickets;
+        private DateTime start;
+        private DateTime end;
+        private string departure;
+        private string destination;
+        private TourGuide tour;
+        private Double discount;
+        private string type;
+        private string trip_ID;
+        private Dictionary<string, int> numberOfSeats;
+        private Dictionary<string, double> priceOfSeat;
+        private List<Ticket> tickets;
 
-        public DateTime Start1 { get => Start; set => Start = value; }
-        public DateTime End1 { get => End; set => End = value; }
-        public string Departure1 { get => Departure; set => Departure = value; }
-        public string Destination1 { get => Destination; set => Destination = value; }
-        public double Discount1 { get => Discount; set => Discount = value; }
-        public string Type1 { get => Type; set => Type = value; }
-        public string Trip_ID1 { get => Trip_ID; set => Trip_ID = value; }
-        internal TourGuide Tour1 { get => Tour; set => Tour = value; }
+        public DateTime Start { get => start; set => start = value; }
+        public DateTime End { get => end; set => end = value; }
+        public string Departure { get => departure; set => departure = value; }
+        public string Destination { get => destination; set => destination = value; }
+        internal TourGuide Tour { get => tour; set => tour = value; }
+        public double Discount { get => discount; set => discount = value; }
+        public string Type { get => type; set => type = value; }
+        public string Trip_ID { get => trip_ID; set => trip_ID = value; }
+        public Dictionary<string, int> NumberOfSeats { get => numberOfSeats; set => numberOfSeats = value; }
+        public Dictionary<string, double> PriceOfSeat { get => priceOfSeat; set => priceOfSeat = value; }
+        internal List<Ticket> Tickets { get => tickets; set => tickets = value; }
 
         public void AddSeats(string Type, int Number, double Price)
         {
@@ -65,7 +68,8 @@ namespace Travelley
             string serial = g.ToString();
             NumberOfSeats[Type] -= NumberOfOrderedSeats;
 
-            Ticket T = new Ticket(Type, NumberOfOrderedSeats, serial, PriceOfSeat[Type] * NumberOfOrderedSeats, this);
+            double TicketPrice = PriceOfSeat[Type] * NumberOfOrderedSeats * (1.0 - discount);
+            Ticket T = new Ticket(Type, NumberOfOrderedSeats, serial,  TicketPrice, this);
 
             return T;
         }

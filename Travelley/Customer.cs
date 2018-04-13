@@ -10,10 +10,10 @@ namespace Travelley
     class Customer: Person
     {
         private List<Ticket> Tickets;
-        private int NumberOfTrips;
+        private int numberOfTrips;
         private bool Discount;
 
-        public int NumberOfTrips1 { get => NumberOfTrips; set => NumberOfTrips = value; }
+        public int NumberOfTrips { get => NumberOfTrips; set => NumberOfTrips = value; }
 
         public Customer(string Name, string Id, string Gender, string Email, string PhoneNumber)
         {

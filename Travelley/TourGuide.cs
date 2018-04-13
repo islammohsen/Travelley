@@ -9,10 +9,10 @@ namespace Travelley
     class TourGuide: Person
     {
         private double salary;
-        private List<Trip> Trips;
+        private List<Trip> trips;
 
         public double Salary { get => salary; set => salary = value; }
-        internal List<Trip> Trips1 { get => Trips; set => Trips = value; }
+        internal List<Trip> Trips { get => trips; set => trips = value; }
 
         public TourGuide(string Name, string Id, string Gender, string Email, string PhoneNumber)
         {

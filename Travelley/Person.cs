@@ -8,16 +8,16 @@ namespace Travelley
 {
     abstract class Person
     {
-        protected string Name;
-        protected string Id;
-        protected string Gender;
-        protected string Email;
-        protected string PhoneNumber;
+        private string name;
+        private string id;
+        private string gender;
+        private string email;
+        private string phoneNumber;
 
-        public string Name1 { get => Name; set => Name = value; }
-        public string Id1 { get => Id; set => Id = value; }
-        public string Gender1 { get => Gender; set => Gender = value; }
-        public string Email1 { get => Email; set => Email = value; }
-        public string PhoneNumber1 { get => PhoneNumber; set => PhoneNumber = value; }
+        public string Name { get => name; set => name = value; }
+        public string Id { get => id; set => id = value; }
+        public string Gender { get => gender; set => gender = value; }
+        public string Email { get => email; set => email = value; }
+        public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
     }
 }

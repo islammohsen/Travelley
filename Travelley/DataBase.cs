@@ -105,7 +105,7 @@ namespace Travelley
                 TourGuide CurrentTourGuide = null;
                 foreach(TourGuide c in TourGuides)
                 {
-                    if(c.Id1 == TourGuideId)
+                    if(c.Id == TourGuideId)
                     {
                         CurrentTourGuide = c;
                         break;
@@ -140,7 +140,7 @@ namespace Travelley
 
                 foreach(Trip c in Trips)
                 {
-                    if(c.Trip_ID1 == TripId)
+                    if(c.Trip_ID == TripId)
                     {
                         c.AddSeats(Type, NoOfSeats, Price);
                         break;
@@ -187,7 +187,7 @@ namespace Travelley
         {
             foreach(Customer C in Customers)
             {
-                if(C.Id1 == Id)
+                if(C.Id == Id)
                 {
                     return C;
                 }
@@ -199,7 +199,7 @@ namespace Travelley
         {
             foreach (Trip C in Trips)
             {
-                if (C.Trip_ID1 == Id)
+                if (C.Trip_ID == Id)
                 {
                     return C;
                 }
@@ -211,7 +211,8 @@ namespace Travelley
         {
             foreach (TourGuide C in TourGuides)
             {
-                if (C.Id1 == Id)
+                
+                if (C.Id == Id)
                 {
                     return C;
                 }
