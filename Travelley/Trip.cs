@@ -17,9 +17,18 @@ namespace Travelley
         private string Type;
         private List<Ticket> Tickets;
 
-        public Ticket ReserveTicket(string Type)
+        public Ticket ReserveTicket(string Type,int NumberOfOrderedSeats)
         {
-            return null;
+            if (NumberOfSeats[Type] == 0 || NumberOfOrderedSeats>NumberOfSeats[Type])
+                return null;
+
+            Guid g = new Guid();
+            string serial = g.ToString();
+            NumberOfSeats[Type] -= NumberOfOrderedSeats;
+
+            Ticket T = new Ticket(Type, NumberOfOrderedSeats, serial, PriceOfSeat[Type] * NumberOfSeats, this);
+
+            return T;
         }
         
     }
