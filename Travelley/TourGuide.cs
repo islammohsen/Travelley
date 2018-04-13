@@ -8,5 +8,28 @@ namespace Travelley
 {
     class TourGuide: Person
     {
+        private double salary;
+        private List<Trip> Trips;
+
+        public double Salary { get => salary; set => salary = value; }
+        internal List<Trip> Trips1 { get => Trips; set => Trips = value; }
+
+        TourGuide(string Name, int Id, string Gender, string Email, string PhoneNumber)
+        {
+            this.Name = Name;
+            this.Id = Id;
+            this.Gender = Gender;
+            this.Email = Email;
+            this.PhoneNumber = PhoneNumber;
+            this.PhoneNumber = PhoneNumber;
+            this.salary = 0;
+            Trips = new List<Trip>();
+        }
+
+        void AddTrip(Trip obj)
+        {
+            Trips.Add(obj);
+            salary += 1;
+        }
     }
 }
