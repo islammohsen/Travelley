@@ -14,7 +14,7 @@ namespace Travelley
         public double Salary { get => salary; set => salary = value; }
         internal List<Trip> Trips1 { get => Trips; set => Trips = value; }
 
-        TourGuide(string Name, int Id, string Gender, string Email, string PhoneNumber)
+        public TourGuide(string Name, string Id, string Gender, string Email, string PhoneNumber)
         {
             this.Name = Name;
             this.Id = Id;

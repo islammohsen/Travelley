@@ -15,7 +15,7 @@ namespace Travelley
 
         public int NumberOfTrips1 { get => NumberOfTrips; set => NumberOfTrips = value; }
 
-        public Customer(string Name, int Id, string Gender, string Email, string PhoneNumber)
+        public Customer(string Name, string Id, string Gender, string Email, string PhoneNumber)
         {
             this.Name = Name;
             this.Id = Id;
@@ -27,7 +27,13 @@ namespace Travelley
             Discount = false;
         }
             
-        public bool AddTicket(Trip obj, string Type)
+        public void AddTicket(Ticket obj)
+        {
+            Tickets.Add(obj);
+            return;
+        }
+
+        public bool ReserveTicket(Trip obj, string Type)
         {
             return true;
         }
