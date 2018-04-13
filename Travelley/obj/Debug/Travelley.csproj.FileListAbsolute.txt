@@ -19,3 +19,11 @@ E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.cache
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.lref
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.exe
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.pdb
+E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.exe.config
+E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.exe
+E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.pdb
+E:\Projects\OOP\Travelley\Travelley\obj\Debug\MainWindow.baml
+E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.g.resources
+E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.Properties.Resources.resources
+E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.csproj.GenerateResource.cache
+E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.csproj.CoreCompileInputs.cache
