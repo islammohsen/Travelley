@@ -30,7 +30,7 @@ namespace Travelley
             SqlDataReader Rdr = Command.ExecuteReader();
 
             //Reading Data
-            while(Rdr.Read())
+            while (Rdr.Read())
             {
                 string Name = (string)Rdr["Name"];
                 string Id = (string)Rdr["Id"];
@@ -103,9 +103,9 @@ namespace Travelley
                 string Type = (string)Rdr["Type"];
 
                 TourGuide CurrentTourGuide = null;
-                foreach(TourGuide c in TourGuides)
+                foreach (TourGuide c in TourGuides)
                 {
-                    if(c.Id == TourGuideId)
+                    if (c.Id == TourGuideId)
                     {
                         CurrentTourGuide = c;
                         break;
@@ -131,16 +131,16 @@ namespace Travelley
             //excuted the command
             SqlDataReader Rdr = Command.ExecuteReader();
 
-            while(Rdr.Read())
+            while (Rdr.Read())
             {
                 string TripId = (string)Rdr["TripId"];
                 string Type = (string)Rdr["Type"];
                 int NoOfSeats = (int)Rdr["NoOfSeats"];
                 double Price = (double)Rdr["Price"];
 
-                foreach(Trip c in Trips)
+                foreach (Trip c in Trips)
                 {
-                    if(c.Trip_ID == TripId)
+                    if (c.Trip_ID == TripId)
                     {
                         c.AddSeats(Type, NoOfSeats, Price);
                         break;
@@ -164,7 +164,7 @@ namespace Travelley
             //excuted the command
             SqlDataReader Rdr = Command.ExecuteReader();
 
-            while(Rdr.Read())
+            while (Rdr.Read())
             {
                 string CustomerId = (string)Rdr["CustomerId"];
                 string TripId = (string)Rdr["TripId"];
@@ -176,18 +176,178 @@ namespace Travelley
                 Trip CurrentTrip = SelectTrip(TripId);
                 Ticket CurrentTicket = new Ticket(TypeOfTicket, NumberOfSeats, SerialNumber, Price, CurrentTrip);
                 CurrentCustomer.AddTicket(CurrentTicket);
-
+                CurrentTrip.AddTicket(CurrentTicket);
             }
             Rdr.Close();
             Connection.Close();
             return;
         }
 
+        public void UpdateCustomer(Customer CurrentCustomer, string Name, string Id, string Gender, string Email, string PhoneNumber)
+        {
+            //opened the connection
+            SqlConnection Connection = new SqlConnection();
+            Connection.Open();
+
+            //update Name
+            if (Name != "")
+            {
+                SqlCommand Command = new SqlCommand($"UPDATE Customer set Name = '{Name}' where Id = '{CurrentCustomer.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentCustomer.Name = Name;
+            }
+
+            //update Gender
+            if (Gender != "")
+            {
+                SqlCommand Command = new SqlCommand($"UPDATE Customer set Gender = '{Gender}' where Id = '{CurrentCustomer.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentCustomer.Gender = Gender;
+            }
+
+            //update Email
+            if (Email != "")
+            {
+                SqlCommand Command = new SqlCommand($"UPDATE Customer set Email = '{Email}' where Id = '{CurrentCustomer.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentCustomer.Email = Email;
+            }
+
+            //update PhoneNumber
+            if (PhoneNumber != "")
+            {
+                SqlCommand Command = new SqlCommand($"UPDATE Customer set PhoneNumber = '{PhoneNumber}' where Id = '{CurrentCustomer.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentCustomer.PhoneNumber = PhoneNumber;
+            }
+
+            if (Id != "" && CheckUniqueCustomerId(Id))
+            {
+                SqlCommand Command = new SqlCommand($"UPDATE Transactions set Id = '{Id}' where Id = '{CurrentCustomer.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                Command = new SqlCommand($"UPDATE Customer set Id = '{Id}' where Id = '{CurrentCustomer.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentCustomer.Id = Id;
+            }
+            Connection.Close();
+            return;
+        }
+
+        public void UpdateTourGuide(TourGuide CurrentTourGuide, string Name, string Id, string Gender, string Email, string PhoneNumber)
+        {
+            //opened the connection
+            SqlConnection Connection = new SqlConnection();
+            Connection.Open();
+
+            //update Name
+            if (Name != "")
+            {
+                SqlCommand Command = new SqlCommand($"UPDATE TourGuide set Name = '{Name}' where Id = '{CurrentTourGuide.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentTourGuide.Name = Name;
+            }
+
+            //update Gender
+            if (Gender != "")
+            {
+                SqlCommand Command = new SqlCommand($"UPDAtE TourGuide set Gender = '{Gender}' WHERE Id = '{CurrentTourGuide.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentTourGuide.Gender = Gender;
+            }
+
+            //update Email
+            if (Email != "")
+            {
+                SqlCommand Command = new SqlCommand($"UPDAtE TourGuide set Email = '{Email}' WHERE Id = '{CurrentTourGuide.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentTourGuide.Email = Email;
+            }
+
+            //update PhoneNumber
+            if (PhoneNumber != "")
+            {
+                SqlCommand Command = new SqlCommand($"UPDAtE TourGuide set PhoneNumber = '{PhoneNumber}' WHERE Id = '{CurrentTourGuide.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentTourGuide.PhoneNumber = PhoneNumber;
+            }
+
+            if (Id != "" && CheckUniqueTourGuideId(Id))
+            {
+                SqlCommand Command = new SqlCommand($"UPDATE Trip set TourGuideId = '{Id}' WHERE TourGuideId = '{CurrentTourGuide.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                Command = new SqlCommand($"UPDATE TourGuide set Id = '{Id}' Where Id = '{CurrentTourGuide.Id}'", Connection);
+                Command.ExecuteNonQuery();
+                CurrentTourGuide.Id = Id;
+            }
+            Connection.Close();
+            return;
+        }
+        
+        public void InsertCustomer(Customer CurrentCustomer)
+        {
+            SqlConnection Connection = new SqlConnection();
+            Connection.Open();
+
+            SqlCommand Command = new SqlCommand($"INSERT INTO Customer values('{ CurrentCustomer.Name }','{CurrentCustomer.Id }' , '{CurrentCustomer.Gender}' , '{CurrentCustomer.Email}' ,'{ CurrentCustomer.PhoneNumber}' )", Connection);
+            Command.ExecuteNonQuery();
+
+            Connection.Close();
+            return;
+        }
+
+        public void InsertTourGuide(TourGuide CurrentTourGuide)
+        {
+            SqlConnection Connection = new SqlConnection();
+            Connection.Open();
+
+            SqlCommand Command = new SqlCommand($"Insert InTo TourGuide Values ( '{CurrentTourGuide.Name}'  , '{CurrentTourGuide.Id},'{CurrentTourGuide.Gender}'  ,  '{ CurrentTourGuide.Email}'  ,  '{ CurrentTourGuide.PhoneNumber}' )", Connection);
+            Command.ExecuteNonQuery();
+
+            Connection.Close();
+            return;
+        }
+
+        public void InsertTrip(Trip CurrentTrip)
+        {
+            SqlConnection Connection = new SqlConnection();
+            Connection.Open();
+
+            SqlCommand Command = new SqlCommand($"Insert InTo Trip Values ( '{CurrentTrip.Start.ToString()}'  ,  '{ CurrentTrip.End.ToString() }' ,'{ CurrentTrip.Departure }' , '{CurrentTrip.Destination}','{ CurrentTrip.Tour.Id } ' , {CurrentTrip.Discount} ,'{CurrentTrip.Trip_ID}' ,  '{CurrentTrip.Type}' )", Connection);
+            Command.ExecuteNonQuery();
+
+            Connection.Close();
+            return;
+        }
+
+        public void InsertTripTickets(string Trip_Id,string Type,int NumbrOfSeats,double Price)
+        {
+            SqlConnection Connection = new SqlConnection();
+            Connection.Open();
+            
+            SqlCommand Command = new SqlCommand($"INSERT INTO TripTickets values( '{Trip_Id}', '{Type}', {NumbrOfSeats}, {Price} )", Connection);
+            Command.ExecuteNonQuery();
+
+            Connection.Close();
+            return;
+        }
+
+        public void InsertTransactions(string Trip_Id, string Customer_Id, string TypeOfTickets, int NumbrOfSeats, double Price,string SerialNumber)
+        {
+            SqlConnection Connection = new SqlConnection();
+            Connection.Open();
+
+            SqlCommand Command = new SqlCommand($"INSERT INTO Transactions values( '{Trip_Id}','{Customer_Id}', '{TypeOfTickets}', {NumbrOfSeats}, {Price},{SerialNumber} )", Connection);
+            Command.ExecuteNonQuery();
+
+            Connection.Close();
+            return;
+        }
+
         private Customer SelectCustomer(string Id)
         {
-            foreach(Customer C in Customers)
+            foreach (Customer C in Customers)
             {
-                if(C.Id == Id)
+                if (C.Id == Id)
                 {
                     return C;
                 }
@@ -211,13 +371,36 @@ namespace Travelley
         {
             foreach (TourGuide C in TourGuides)
             {
-                
                 if (C.Id == Id)
                 {
                     return C;
                 }
             }
             return null;
+        }
+
+        //Return True if the given Id is unique
+        private bool CheckUniqueCustomerId(string Id)
+        {
+            foreach (Customer C in Customers)
+            {
+                if (C.Id == Id)
+                    return false;
+            }
+            return true;
+        }
+
+        private bool CheckUniqueTourGuideId(string id)
+        {
+
+            foreach(TourGuide T in TourGuides)
+            {
+                if (T.Id == id)
+
+                    return false;
+
+            }
+            return true;
         }
     }
 }
