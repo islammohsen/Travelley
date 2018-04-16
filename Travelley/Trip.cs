@@ -28,9 +28,9 @@ namespace Travelley
         public double Discount { get => discount; set => discount = value; }
         public string Type { get => type; set => type = value; }
         public string Trip_ID { get => trip_ID; set => trip_ID = value; }
+        internal List<Ticket> Tickets { get => tickets; set => tickets = value; }
         public Dictionary<string, int> NumberOfSeats { get => numberOfSeats; set => numberOfSeats = value; }
         public Dictionary<string, double> PriceOfSeat { get => priceOfSeat; set => priceOfSeat = value; }
-        internal List<Ticket> Tickets { get => tickets; set => tickets = value; }
 
         public void AddSeats(string Type, int Number, double Price)
         {
