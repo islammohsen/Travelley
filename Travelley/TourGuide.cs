@@ -8,10 +8,7 @@ namespace Travelley
 {
     class TourGuide: Person
     {
-        private double salary;
         private List<Trip> trips;
-
-        public double Salary { get => salary; set => salary = value; }
         internal List<Trip> Trips { get => trips; set => trips = value; }
 
         public TourGuide(string Name, string Id, string Gender, string Email, string PhoneNumber)
@@ -22,14 +19,31 @@ namespace Travelley
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
             this.PhoneNumber = PhoneNumber;
-            this.salary = 0;
+            
             Trips = new List<Trip>();
         }
 
         void AddTrip(Trip obj)
         {
             Trips.Add(obj);
-            salary += 1;
+        }
+        double GetSalary(int month,int year)
+        {
+            int currentMonth = DateTime.Now.Month;
+            int currentYear = DateTime.Now.Year;
+            double salary = 0;
+            if (currentMonth <= month && currentYear <= year)
+                return -1;
+          
+            foreach(Trip T in trips)
+            {
+                //Tourguide takes money if he starts the trip
+                if (T.Start.Month == month && T.Start.Year == year)
+                {
+                    salary += 150;
+                }
+            }
+            return salary;
         }
     }
 }
