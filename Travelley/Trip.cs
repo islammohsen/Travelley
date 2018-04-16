@@ -64,8 +64,8 @@ namespace Travelley
             if (NumberOfSeats[Type] == 0 || NumberOfOrderedSeats > NumberOfSeats[Type])
                 return null;
 
-            Guid g = new Guid();
-            string serial = g.ToString();
+            
+            string serial = Guid.NewGuid().ToString();
             NumberOfSeats[Type] -= NumberOfOrderedSeats;
 
             double TicketPrice = PriceOfSeat[Type] * NumberOfOrderedSeats * (1.0 - discount);

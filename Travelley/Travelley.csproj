@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Currency.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="Ticket.cs" />
