@@ -134,7 +134,7 @@ namespace Travelley
         {
 
             //created a command
-            SqlCommand Command = new SqlCommand("select * from TripTickets", Connection);
+            Command = new SqlCommand("select * from TripTickets", Connection);
 
             //excuted the command
             Reader = Command.ExecuteReader();
@@ -143,14 +143,14 @@ namespace Travelley
             {
                 string TripId = (string)Reader["TripId"];
                 string Type = (string)Reader["Type"];
-                int NoOfSeats = (int)Reader["NoOfSeats"];
+                int NumberOfSeats = (int)Reader["NumberOfSeats"];
                 double Price = (double)Reader["Price"];
 
                 foreach (Trip C in Trips)
                 {
                     if (C.TripId == TripId)
                     {
-                        C.AddSeats(Type, NoOfSeats, Price);
+                        C.AddSeats(Type, NumberOfSeats, Price);
                         break;
                     }
                 }
@@ -247,11 +247,55 @@ namespace Travelley
             return false;
         }
         
+        public static bool UpdateTrip(Trip CurrentTrip, string TripId, string TourGuideId, string Type, string Depature, string Destination, double Discount, DateTime Start, DateTime End)
+        {
+            if(CheckUniqueTripId(TripId) || TripId == CurrentTrip.TripId)
+            {
+                Command = new SqlCommand($"UPDATE Trips set TripId = '{TripId}', set TourGuideId = '{TourGuideId}', set Type = '{Type}', " +
+                    $"set Depature = '{Depature}', set Destination = '{Destination}', set Discont = {Discount}, Start = '{Start}'," +
+                    $"End = '{End}' where TripId = '{CurrentTrip.TripId}'", Connection);
+                Command = new SqlCommand($"UPDATE TripsTickets set TripId = '{TripId}' where TripId = '{CurrentTrip.TripId}'");
+                Command = new SqlCommand($"UPDATE Transactions set TripId = '{TripId}' where TripId = '{CurrentTrip.TripId}'");
+                CurrentTrip.TripId = TripId;
+                TourGuide T = SelectTourGuide(TourGuideId);
+                CurrentTrip.Tour = T;
+                CurrentTrip.Type = Type;
+                CurrentTrip.Departure = Depature;
+                CurrentTrip.Destination = Destination;
+                CurrentTrip.Discount = Discount;
+                CurrentTrip.Start = Start;
+                CurrentTrip.End = End;
+                Command.ExecuteNonQuery();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool UpdateTripsTickets(Trip CurrentTrip, string Type, int NumberOfSeats, double Price)
+        {
+            if(CurrentTrip.NumberOfSeats.ContainsKey(Type))
+            {
+                Command = new SqlCommand($"UPDATE TripsTickets set Type = '{Type}', set NumberOfSeats = {NumberOfSeats}, set Price = {Price} where TripId = '{CurrentTrip.TripId}'");
+                CurrentTrip.NumberOfSeats[Type] = NumberOfSeats;
+                CurrentTrip.PriceOfSeat[Type] = Price;
+                Command.ExecuteNonQuery();
+                return true;
+;            }
+            return false;
+        }
+
+        public static bool UpdateTourGuideLanguage()
+        {
+            //todo
+            return false;
+        }
+
         public static void InsertCustomer(Customer CurrentCustomer)
         {
             Command = new SqlCommand($"INSERT INTO Customer values('{ CurrentCustomer.Id }','{CurrentCustomer.Name }' ," +
                 $" '{CurrentCustomer.Nationality}' , '{CurrentCustomer.Languages[0]}' ,'{ CurrentCustomer.Gender}','{CurrentCustomer.Email}'," +
                 $"'{CurrentCustomer.PhoneNumber}')", Connection);
+            Customers.Add(CurrentCustomer);
             Command.ExecuteNonQuery();
             return;
         }
@@ -261,6 +305,7 @@ namespace Travelley
             Command = new SqlCommand($"INSERT INTO Customer values('{ CurrentTourGuide.Id }','{CurrentTourGuide.Name }' ," +
                 $" '{CurrentTourGuide.Nationality}','{ CurrentTourGuide.Gender}','{CurrentTourGuide.Email}'," +
                 $"'{CurrentTourGuide.PhoneNumber}')", Connection);
+            TourGuides.Add(CurrentTourGuide);
             Command.ExecuteNonQuery();
             return;
         }
@@ -269,13 +314,14 @@ namespace Travelley
         {
             Command = new SqlCommand($"INSERT INTO values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Type}', '{CurrentTrip.Departure}', " +
                 $"'{CurrentTrip.Destination}', {CurrentTrip.Discount}, '{CurrentTrip.Start.ToString()}', '{CurrentTrip.End.ToString()}')", Connection);
+            Trips.Add(CurrentTrip);
             Command.ExecuteNonQuery();
             return;
         }
 
-        public static void InsertTripTickets(string TripId,string Type,int NumbrOfSeats,double Price)
+        public static void InsertTripTickets(string TripId, string Type, int NumbrOfSeats, double Price)
         {
-            SqlCommand Command = new SqlCommand($"INSERT INTO TripTickets values( '{TripId}', '{Type}', {NumbrOfSeats}, {Price} )", Connection);
+            Command = new SqlCommand($"INSERT INTO TripTickets values( '{TripId}', '{Type}', {NumbrOfSeats}, {Price} )", Connection);
             Command.ExecuteNonQuery();
             return;
         }
@@ -284,6 +330,13 @@ namespace Travelley
         {
             Command = new SqlCommand($"INSERT INTO Transactions values( '{SerialNumber}', '{CustomerId}', '{TripId}'," +
                 $" '{Type}', {Price}, {NumberOfSeats} )", Connection);
+            Command.ExecuteNonQuery();
+            return;
+        }
+
+        public static void InsertLanguage(string TourGuideId, string Language)
+        {
+            Command = new SqlCommand($"INSERT INTO TourGuideLanguage values('{TourGuideId}', '{Language}')");
             Command.ExecuteNonQuery();
             return;
         }
@@ -335,15 +388,25 @@ namespace Travelley
             return true;
         }
 
-        private static bool CheckUniqueTourGuideId(string id)
+        private static bool CheckUniqueTourGuideId(string Id)
         {
 
             foreach(TourGuide T in TourGuides)
             {
-                if (T.Id == id)
+                if (T.Id == Id)
 
                     return false;
 
+            }
+            return true;
+        }
+
+        private static bool CheckUniqueTripId(string Id)
+        {
+            foreach(Trip T in Trips)
+            {
+                if (T.TripId == Id)
+                    return false;
             }
             return true;
         }

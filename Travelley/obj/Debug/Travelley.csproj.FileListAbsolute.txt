@@ -30,3 +30,4 @@ D:\Git\Travelley\Travelley\obj\Debug\Travelley.csproj.CoreCompileInputs.cache
 D:\Git\Travelley\Travelley\bin\Debug\Travelley.mdf
 D:\Git\Travelley\Travelley\bin\Debug\Travelley_log.ldf
 D:\Git\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs
+D:\Git\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache

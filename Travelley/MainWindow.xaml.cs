@@ -23,6 +23,12 @@ namespace Travelley
         public MainWindow()
         {
             InitializeComponent();
+            DataBase.Intialize();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            DataBase.ShutDown();
         }
     }
 }
