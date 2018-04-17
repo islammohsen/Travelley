@@ -30,3 +30,20 @@ D:\Git\Travelley\Travelley\obj\Debug\Travelley.csproj.CoreCompileInputs.cache
 D:\Git\Travelley\Travelley\obj\Debug\Travelley.exe
 D:\Git\Travelley\Travelley\obj\Debug\Travelley.pdb
 D:\Git\Travelley\Travelley\bin\Debug\Travelley.pdb
+D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.mdf
+D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley_log.ldf
+D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.exe.config
+D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.exe
+D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.pdb
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
+D:\OOP Project\Travelley\Travelley\obj\Debug\MainWindow.g.cs
+D:\OOP Project\Travelley\Travelley\obj\Debug\App.g.cs
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.cache
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.lref
+D:\OOP Project\Travelley\Travelley\obj\Debug\MainWindow.baml
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.g.resources
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.Properties.Resources.resources
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.csproj.GenerateResource.Cache
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.exe
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.pdb
