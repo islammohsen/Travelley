@@ -14,7 +14,7 @@ namespace Travelley
         public static List<Customer> Customers;
         public static List<TourGuide> TourGuides;
         public static List<Trip> Trips;
-        private static SqlConnection Connection = new SqlConnection("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename=|DataDirectory|\\Test.mdf; Integrated Security = True");
+        private static SqlConnection Connection = new SqlConnection("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename=|DataDirectory|\\Travelley.mdf; Integrated Security = True");
         private static SqlCommand Command = new SqlCommand();
         private static SqlDataReader Reader;
         private static bool IsIntialized = false;
@@ -31,7 +31,7 @@ namespace Travelley
             GetTourGuides();
             GetLanguages();
             GetTrips();
-            TripTickets();
+            TripsTickets();
             Transactions();
         }
 
@@ -50,7 +50,7 @@ namespace Travelley
             
 
             //created a command
-            Command= new SqlCommand("SELECT * FROM Customers", Connection);
+            Command= new SqlCommand("SELECT * FROM Customer", Connection);
 
             //excuted the command
             Reader = Command.ExecuteReader();
@@ -130,11 +130,11 @@ namespace Travelley
             return;
         }
 
-        public static void TripTickets()
+        public static void TripsTickets()
         {
 
             //created a command
-            Command = new SqlCommand("select * from TripTickets", Connection);
+            Command = new SqlCommand("select * from TripsTickets", Connection);
 
             //excuted the command
             Reader = Command.ExecuteReader();
@@ -280,7 +280,7 @@ namespace Travelley
                 CurrentTrip.PriceOfSeat[Type] = Price;
                 Command.ExecuteNonQuery();
                 return true;
-;            }
+            }
             return false;
         }
 
@@ -302,7 +302,7 @@ namespace Travelley
 
         public static void InsertTourGuide(TourGuide CurrentTourGuide)
         {
-            Command = new SqlCommand($"INSERT INTO Customer values('{ CurrentTourGuide.Id }','{CurrentTourGuide.Name }' ," +
+            Command = new SqlCommand($"INSERT INTO TourGuide values('{ CurrentTourGuide.Id }','{CurrentTourGuide.Name }' ," +
                 $" '{CurrentTourGuide.Nationality}','{ CurrentTourGuide.Gender}','{CurrentTourGuide.Email}'," +
                 $"'{CurrentTourGuide.PhoneNumber}')", Connection);
             TourGuides.Add(CurrentTourGuide);
@@ -312,7 +312,7 @@ namespace Travelley
 
         public static void InsertTrip(Trip CurrentTrip)
         {
-            Command = new SqlCommand($"INSERT INTO values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Type}', '{CurrentTrip.Departure}', " +
+            Command = new SqlCommand($"INSERT INTO Trip values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Type}', '{CurrentTrip.Departure}', " +
                 $"'{CurrentTrip.Destination}', {CurrentTrip.Discount}, '{CurrentTrip.Start.ToString()}', '{CurrentTrip.End.ToString()}')", Connection);
             Trips.Add(CurrentTrip);
             Command.ExecuteNonQuery();
@@ -321,7 +321,7 @@ namespace Travelley
 
         public static void InsertTripTickets(string TripId, string Type, int NumbrOfSeats, double Price)
         {
-            Command = new SqlCommand($"INSERT INTO TripTickets values( '{TripId}', '{Type}', {NumbrOfSeats}, {Price} )", Connection);
+            Command = new SqlCommand($"INSERT INTO TripsTickets values( '{TripId}', '{Type}', {NumbrOfSeats}, {Price} )", Connection);
             Command.ExecuteNonQuery();
             return;
         }
