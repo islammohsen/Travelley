@@ -8,16 +8,20 @@ namespace Travelley
 {
     abstract class Person
     {
-        private string name;
         private string id;
+        private string name;
         private string gender;
         private string email;
         private string phoneNumber;
+        private List<string> languages;
+        private string nationality;
 
-        public string Name { get => name; set => name = value; }
         public string Id { get => id; set => id = value; }
+        public string Name { get => name; set => name = value; }
         public string Gender { get => gender; set => gender = value; }
         public string Email { get => email; set => email = value; }
         public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
+        public List<string> Languages { get => languages; set => languages = value; }
+        public string Nationality { get => nationality; set => nationality = value; }
     }
 }

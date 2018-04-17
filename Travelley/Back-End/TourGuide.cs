@@ -11,15 +11,14 @@ namespace Travelley
         private List<Trip> trips;
         internal List<Trip> Trips { get => trips; set => trips = value; }
 
-        public TourGuide(string Name, string Id, string Gender, string Email, string PhoneNumber)
+        public TourGuide(string Id, string Name, string Nationality, string Gender, string Email, string PhoneNumber)
         {
-            this.Name = Name;
             this.Id = Id;
+            this.Name = Name;
+            this.Nationality = Nationality;
+            this.Languages = new List<string>();
             this.Gender = Gender;
-            this.Email = Email;
             this.PhoneNumber = PhoneNumber;
-            this.PhoneNumber = PhoneNumber;
-            
             Trips = new List<Trip>();
         }
 
@@ -27,6 +26,7 @@ namespace Travelley
         {
             Trips.Add(obj);
         }
+
         double GetSalary(int month,int year)
         {
             int currentMonth = DateTime.Now.Month;
