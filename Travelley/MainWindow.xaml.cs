@@ -30,5 +30,10 @@ namespace Travelley
         {
             DataBase.ShutDown();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
     }
 }

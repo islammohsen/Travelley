@@ -5,9 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Travelley"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525"
+        Title="MainWindow" Height="705" Width="1350"
         Closed="Window_Closed">
-    <Grid>
-        
-    </Grid>
+    <Canvas x:Name="Header_Canvas" Height="108" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1340">
+        <Rectangle Fill="#FF1034A6" HorizontalAlignment="Left" Height="108" Stroke="Black" VerticalAlignment="Top" Width="1340" Canvas.Top="1" Canvas.Left="4"/>
+        <Button x:Name="Trip_Button" Foreground="White" Background="#FF1034A6" Content="Trips" Canvas.Top="1" Width="190" Height="108" BorderThickness="0" FontSize="30" FontFamily="Comic Sans MS" FontWeight="Bold" Click="Button_Click" Canvas.Left="251"/>
+        <Button x:Name="Ticket_Button" Foreground="White" Background="#FF1034A6" Content="Tickets" Canvas.Top="2" Width="166" Height="108" BorderThickness="0" FontSize="30" FontFamily="Comic Sans MS" FontWeight="Bold" Canvas.Left="456"/>
+        <Button x:Name="TourGuide_Button"  Foreground="White" Background="#FF1034A6" Content="Tour Guides" Canvas.Top="2" Width="232" Height="108" BorderThickness="0" FontSize="30" FontFamily="Comic Sans MS" FontWeight="Bold" Canvas.Left="642"/>
+        <Button x:Name="Customer_Button"  Foreground="White" Background="#FF1034A6" Content="Customers" Canvas.Top="2" Width="223" Height="108" BorderThickness="0" FontSize="30" FontFamily="Comic Sans MS" FontWeight="Bold" Canvas.Left="891"/>
+        <Button  x:Name="Transactions_Button"  Foreground="White" Background="#FF1034A6" Content="Transactions" Canvas.Top="2" Width="207" Height="108" BorderThickness="0" FontSize="30" FontFamily="Comic Sans MS" FontWeight="Bold" Canvas.Left="1131"/>
+        <Button x:Name="Home_Button" Foreground="White" Background="#FF1034A6" Content="Home" Canvas.Top="1" Width="231" Height="108" BorderThickness="0" FontSize="30" FontFamily="Comic Sans MS" FontWeight="Bold" Click="Button_Click"/>
+        <Rectangle Fill="White" Height="108" Canvas.Left="443" Canvas.Top="1" Width="7"/>
+        <Rectangle Fill="White" Height="108" Canvas.Left="239" Canvas.Top="1" Width="7"/>
+        <Rectangle Fill="White" Height="108" Canvas.Left="625" Width="8" Canvas.Top="1"/>
+        <Rectangle Fill="White" Height="108" Canvas.Left="877" Canvas.Top="1" Width="7"/>
+        <Rectangle Fill="White" Height="108" Canvas.Left="1119" Canvas.Top="1" Width="7"/>
+        <Canvas x:Name="Main_Canvas" Height="565" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1342" Canvas.Top="109">
+
+
+            <Label Content="Trip of the day" Canvas.Left="38" Canvas.Top="57" Height="89" Width="308" FontSize="45" FontWeight="Bold" FontFamily="Simplified Arabic"/>
+            <Label Content=" Tour Guide &#xA;of the month" Canvas.Left="968" Canvas.Top="27" Height="146" Width="266" FontSize="45" FontWeight="Bold" FontFamily="Simplified Arabic" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+            <Image x:Name="Best_TourGuide_IMG" Height="246" Canvas.Left="968" Canvas.Top="201" Width="308"/>
+            <Image x:Name="Best_Trip_IMG" Height="246" Canvas.Left="53" Canvas.Top="201" Width="308"/>
+
+
+
+        </Canvas>
+       
+
+    </Canvas>
+
+
 </Window>

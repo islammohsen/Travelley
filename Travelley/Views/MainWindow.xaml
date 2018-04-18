@@ -1,0 +1,19 @@
+﻿<Window x:Class="Travelley.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Travelley"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Border Padding="3">
+        <StackPanel >
+            
+            <Button Content="TourGuides" Margin="150 30 150 30" Padding="0 10 0 10" x:Name="TourGuideButton" Click="TourGuideButton_Click"/>
+            <Button Content="Customer" Margin="150 0 150 30" Padding="0 10 0 10" x:Name="CustomerButton" Click="CustomerButton_Click"/>
+            <Button Content="Trips" Margin="150 0 150 30" Padding="0 10 0 10" x:Name="TripsButton" Click="TripsButton_Click"/>
+            <Button Content="Tickets" Margin="150 0 150 30" Padding="0 10 0 10" x:Name="TicketsButton" Click="TicketsButton_Click"/>
+            
+        </StackPanel>
+    </Border>
+</Window>
