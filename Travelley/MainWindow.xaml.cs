@@ -20,10 +20,12 @@ namespace Travelley
     /// </summary>
     public partial class MainWindow : Window
     {
+        Canvas CurrentCanvas;
         public MainWindow()
         {
             InitializeComponent();
             DataBase.Intialize();
+            CurrentCanvas = Main_Canvas;
         }
 
         private void Window_Closed(object sender, EventArgs e)
