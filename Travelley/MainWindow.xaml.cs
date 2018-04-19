@@ -35,5 +35,10 @@ namespace Travelley
         {
            
         }
+
+        private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
