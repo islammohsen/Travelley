@@ -46,5 +46,24 @@ namespace Travelley
             }
             return salary;
         }
+        public static TourGuide GetBestTourGuide(int Month)
+        {
+
+            int year = DateTime.Today.Year;
+            if (Month == 0)  //handles the case if we are in month 1
+            {
+                Month = 12;
+                year--;
+            }
+            TourGuide ret = DataBase.TourGuides[0];
+
+            foreach(TourGuide t in DataBase.TourGuides)
+            {
+                if (t.GetSalary(Month, year) > ret.GetSalary(Month, year))
+                    ret = t;
+            }
+            return ret;
+        }
+
     }
 }

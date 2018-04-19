@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using System.Windows.Controls;
 
 namespace Travelley
 {
@@ -38,6 +37,7 @@ namespace Travelley
             if (Mark.Count >= 2)
                 discount = true;
             return;
+
         }
 
         public bool ReserveTicket(Trip obj, string Type)

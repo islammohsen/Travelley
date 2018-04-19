@@ -23,7 +23,6 @@ namespace Travelley
         public string Email { get => email; set => email = value; }
         public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
         public List<string> Languages { get => languages; set => languages = value; }
-        public string Nationality { get => nationality; set => nationality = value; }
-        
+        public string Nationality { get => nationality; set => nationality = value; }   
     }
 }

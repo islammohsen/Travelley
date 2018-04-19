@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace Travelley
 {
@@ -33,7 +32,6 @@ namespace Travelley
         public Dictionary<string, int> NumberOfSeats { get => numberOfSeats; set => numberOfSeats = value; }
         public Dictionary<string, double> PriceOfSeat { get => priceOfSeat; set => priceOfSeat = value; }
         
-
         public void AddSeats(string Type, int Number, double Price)
         {
             NumberOfSeats[Type] = Number;
