@@ -47,3 +47,6 @@ D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.Properties.Resources.reso
 D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.csproj.GenerateResource.Cache
 D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.exe
 D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.pdb
+E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.mdf
+E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley_log.ldf
+E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs

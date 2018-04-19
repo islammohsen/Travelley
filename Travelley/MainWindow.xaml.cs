@@ -20,10 +20,18 @@ namespace Travelley
     /// </summary>
     public partial class MainWindow : Window
     {
+        Canvas CurrentCanvas;
+        Trip TripOfTheDay;
+        TourGuide TourGuideOfTheMonth;
         public MainWindow()
         {
             InitializeComponent();
             DataBase.Intialize();
+            CurrentCanvas = Main_Canvas;
+
+            int today=DateTime.Today.Day;
+            TripOfTheDay = DataBase.Trips[today%DataBase.Trips.Count]; //generate trip based on today's date
+            TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
         }
 
         private void Window_Closed(object sender, EventArgs e)

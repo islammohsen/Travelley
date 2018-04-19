@@ -12,7 +12,7 @@ namespace Travelley
         private List<Ticket> Tickets;
         private HashSet<Trip> Mark;
         private bool discount;
-
+        
 
         public int NumberOfTrips { get => NumberOfTrips; }
         public bool Discount { get => Discount; }
@@ -37,6 +37,7 @@ namespace Travelley
             if (Mark.Count >= 2)
                 discount = true;
             return;
+
         }
 
         public bool ReserveTicket(Trip obj, string Type)
