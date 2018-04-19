@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Travelley
 {
@@ -23,5 +24,6 @@ namespace Travelley
         public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
         public List<string> Languages { get => languages; set => languages = value; }
         public string Nationality { get => nationality; set => nationality = value; }
+        
     }
 }

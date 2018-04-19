@@ -20,6 +20,7 @@ namespace Travelley
             this.Gender = Gender;
             this.PhoneNumber = PhoneNumber;
             Trips = new List<Trip>();
+            this.Email = Email;
         }
 
         void AddTrip(Trip obj)

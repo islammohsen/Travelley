@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Windows.Controls;
 
 namespace Travelley
 {
@@ -12,7 +13,7 @@ namespace Travelley
         private List<Ticket> Tickets;
         private HashSet<Trip> Mark;
         private bool discount;
-
+        
 
         public int NumberOfTrips { get => NumberOfTrips; }
         public bool Discount { get => Discount; }
