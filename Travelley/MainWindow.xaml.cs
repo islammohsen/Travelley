@@ -28,11 +28,20 @@ namespace Travelley
             InitializeComponent();
             DataBase.Intialize();
             CurrentCanvas = Main_Canvas;
-            
 
-            //int today=DateTime.Today.Day;
-            //TripOfTheDay = DataBase.Trips[today%DataBase.Trips.Count]; //generate trip based on today's date
-            //TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
+
+            int today = DateTime.Today.Day;
+            if (DataBase.Trips.Count != 0)
+                TripOfTheDay = DataBase.Trips[today % DataBase.Trips.Count]; //generate trip based on today's date
+            if (DataBase.TourGuides.Count != 0)
+                TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
+
+            if (TripOfTheDay == null) ;
+            //TODO: add message
+            //there is no exiting trips
+            if (TourGuideOfTheMonth == null) ;
+            //Todo: add message
+            //There is no tour guides or max existing haas 0 salary in the past month
         }
 
         private void Window_Closed(object sender, EventArgs e)
