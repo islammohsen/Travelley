@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Travelley.Back_End;
 
 namespace Travelley
 {
@@ -28,7 +29,7 @@ namespace Travelley
             InitializeComponent();
             DataBase.Intialize();
             CurrentCanvas = Main_Canvas;
-
+        
 
             int today = DateTime.Today.Day;
             if (DataBase.Trips.Count != 0)
