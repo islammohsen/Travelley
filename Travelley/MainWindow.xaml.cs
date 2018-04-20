@@ -54,9 +54,43 @@ namespace Travelley
            
         }
 
+
         private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
         {
-
+            CurrentPanelName_Label.Content = "Customers";
         }
+
+       private void Ticket_Button_Click(object sender, RoutedEventArgs e)
+       {
+           CurrentPanelName_Label.Content = "Tickets";
+       }
+
+       private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
+       {
+           CurrentPanelName_Label.Content = "Tour Guides";
+       }
+
+       private void Transactions_Button_Click(object sender, RoutedEventArgs e)
+       {
+           CurrentPanelName_Label.Content = "Transactions";
+       }
+       private void Trips_Button_Click(object sender, RoutedEventArgs e)
+       {
+           CurrentPanelName_Label.Content = "Trips";
+       }
+
+       private void Button_Mouse_Enter(object sender, MouseEventArgs e)
+       {
+           Button b = sender as Button;
+           b.Background = new SolidColorBrush(Color.FromRgb(21, 31, 40));
+           b.Foreground = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+       }
+
+       private void Button_Mouse_Leave(object sender, MouseEventArgs e)
+       {
+           Button b = sender as Button;
+           b.Background = new SolidColorBrush(Color.FromRgb(41, 53, 65));
+           b.Foreground = Brushes.White;
+         }
     }
 }
