@@ -22,7 +22,7 @@ namespace Travelley
 
         public static void Intialize()
         {
-            if(!IsIntialized)
+            if (!IsIntialized)
             {
                 Connection.Open();
                 Command.Connection = Connection;
@@ -38,7 +38,7 @@ namespace Travelley
 
         public static void ShutDown()
         {
-            if(IsIntialized)
+            if (IsIntialized)
             {
                 Connection.Close();
                 IsIntialized = false;
@@ -48,10 +48,10 @@ namespace Travelley
         public static void GetCustomers()
         {
             Customers = new List<Customer>();
-            
+
 
             //created a command
-            Command= new SqlCommand("SELECT * FROM Customer", Connection);
+            Command = new SqlCommand("SELECT * FROM Customer", Connection);
 
             //excuted the command
             Reader = Command.ExecuteReader();
@@ -80,7 +80,7 @@ namespace Travelley
         public static void GetTourGuides()
         {
             TourGuides = new List<TourGuide>();
-            
+
             //created a command
             Command = new SqlCommand("SELECT * from TourGuide", Connection);
 
@@ -107,7 +107,7 @@ namespace Travelley
         public static void GetTrips()
         {
             Trips = new List<Trip>();
-            
+
             //created a command
             Command = new SqlCommand("SELECT * FROM Trip", Connection);
 
@@ -196,13 +196,13 @@ namespace Travelley
 
             Reader = Command.ExecuteReader();
 
-            while(Reader.Read())
+            while (Reader.Read())
             {
                 string Id = (string)Reader["Id"];
                 string Language = (string)Reader["Language"];
-                foreach(TourGuide C in TourGuides)
+                foreach (TourGuide C in TourGuides)
                 {
-                    if(C.Id == Id)
+                    if (C.Id == Id)
                     {
                         C.Languages.Add(Language);
                         break;
@@ -216,7 +216,7 @@ namespace Travelley
 
         public static bool UpdateCustomer(Customer CurrentCustomer, string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber, CustomImage CustomerImage)
         {
-            if(CheckUniqueCustomerId(Id) || CurrentCustomer.Id == Id)
+            if (CheckUniqueCustomerId(Id) || CurrentCustomer.Id == Id)
             {
                 Command = new SqlCommand($"UPDATE Customer set Id = '{Id}', set Name = '{Name}', set Nationality = '{Nationality}', " +
                     $"set Language = '{Language}', set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}'," +
@@ -255,10 +255,10 @@ namespace Travelley
             }
             return false;
         }
-        
+
         public static bool UpdateTrip(Trip CurrentTrip, string TripId, string TourGuideId, string Type, string Depature, string Destination, double Discount, DateTime Start, DateTime End, CustomImage TripImage)
         {
-            if(CheckUniqueTripId(TripId) || TripId == CurrentTrip.TripId)
+            if (CheckUniqueTripId(TripId) || TripId == CurrentTrip.TripId)
             {
                 Command = new SqlCommand($"UPDATE Trips set TripId = '{TripId}', set TourGuideId = '{TourGuideId}', set Type = '{Type}', " +
                     $"set Depature = '{Depature}', set Destination = '{Destination}', set Discont = {Discount}, set Start = '{Start}'," +
@@ -283,7 +283,7 @@ namespace Travelley
 
         public static bool UpdateTripsTickets(Trip CurrentTrip, string Type, int NumberOfSeats, double Price)
         {
-            if(CurrentTrip.NumberOfSeats.ContainsKey(Type))
+            if (CurrentTrip.NumberOfSeats.ContainsKey(Type))
             {
                 Command = new SqlCommand($"UPDATE TripsTickets set Type = '{Type}', set NumberOfSeats = {NumberOfSeats}, set Price = {Price} where TripId = '{CurrentTrip.TripId}'");
                 CurrentTrip.NumberOfSeats[Type] = NumberOfSeats;
@@ -389,7 +389,7 @@ namespace Travelley
         }
 
         //Return True if the given Id is unique
-        private static  bool CheckUniqueCustomerId(string Id)
+        private static bool CheckUniqueCustomerId(string Id)
         {
             foreach (Customer C in Customers)
             {
@@ -402,18 +402,18 @@ namespace Travelley
         private static bool CheckUniqueTourGuideId(string Id)
         {
 
-            foreach(TourGuide T in TourGuides)
+            foreach (TourGuide T in TourGuides)
             {
                 if (T.Id == Id)
                     return false;
-     
+
             }
             return true;
         }
 
         private static bool CheckUniqueTripId(string Id)
         {
-            foreach(Trip T in Trips)
+            foreach (Trip T in Trips)
             {
                 if (T.TripId == Id)
                     return false;

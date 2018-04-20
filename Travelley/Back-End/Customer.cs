@@ -13,7 +13,7 @@ using Travelley.Back_End;
 
 namespace Travelley
 {
-    class Customer: Person
+    class Customer : Person
     {
         private List<Ticket> Tickets;
         private HashSet<Trip> Mark;
@@ -53,7 +53,7 @@ namespace Travelley
         public List<Ticket> GetTickets()
         {
             List<Ticket> Ret = new List<Ticket>();
-            foreach(Ticket c in Tickets)
+            foreach (Ticket c in Tickets)
             {
                 Ret.Add(c);
             }

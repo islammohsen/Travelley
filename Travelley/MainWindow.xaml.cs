@@ -29,13 +29,13 @@ namespace Travelley
             InitializeComponent();
             DataBase.Intialize();
             CurrentCanvas = Main_Canvas;
-        
-            TourGuide t = new TourGuide("1","ahmed","egy","male","asa","011");
-            t.UserImage=new CustomImage("C:/Users/Ramy_/Pictures/Camera Roll/WIN_20180406_21_08_56_Pro.jpg");
-            DataBase.TourGuides.Add(t); 
 
-            Trip trip = new Trip("2", t, "family", "cairo", "alex", 0, new DateTime(2017, 5, 4),new DateTime(2017, 6, 4));
-            trip.TripImage=new CustomImage("E:/beach.jpeg");  //Put a valid image just to test
+            TourGuide t = new TourGuide("1", "ahmed", "egy", "male", "asa", "011");
+            t.UserImage = new CustomImage("C:/Users/Ramy_/Pictures/Camera Roll/WIN_20180406_21_08_56_Pro.jpg");
+            DataBase.TourGuides.Add(t);
+
+            Trip trip = new Trip("2", t, "family", "cairo", "alex", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
+            trip.TripImage = new CustomImage("E:/beach.jpeg");  //Put a valid image just to test
             DataBase.Trips.Add(trip);
 
             int today = DateTime.Today.Day;
@@ -51,7 +51,7 @@ namespace Travelley
                 TripOfTheDay_IMG.Source = TripOfTheDay.TripImage.GetImage().Source;
                 TripOfTheDay_Label.Content = TripOfTheDay.Departure + " - " + TripOfTheDay.Destination;
             }
-            
+
             if (TourGuideOfTheMonth == null) ;
             //Todo: add message
             //There is no tour guides or max existing haas 0 salary in the past month
@@ -64,64 +64,64 @@ namespace Travelley
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-			CurrentCanvas.Visibility = Visibility.Hidden;
-			CurrentCanvas = Main_Canvas;
-			CurrentCanvas.Visibility = Visibility.Visible;
-			CurrentPanelName_Label.Content = "Home Page";
-		}
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = Main_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Home Page";
+        }
 
 
         private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
         {
-			CurrentCanvas.Visibility = Visibility.Hidden;
-			CurrentCanvas = Customers_Canvas;
-			CurrentCanvas.Visibility = Visibility.Visible;
-			CurrentPanelName_Label.Content = "Customers";
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = Customers_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Customers";
         }
 
-       private void Ticket_Button_Click(object sender, RoutedEventArgs e)
-       {
-			CurrentCanvas.Visibility = Visibility.Hidden;
-			CurrentCanvas = Tickets_Canvas;
-			CurrentCanvas.Visibility = Visibility.Visible;
-			CurrentPanelName_Label.Content = "Tickets";
-       }
+        private void Ticket_Button_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = Tickets_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Tickets";
+        }
 
-       private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
-		{
-			CurrentCanvas.Visibility = Visibility.Hidden;
-			CurrentCanvas = TourGuides_Canvas;
-			CurrentCanvas.Visibility = Visibility.Visible;
-			CurrentPanelName_Label.Content = "Tour Guides";
-       }
+        private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = TourGuides_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Tour Guides";
+        }
 
-       private void Transactions_Button_Click(object sender, RoutedEventArgs e)
-       {
+        private void Transactions_Button_Click(object sender, RoutedEventArgs e)
+        {
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = Transactions_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
             CurrentPanelName_Label.Content = "Transactions";
-       }
-       private void Trips_Button_Click(object sender, RoutedEventArgs e)
-       {
-			CurrentPanelName_Label.Content = "Trips";
-			CurrentCanvas.Visibility = Visibility.Hidden;
-			CurrentCanvas = Trips_Canvas;
-			CurrentCanvas.Visibility = Visibility.Visible;
-       }
+        }
+        private void Trips_Button_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPanelName_Label.Content = "Trips";
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = Trips_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+        }
 
-       private void Button_Mouse_Enter(object sender, MouseEventArgs e)
-       {
-           Button b = sender as Button;
-           b.Background = new SolidColorBrush(Color.FromRgb(21, 31, 40));
-           b.Foreground = new SolidColorBrush(Color.FromRgb(232, 126, 49));
-       }
+        private void Button_Mouse_Enter(object sender, MouseEventArgs e)
+        {
+            Button b = sender as Button;
+            b.Background = new SolidColorBrush(Color.FromRgb(21, 31, 40));
+            b.Foreground = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+        }
 
-       private void Button_Mouse_Leave(object sender, MouseEventArgs e)
-       {
-           Button b = sender as Button;
-           b.Background = new SolidColorBrush(Color.FromRgb(41, 53, 65));
-           b.Foreground = Brushes.White;
-         }
+        private void Button_Mouse_Leave(object sender, MouseEventArgs e)
+        {
+            Button b = sender as Button;
+            b.Background = new SolidColorBrush(Color.FromRgb(41, 53, 65));
+            b.Foreground = Brushes.White;
+        }
     }
 }

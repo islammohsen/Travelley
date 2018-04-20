@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace Travelley
 {
-    class TourGuide: Person
+    class TourGuide : Person
     {
         private List<Trip> trips;
 
@@ -32,15 +32,15 @@ namespace Travelley
             Trips.Add(obj);
         }
 
-        double GetSalary(int month,int year)
+        double GetSalary(int month, int year)
         {
             int currentMonth = DateTime.Now.Month;
             int currentYear = DateTime.Now.Year;
             double salary = 0;
             if (currentMonth <= month && currentYear <= year)
                 return -1;
-          
-            foreach(Trip T in trips)
+
+            foreach (Trip T in trips)
             {
                 //Tourguide takes money if he starts the trip
                 if (T.Start.Month == month && T.Start.Year == year)
@@ -61,7 +61,7 @@ namespace Travelley
             }
             TourGuide ret = DataBase.TourGuides[0];
 
-            foreach(TourGuide t in DataBase.TourGuides)
+            foreach (TourGuide t in DataBase.TourGuides)
             {
                 if (t.GetSalary(Month, year) > ret.GetSalary(Month, year))
                     ret = t;
