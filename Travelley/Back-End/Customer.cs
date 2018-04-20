@@ -9,6 +9,7 @@ using System.Media;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Travelley.Back_End;
 
 namespace Travelley
 {
@@ -17,12 +18,10 @@ namespace Travelley
         private List<Ticket> Tickets;
         private HashSet<Trip> Mark;
         private bool discount;
-        private byte[] customerImage;
         public int NumberOfTrips { get => NumberOfTrips; }
         public bool Discount { get => Discount; }
-        public byte[] CustomerImage { get => customerImage; set => customerImage = value; }
 
-        public Customer(string Id, string Name, string Nationality, List<string> Languages, string Gender, string Email, string PhoneNumber, byte[] CustomerImage)
+        public Customer(string Id, string Name, string Nationality, List<string> Languages, string Gender, string Email, string PhoneNumber)
         {
             this.Id = Id;
             this.Name = Name;
@@ -34,25 +33,7 @@ namespace Travelley
             this.discount = false;
             this.Tickets = new List<Ticket>();
             Mark = new HashSet<Trip>();
-            this.CustomerImage = CustomerImage;
         }
-            
-        public Image GetImage()
-        {
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.CreateOptions = BitmapCreateOptions.None;
-            bi.CacheOption = BitmapCacheOption.Default;
-            bi.StreamSource = new MemoryStream(CustomerImage);
-            bi.EndInit();
-
-            Image img = new Image();  //Image control of wpf
-            img.Source = bi;
-
-            return img;
-        }
-        
-
 
         public void AddTicket(Ticket obj)
         {

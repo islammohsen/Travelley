@@ -71,6 +71,7 @@
     </ApplicationDefinition>
     <Compile Include="Back-End\Currency.cs" />
     <Compile Include="Back-End\Customer.cs" />
+    <Compile Include="Back-End\CustomImage.cs" />
     <Compile Include="Back-End\DataBase.cs" />
     <Compile Include="Back-End\Ticket.cs" />
     <Compile Include="Back-End\TourGuide.cs" />

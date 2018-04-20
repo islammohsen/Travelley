@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using Travelley.Back_End;
 
 namespace Travelley
 {
@@ -68,7 +69,8 @@ namespace Travelley
                 string Email = (string)Reader["Email"];
                 string PhoneNumber = (string)Reader["PhoneNumber"];
                 byte[] CustomerImage = (byte[])Reader["CustomerImage"];
-                Customer Obj = new Customer(Id, Name, Nationality, Languages, Gender, Email, PhoneNumber, CustomerImage);
+                Customer Obj = new Customer(Id, Name, Nationality, Languages, Gender, Email, PhoneNumber);
+                Obj.UserImage = new CustomImage(CustomerImage);
                 Customers.Add(Obj);
             }
             Reader.Close();
@@ -79,7 +81,6 @@ namespace Travelley
         {
             TourGuides = new List<TourGuide>();
             
-
             //created a command
             Command = new SqlCommand("SELECT * from TourGuide", Connection);
 
@@ -95,7 +96,8 @@ namespace Travelley
                 string Email = (string)Reader["Email"];
                 string PhoneNumber = (string)Reader["PhoneNumber"];
                 byte[] TourGuideImage = (byte[])Reader["TourGuideImage"];
-                TourGuide Obj = new TourGuide(Id, Name, Nationality, Gender, Email, PhoneNumber, TourGuideImage);
+                TourGuide Obj = new TourGuide(Id, Name, Nationality, Gender, Email, PhoneNumber);
+                Obj.UserImage.SetImage(TourGuideImage);
                 TourGuides.Add(Obj);
             }
             Reader.Close();
@@ -125,7 +127,8 @@ namespace Travelley
                 DateTime End = (DateTime)Reader["End"];
                 Byte[] TripImage = (Byte[])Reader["TripImage"];
                 TourGuide CurrentTourGuide = SelectTourGuide(TourGuideId);
-                Trip Obj = new Trip(TripId, CurrentTourGuide, Type, Depature, Destination, Discount, Start, End, TripImage);
+                Trip Obj = new Trip(TripId, CurrentTourGuide, Type, Depature, Destination, Discount, Start, End);
+                Obj.TripImage = new CustomImage(TripImage);
                 Trips.Add(Obj);
             }
             Reader.Close();
@@ -211,7 +214,7 @@ namespace Travelley
             return;
         }
 
-        public static bool UpdateCustomer(Customer CurrentCustomer, string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber, Byte[] CustomerImage)
+        public static bool UpdateCustomer(Customer CurrentCustomer, string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber, CustomImage CustomerImage)
         {
             if(CheckUniqueCustomerId(Id) || CurrentCustomer.Id == Id)
             {
@@ -227,19 +230,19 @@ namespace Travelley
                 CurrentCustomer.Gender = Gender;
                 CurrentCustomer.Email = Email;
                 CurrentCustomer.PhoneNumber = PhoneNumber;
-                CurrentCustomer.CustomerImage = CustomerImage;
+                CurrentCustomer.UserImage = CustomerImage;
                 return true;
             }
             return false;
         }
 
-        public static bool UpdateTourGuide(TourGuide CurrentTourGuide, string Id, string Name, string Nationality, string Gender, string Email, string PhoneNumber, byte[] TourGuideImage)
+        public static bool UpdateTourGuide(TourGuide CurrentTourGuide, string Id, string Name, string Nationality, string Gender, string Email, string PhoneNumber, CustomImage TourGuideImage)
         {
             if (CheckUniqueTourGuideId(Id) || CurrentTourGuide.Id == Id)
             {
                 Command = new SqlCommand($"UPDATE Customer set Id = '{Id}', set Name = '{Name}', set Nationality = '{Nationality}', " +
                     $"set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}', " +
-                    $"set TourGuideImage = {TourGuideImage} where Id = '{CurrentTourGuide.Id}'",
+                    $"set TourGuideImage = {TourGuideImage.GetByteImage()} where Id = '{CurrentTourGuide.Id}'",
                     Connection);
                 CurrentTourGuide.Id = Id;
                 CurrentTourGuide.Name = Name;
@@ -247,19 +250,19 @@ namespace Travelley
                 CurrentTourGuide.Gender = Gender;
                 CurrentTourGuide.Email = Email;
                 CurrentTourGuide.PhoneNumber = PhoneNumber;
-                CurrentTourGuide.TourGuideImage = TourGuideImage;
+                CurrentTourGuide.UserImage = TourGuideImage;
                 return true;
             }
             return false;
         }
         
-        public static bool UpdateTrip(Trip CurrentTrip, string TripId, string TourGuideId, string Type, string Depature, string Destination, double Discount, DateTime Start, DateTime End)
+        public static bool UpdateTrip(Trip CurrentTrip, string TripId, string TourGuideId, string Type, string Depature, string Destination, double Discount, DateTime Start, DateTime End, CustomImage TripImage)
         {
             if(CheckUniqueTripId(TripId) || TripId == CurrentTrip.TripId)
             {
                 Command = new SqlCommand($"UPDATE Trips set TripId = '{TripId}', set TourGuideId = '{TourGuideId}', set Type = '{Type}', " +
-                    $"set Depature = '{Depature}', set Destination = '{Destination}', set Discont = {Discount}, Start = '{Start}'," +
-                    $"End = '{End}' where TripId = '{CurrentTrip.TripId}'", Connection);
+                    $"set Depature = '{Depature}', set Destination = '{Destination}', set Discont = {Discount}, set Start = '{Start}'," +
+                    $"set End = '{End}', set Image = {TripImage.GetByteImage()}  where TripId = '{CurrentTrip.TripId}'", Connection);
                 Command = new SqlCommand($"UPDATE TripsTickets set TripId = '{TripId}' where TripId = '{CurrentTrip.TripId}'");
                 Command = new SqlCommand($"UPDATE Transactions set TripId = '{TripId}' where TripId = '{CurrentTrip.TripId}'");
                 CurrentTrip.TripId = TripId;
@@ -271,6 +274,7 @@ namespace Travelley
                 CurrentTrip.Discount = Discount;
                 CurrentTrip.Start = Start;
                 CurrentTrip.End = End;
+                CurrentTrip.TripImage = TripImage;
                 Command.ExecuteNonQuery();
                 return true;
             }
@@ -300,7 +304,7 @@ namespace Travelley
         {
             Command = new SqlCommand($"INSERT INTO Customer values('{ CurrentCustomer.Id }','{CurrentCustomer.Name }' ," +
                 $" '{CurrentCustomer.Nationality}'F , '{CurrentCustomer.Languages[0]}' ,'{ CurrentCustomer.Gender}','{CurrentCustomer.Email}'," +
-                $"'{CurrentCustomer.PhoneNumber}', {CurrentCustomer.CustomerImage});", Connection);
+                $"'{CurrentCustomer.PhoneNumber}', {CurrentCustomer.UserImage.GetByteImage()});", Connection);
             Customers.Add(CurrentCustomer);
             Command.ExecuteNonQuery();
             return;
@@ -310,7 +314,7 @@ namespace Travelley
         {
             Command = new SqlCommand($"INSERT INTO TourGuide values('{ CurrentTourGuide.Id }','{CurrentTourGuide.Name }' ," +
                 $" '{CurrentTourGuide.Nationality}','{ CurrentTourGuide.Gender}','{CurrentTourGuide.Email}'," +
-                $"'{CurrentTourGuide.PhoneNumber}', {CurrentTourGuide.TourGuideImage})", Connection);
+                $"'{CurrentTourGuide.PhoneNumber}', {CurrentTourGuide.UserImage.GetByteImage()})", Connection);
             TourGuides.Add(CurrentTourGuide);
             Command.ExecuteNonQuery();
             return;
@@ -319,7 +323,8 @@ namespace Travelley
         public static void InsertTrip(Trip CurrentTrip)
         {
             Command = new SqlCommand($"INSERT INTO Trip values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Type}', '{CurrentTrip.Departure}', " +
-                $"'{CurrentTrip.Destination}', {CurrentTrip.Discount}, '{CurrentTrip.Start.ToString()}', '{CurrentTrip.End.ToString()}', {Trips})", Connection);
+                $"'{CurrentTrip.Destination}', {CurrentTrip.Discount}, '{CurrentTrip.Start.ToString()}', '{CurrentTrip.End.ToString()}'," +
+                $"{CurrentTrip.TripImage.GetByteImage()})", Connection);
             Trips.Add(CurrentTrip);
             Command.ExecuteNonQuery();
             return;

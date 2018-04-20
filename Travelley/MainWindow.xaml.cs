@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Travelley.Back_End;
 
 namespace Travelley
 {
@@ -29,6 +30,11 @@ namespace Travelley
             DataBase.Intialize();
             CurrentCanvas = Main_Canvas;
             
+            CustomImage img = new CustomImage("D:/Test.png");
+
+            Image img2 = img.GetImage();
+
+            Main_Canvas.Children.Add(img2);
 
             //int today=DateTime.Today.Day;
             //TripOfTheDay = DataBase.Trips[today%DataBase.Trips.Count]; //generate trip based on today's date

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Travelley.Back_End;
 
 namespace Travelley
 {
@@ -22,7 +23,6 @@ namespace Travelley
         private Dictionary<string, int> numberOfSeats;
         private Dictionary<string, double> priceOfSeat;
         private List<Ticket> tickets;
-        private byte[] tripImage;
 
         public DateTime Start { get => start; set => start = value; }
         public DateTime End { get => end; set => end = value; }
@@ -35,7 +35,7 @@ namespace Travelley
         internal List<Ticket> Tickets { get => tickets; set => tickets = value; }
         public Dictionary<string, int> NumberOfSeats { get => numberOfSeats; set => numberOfSeats = value; }
         public Dictionary<string, double> PriceOfSeat { get => priceOfSeat; set => priceOfSeat = value; }
-        public byte[] TripImage { get => tripImage; set => tripImage = value; }
+        public CustomImage TripImage;
         
         public void AddSeats(string Type, int Number, double Price)
         {
@@ -43,7 +43,7 @@ namespace Travelley
             PriceOfSeat[Type] = Price;
         }
 
-        public Trip(string TripId, TourGuide Tour, string Type, string Depature, string Destination, Double Discount, DateTime Start, DateTime End, byte[] TripImage)
+        public Trip(string TripId, TourGuide Tour, string Type, string Depature, string Destination, Double Discount, DateTime Start, DateTime End)
         {
             this.tripId = TripId;
             this.tour = Tour;
@@ -53,7 +53,6 @@ namespace Travelley
             this.discount = Discount;
             this.start = Start;
             this.end = End;
-            this.TripImage = TripImage;
             Tickets = new List<Ticket>();
             NumberOfSeats = new Dictionary<string, int>();
             PriceOfSeat = new Dictionary<string, double>();
@@ -77,21 +76,6 @@ namespace Travelley
             double TicketPrice = PriceOfSeat[Type] * NumberOfOrderedSeats * (1.0 - discount);
             Ticket T = new Ticket(serial, this, Type, TicketPrice, NumberOfOrderedSeats);
             return T;
-        }
-
-        public Image GetImage()
-        {
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.CreateOptions = BitmapCreateOptions.None;
-            bi.CacheOption = BitmapCacheOption.Default;
-            bi.StreamSource = new MemoryStream(tripImage);
-            bi.EndInit();
-
-            Image img = new Image();  //Image control of wpf
-
-            img.Source = bi;
-            return img;
         }
 
     }
