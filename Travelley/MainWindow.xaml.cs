@@ -85,7 +85,10 @@ namespace Travelley
 
        private void Transactions_Button_Click(object sender, RoutedEventArgs e)
        {
-           CurrentPanelName_Label.Content = "Transactions";
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = Transactions_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Transactions";
        }
        private void Trips_Button_Click(object sender, RoutedEventArgs e)
        {
