@@ -52,23 +52,35 @@ namespace Travelley
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
-        }
+			CurrentCanvas.Visibility = Visibility.Hidden;
+			CurrentCanvas = Main_Canvas;
+			CurrentCanvas.Visibility = Visibility.Visible;
+			CurrentPanelName_Label.Content = "Home Page";
+		}
 
 
         private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPanelName_Label.Content = "Customers";
+			CurrentCanvas.Visibility = Visibility.Hidden;
+			CurrentCanvas = Customers_Canvas;
+			CurrentCanvas.Visibility = Visibility.Visible;
+			CurrentPanelName_Label.Content = "Customers";
         }
 
        private void Ticket_Button_Click(object sender, RoutedEventArgs e)
        {
-           CurrentPanelName_Label.Content = "Tickets";
+			CurrentCanvas.Visibility = Visibility.Hidden;
+			CurrentCanvas = Tickets_Canvas;
+			CurrentCanvas.Visibility = Visibility.Visible;
+			CurrentPanelName_Label.Content = "Tickets";
        }
 
        private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
-       {
-           CurrentPanelName_Label.Content = "Tour Guides";
+		{
+			CurrentCanvas.Visibility = Visibility.Hidden;
+			CurrentCanvas = TourGuides_Canvas;
+			CurrentCanvas.Visibility = Visibility.Visible;
+			CurrentPanelName_Label.Content = "Tour Guides";
        }
 
        private void Transactions_Button_Click(object sender, RoutedEventArgs e)
@@ -77,7 +89,10 @@ namespace Travelley
        }
        private void Trips_Button_Click(object sender, RoutedEventArgs e)
        {
-           CurrentPanelName_Label.Content = "Trips";
+			CurrentPanelName_Label.Content = "Trips";
+			CurrentCanvas.Visibility = Visibility.Hidden;
+			CurrentCanvas = Trips_Canvas;
+			CurrentCanvas.Visibility = Visibility.Visible;
        }
 
        private void Button_Mouse_Enter(object sender, MouseEventArgs e)
