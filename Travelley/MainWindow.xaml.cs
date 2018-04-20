@@ -29,9 +29,20 @@ namespace Travelley
             DataBase.Intialize();
             CurrentCanvas = Main_Canvas;
 
-            int today=DateTime.Today.Day;
-            TripOfTheDay = DataBase.Trips[today%DataBase.Trips.Count]; //generate trip based on today's date
-            TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
+            DataBase.InsertTripTickets("1", "Family", 1, 1.0);
+
+            int today = DateTime.Today.Day;
+            if (DataBase.Trips.Count != 0)
+                TripOfTheDay = DataBase.Trips[today % DataBase.Trips.Count]; //generate trip based on today's date
+            if (DataBase.TourGuides.Count != 0)
+                TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
+
+            if (TripOfTheDay == null) ;
+            //TODO: add message
+            //there is no exiting trips
+            if (TourGuideOfTheMonth == null) ;
+            //Todo: add message
+            //There is no tour guides or max existing haas 0 salary
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -41,12 +52,46 @@ namespace Travelley
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
+            CurrentPanelName_Label.Content = "Home Page";
         }
 
         private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
         {
+            CurrentPanelName_Label.Content = "Customers";
 
+        }
+
+        private void Ticket_Button_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPanelName_Label.Content = "Tickets";
+        }
+
+        private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPanelName_Label.Content = "Tour Guides";
+        }
+
+        private void Transactions_Button_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPanelName_Label.Content = "Transactions";
+        }
+        private void Trips_Button_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPanelName_Label.Content = "Trips";
+        }
+
+        private void Button_Mouse_Enter(object sender, MouseEventArgs e)
+        {
+            Button b = sender as Button;
+            b.Background = new SolidColorBrush(Color.FromRgb(21, 31, 40));
+            b.Foreground = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+        }
+
+        private void Button_Mouse_Leave(object sender, MouseEventArgs e)
+        {
+            Button b = sender as Button;
+            b.Background = new SolidColorBrush(Color.FromRgb(41, 53, 65));
+            b.Foreground = Brushes.White;
         }
     }
 }
