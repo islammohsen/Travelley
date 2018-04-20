@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace Travelley
 {
     class TourGuide: Person
     {
         private List<Trip> trips;
-        internal List<Trip> Trips { get => trips; set => trips = value; }
+        private byte[] tourGuideImage;
 
-        public TourGuide(string Id, string Name, string Nationality, string Gender, string Email, string PhoneNumber)
+        internal List<Trip> Trips { get => trips; set => trips = value; }
+        public byte[] TourGuideImage { get => tourGuideImage; set => tourGuideImage = value; }
+
+        public TourGuide(string Id, string Name, string Nationality, string Gender, string Email, string PhoneNumber, byte[] TourGuideTmage)
         {
             this.Id = Id;
             this.Name = Name;
@@ -19,8 +25,24 @@ namespace Travelley
             this.Languages = new List<string>();
             this.Gender = Gender;
             this.PhoneNumber = PhoneNumber;
+            this.tourGuideImage = TourGuideTmage;
             Trips = new List<Trip>();
             this.Email = Email;
+        }
+
+        public Image GetImage()
+        {
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.CreateOptions = BitmapCreateOptions.None;
+            bi.CacheOption = BitmapCacheOption.Default;
+            bi.StreamSource = new MemoryStream(tourGuideImage);
+            bi.EndInit();
+
+            Image img = new Image();  //Image control of wpf
+
+            img.Source = bi;
+            return img;
         }
 
         void AddTrip(Trip obj)

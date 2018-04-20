@@ -50,3 +50,4 @@ D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.pdb
 E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.mdf
 E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley_log.ldf
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs
+D:\Git\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache

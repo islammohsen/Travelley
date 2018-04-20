@@ -67,7 +67,8 @@ namespace Travelley
                 string Gender = (string)Reader["Gender"];
                 string Email = (string)Reader["Email"];
                 string PhoneNumber = (string)Reader["PhoneNumber"];
-                Customer Obj = new Customer(Id, Name, Nationality, Languages, Gender, Email, PhoneNumber);
+                byte[] CustomerImage = (byte[])Reader["CustomerImage"];
+                Customer Obj = new Customer(Id, Name, Nationality, Languages, Gender, Email, PhoneNumber, CustomerImage);
                 Customers.Add(Obj);
             }
             Reader.Close();
@@ -93,8 +94,8 @@ namespace Travelley
                 string Gender = (string)Reader["Gender"];
                 string Email = (string)Reader["Email"];
                 string PhoneNumber = (string)Reader["PhoneNumber"];
-
-                TourGuide Obj = new TourGuide(Id, Name, Nationality, Gender, Email, PhoneNumber);
+                byte[] TourGuideImage = (byte[])Reader["TourGuideImage"];
+                TourGuide Obj = new TourGuide(Id, Name, Nationality, Gender, Email, PhoneNumber, TourGuideImage);
                 TourGuides.Add(Obj);
             }
             Reader.Close();
@@ -122,8 +123,9 @@ namespace Travelley
                 Double Discount = (Double)Reader["Discount"];
                 DateTime Start = (DateTime)Reader["Start"];
                 DateTime End = (DateTime)Reader["End"];
+                Byte[] TripImage = (Byte[])Reader["TripImage"];
                 TourGuide CurrentTourGuide = SelectTourGuide(TourGuideId);
-                Trip Obj = new Trip(TripId, CurrentTourGuide, Type, Depature, Destination, Discount, Start, End);
+                Trip Obj = new Trip(TripId, CurrentTourGuide, Type, Depature, Destination, Discount, Start, End, TripImage);
                 Trips.Add(Obj);
             }
             Reader.Close();
@@ -209,12 +211,13 @@ namespace Travelley
             return;
         }
 
-        public static bool UpdateCustomer(Customer CurrentCustomer, string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber)
+        public static bool UpdateCustomer(Customer CurrentCustomer, string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber, Byte[] CustomerImage)
         {
             if(CheckUniqueCustomerId(Id) || CurrentCustomer.Id == Id)
             {
                 Command = new SqlCommand($"UPDATE Customer set Id = '{Id}', set Name = '{Name}', set Nationality = '{Nationality}', " +
-                    $"set Language = '{Language}', set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}' where Id = '{CurrentCustomer.Id}'",
+                    $"set Language = '{Language}', set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}'," +
+                    $" set CustomerImage = {CustomerImage} where Id = '{CurrentCustomer.Id}'",
                     Connection);
                 Command.ExecuteNonQuery();
                 CurrentCustomer.Id = Id;
@@ -224,17 +227,19 @@ namespace Travelley
                 CurrentCustomer.Gender = Gender;
                 CurrentCustomer.Email = Email;
                 CurrentCustomer.PhoneNumber = PhoneNumber;
+                CurrentCustomer.CustomerImage = CustomerImage;
                 return true;
             }
             return false;
         }
 
-        public static bool UpdateTourGuide(TourGuide CurrentTourGuide, string Id, string Name, string Nationality, string Gender, string Email, string PhoneNumber)
+        public static bool UpdateTourGuide(TourGuide CurrentTourGuide, string Id, string Name, string Nationality, string Gender, string Email, string PhoneNumber, byte[] TourGuideImage)
         {
             if (CheckUniqueTourGuideId(Id) || CurrentTourGuide.Id == Id)
             {
                 Command = new SqlCommand($"UPDATE Customer set Id = '{Id}', set Name = '{Name}', set Nationality = '{Nationality}', " +
-                    $"set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}' where Id = '{CurrentTourGuide.Id}'",
+                    $"set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}', " +
+                    $"set TourGuideImage = {TourGuideImage} where Id = '{CurrentTourGuide.Id}'",
                     Connection);
                 CurrentTourGuide.Id = Id;
                 CurrentTourGuide.Name = Name;
@@ -242,6 +247,7 @@ namespace Travelley
                 CurrentTourGuide.Gender = Gender;
                 CurrentTourGuide.Email = Email;
                 CurrentTourGuide.PhoneNumber = PhoneNumber;
+                CurrentTourGuide.TourGuideImage = TourGuideImage;
                 return true;
             }
             return false;
@@ -293,8 +299,8 @@ namespace Travelley
         public static void InsertCustomer(Customer CurrentCustomer)
         {
             Command = new SqlCommand($"INSERT INTO Customer values('{ CurrentCustomer.Id }','{CurrentCustomer.Name }' ," +
-                $" '{CurrentCustomer.Nationality}' , '{CurrentCustomer.Languages[0]}' ,'{ CurrentCustomer.Gender}','{CurrentCustomer.Email}'," +
-                $"'{CurrentCustomer.PhoneNumber}')", Connection);
+                $" '{CurrentCustomer.Nationality}'F , '{CurrentCustomer.Languages[0]}' ,'{ CurrentCustomer.Gender}','{CurrentCustomer.Email}'," +
+                $"'{CurrentCustomer.PhoneNumber}', {CurrentCustomer.CustomerImage});", Connection);
             Customers.Add(CurrentCustomer);
             Command.ExecuteNonQuery();
             return;
@@ -304,7 +310,7 @@ namespace Travelley
         {
             Command = new SqlCommand($"INSERT INTO TourGuide values('{ CurrentTourGuide.Id }','{CurrentTourGuide.Name }' ," +
                 $" '{CurrentTourGuide.Nationality}','{ CurrentTourGuide.Gender}','{CurrentTourGuide.Email}'," +
-                $"'{CurrentTourGuide.PhoneNumber}')", Connection);
+                $"'{CurrentTourGuide.PhoneNumber}', {CurrentTourGuide.TourGuideImage})", Connection);
             TourGuides.Add(CurrentTourGuide);
             Command.ExecuteNonQuery();
             return;
@@ -313,7 +319,7 @@ namespace Travelley
         public static void InsertTrip(Trip CurrentTrip)
         {
             Command = new SqlCommand($"INSERT INTO Trip values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Type}', '{CurrentTrip.Departure}', " +
-                $"'{CurrentTrip.Destination}', {CurrentTrip.Discount}, '{CurrentTrip.Start.ToString()}', '{CurrentTrip.End.ToString()}')", Connection);
+                $"'{CurrentTrip.Destination}', {CurrentTrip.Discount}, '{CurrentTrip.Start.ToString()}', '{CurrentTrip.End.ToString()}', {Trips})", Connection);
             Trips.Add(CurrentTrip);
             Command.ExecuteNonQuery();
             return;
@@ -322,7 +328,7 @@ namespace Travelley
         public static void InsertTripTickets(string TripId, string Type, int NumbrOfSeats, double Price)
         {
             Command = new SqlCommand($"INSERT INTO TripsTickets values( '{TripId}', '{Type}', {NumbrOfSeats}, {Price} )", Connection);
-            Command.ExecuteNonQuery();
+            Command.ExecuteScalar();
             return;
         }
 
@@ -336,8 +342,8 @@ namespace Travelley
 
         public static void InsertLanguage(string TourGuideId, string Language)
         {
-            Command = new SqlCommand($"INSERT INTO TourGuideLanguage values('{TourGuideId}', '{Language}')");
-            Command.ExecuteNonQuery();
+            Command = new SqlCommand($"INSERT INTO TourGuideLanguage values('{TourGuideId}', '{Language}')", Connection);
+            Command.ExecuteNonQueryAsync();
             return;
         }
 
@@ -394,9 +400,8 @@ namespace Travelley
             foreach(TourGuide T in TourGuides)
             {
                 if (T.Id == Id)
-
                     return false;
-
+     
             }
             return true;
         }
