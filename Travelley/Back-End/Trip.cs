@@ -31,7 +31,7 @@ namespace Travelley
         internal TourGuide Tour { get => tour; set => tour = value; }
         public double Discount { get => discount; set => discount = value; }
         public string Type { get => type; set => type = value; }
-        public string TripId { get => TripId; set => TripId = value; }
+        public string TripId { get => tripId; set => tripId = value; }
         internal List<Ticket> Tickets { get => tickets; set => tickets = value; }
         public Dictionary<string, int> NumberOfSeats { get => numberOfSeats; set => numberOfSeats = value; }
         public Dictionary<string, double> PriceOfSeat { get => priceOfSeat; set => priceOfSeat = value; }

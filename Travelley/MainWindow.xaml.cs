@@ -30,6 +30,13 @@ namespace Travelley
             DataBase.Intialize();
             CurrentCanvas = Main_Canvas;
         
+            TourGuide t = new TourGuide("1","ahmed","egy","male","asa","011");
+            t.UserImage=new CustomImage("C:/Users/Ramy_/Pictures/Camera Roll/WIN_20180406_21_08_56_Pro.jpg");
+            DataBase.TourGuides.Add(t); 
+
+            Trip trip = new Trip("2", t, "family", "cairo", "alex", 0, new DateTime(2017, 5, 4),new DateTime(2017, 6, 4));
+            trip.TripImage=new CustomImage("E:/beach.jpeg");  //Put a valid image just to test
+            DataBase.Trips.Add(trip);
 
             int today = DateTime.Today.Day;
             if (DataBase.Trips.Count != 0)
@@ -37,9 +44,14 @@ namespace Travelley
             if (DataBase.TourGuides.Count != 0)
                 TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
 
-            if (TripOfTheDay == null) ;
-            //TODO: add message
-            //there is no exiting trips
+
+
+            if (TripOfTheDay != null)
+            {
+                TripOfTheDay_IMG.Source = TripOfTheDay.TripImage.GetImage().Source;
+                TripOfTheDay_Label.Content = TripOfTheDay.Departure + " - " + TripOfTheDay.Destination;
+            }
+            
             if (TourGuideOfTheMonth == null) ;
             //Todo: add message
             //There is no tour guides or max existing haas 0 salary in the past month
