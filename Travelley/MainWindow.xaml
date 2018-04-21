@@ -76,16 +76,34 @@
             <Label Content="Trip of the day" Canvas.Left="55" Canvas.Top="189" Height="89" Width="368" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label Content=" Tour Guide &#xA;of the month" Canvas.Left="647" Canvas.Top="157" Height="154" Width="313" FontSize="45" FontWeight="Bold" FontFamily="Roboto" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
             <Image x:Name="Best_TourGuide_IMG" Height="246" Canvas.Left="647" Canvas.Top="310" Width="308"/>
-            <Image x:Name="TripOfTheDay_IMG" Height="246" Canvas.Left="55" Canvas.Top="310" Width="308" Stretch="Fill"/>
+            <Image x:Name="TripOfTheDay_IMG" Height="246" Canvas.Left="55" Canvas.Top="310" Width="308" Stretch="Fill" MouseLeftButtonDown="TripOfTheDay_IMG_MouseLeftButtonDown" Cursor="Hand"/>
             <Label x:Name="TripOfTheDay_Label" Content="" Canvas.Left="25" Canvas.Top="549" Height="89" Width="368" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <Label x:Name="TourGuideOfTheMonth_Label" Content="" Canvas.Left="617" Canvas.Top="549" Height="89" Width="368" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
         </Canvas>
         <Canvas x:Name="Trips_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
-        <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" Canvas.Left="-735"/>
-        <Canvas x:Name="TourGuides_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" Canvas.Left="-735"/>
-        <Canvas x:Name="Transactions_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" Canvas.Left="-735" d:IsHidden="True"/>
-        <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" Canvas.Left="-735"/>
+        <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+        <Canvas x:Name="TourGuides_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+        <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+        <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+        <Canvas x:Name="TripFullData_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="0.8" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+
+            <Image x:Name="TripFullData_IMG" Height="210" Canvas.Left="52" Canvas.Top="166" Width="221" Stretch="Fill" Cursor="None"/>
+            <Label x:Name="TripFullData_DummyLabel1" Content="Trip id:" Canvas.Left="52" Canvas.Top="415" Height="56" Width="128" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_DepartureAndDestination" Content="" Canvas.Left="297" Canvas.Top="156" FontSize="48" FontWeight="Bold" FontFamily="Roboto" Foreground="#FFE87E31"/>
+            <Label x:Name="TripFullData_DummyLabel1_Copy" Content="from" Canvas.Left="297" Canvas.Top="238" Height="56" Width="85" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_StartDate" Content="" Canvas.Left="393" Canvas.Top="240" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_DummyLabel1_Copy1" Content="to" Canvas.Left="584" Canvas.Top="238" Height="56" Width="44" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_EndDate" Content="" Canvas.Left="636" Canvas.Top="240" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_DummyLabel1_Copy2" Content="Tour guide:" Canvas.Left="52" Canvas.Top="476" Height="56" Width="192" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_TourGuideName" Content="" Canvas.Left="249" Canvas.Top="478" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_DummyLabel1_Copy3" Content="Discount:" Canvas.Left="52" Canvas.Top="537" Height="56" Width="163" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Button x:Name="TripFullData_Edit_Button" Content="Edit Trip" Canvas.Left="589" Canvas.Top="607" Width="201" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
+            <Button x:Name="TripFullData_Delete_Button" Content="Delete Trip" Canvas.Left="817" Canvas.Top="607" Width="202" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
+            <Label x:Name="TripFullData_TripType" Content="" Canvas.Left="297" Canvas.Top="317" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_Discount" Content="" Canvas.Left="216" Canvas.Top="538" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_TripId" Content="" Canvas.Left="180" Canvas.Top="417" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+        </Canvas>
         <Rectangle Fill="#293541" Height="565" Canvas.Top="114" Width="305"/>
         <Button x:Name="Trip_Button" HorizontalContentAlignment="Left"  Foreground="White" Background="#293541" Content=" Trips" Canvas.Top="114" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Click="Trips_Button_Click" Canvas.Left="-1" RenderTransformOrigin="-1.435,0.143" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
         <Button x:Name="Ticket_Button" HorizontalContentAlignment="Left" Foreground="White" Background="#293541" Canvas.Top="227" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="RobotoMS" FontWeight="Bold" Canvas.Left="-1" Click="Ticket_Button_Click" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave" Content=" Tickets"/>
