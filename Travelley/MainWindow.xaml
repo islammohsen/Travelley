@@ -82,10 +82,10 @@
 
         </Canvas>
         <Canvas x:Name="Trips_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
-        <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" Canvas.Left="-735"/>
-        <Canvas x:Name="TourGuides_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" Canvas.Left="-735"/>
-        <Canvas x:Name="Transactions_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" Canvas.Left="-735" d:IsHidden="True"/>
-        <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" Canvas.Left="-735"/>
+        <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+        <Canvas x:Name="TourGuides_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+        <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+        <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         <Rectangle Fill="#293541" Height="565" Canvas.Top="114" Width="305"/>
         <Button x:Name="Trip_Button" HorizontalContentAlignment="Left"  Foreground="White" Background="#293541" Content=" Trips" Canvas.Top="114" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Click="Trips_Button_Click" Canvas.Left="-1" RenderTransformOrigin="-1.435,0.143" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
         <Button x:Name="Ticket_Button" HorizontalContentAlignment="Left" Foreground="White" Background="#293541" Canvas.Top="227" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="RobotoMS" FontWeight="Bold" Canvas.Left="-1" Click="Ticket_Button_Click" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave" Content=" Tickets"/>
