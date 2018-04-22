@@ -81,7 +81,7 @@
             <Image x:Name="TripOfTheDay_IMG" Height="246" Canvas.Left="55" Canvas.Top="310" Width="308" Stretch="Fill" MouseLeftButtonDown="TripOfTheDay_IMG_MouseLeftButtonDown" Cursor="Hand"/>
 
         </Canvas>
-        <ScrollViewer x:Name="TripsScrollViewer" Height="560" Canvas.Top="119" Width="1038" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
+        <ScrollViewer x:Name="TripsScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="Trips_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True" Visibility="Hidden"/>
         </ScrollViewer>
         <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>

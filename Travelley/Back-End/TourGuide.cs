@@ -52,7 +52,6 @@ namespace Travelley
         }
         public static TourGuide GetBestTourGuide(int Month)
         {
-
             int year = DateTime.Today.Year;
             if (Month == 0)  //handles the case if we are in month 1
             {
