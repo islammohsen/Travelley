@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace Travelley.Back_End
 {
-    class CustomImage
+    public class CustomImage
     {
         private byte[] ByteImage;
 
@@ -53,7 +53,6 @@ namespace Travelley.Back_End
                 bi.CacheOption = BitmapCacheOption.Default;
                 bi.StreamSource = new MemoryStream(ByteImage);
                 bi.EndInit();
-
                 Image img = new Image();
                 img.Source = bi;
 

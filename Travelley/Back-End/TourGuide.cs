@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace Travelley
 {
-    class TourGuide : Person
+   public class TourGuide : Person
     {
         private List<Trip> trips;
 

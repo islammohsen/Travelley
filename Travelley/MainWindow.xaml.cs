@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Travelley.Back_End;
-
 namespace Travelley
 {
     /// <summary>
@@ -21,7 +20,7 @@ namespace Travelley
     /// </summary>
     public partial class MainWindow : Window
     {
-        Canvas CurrentCanvas;
+        public Canvas CurrentCanvas;
         Trip TripOfTheDay;
         TourGuide TourGuideOfTheMonth;
         public MainWindow()
@@ -37,6 +36,14 @@ namespace Travelley
             Trip trip = new Trip("2", t, "family", "Cairo", "Alex", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
             trip.TripImage = new CustomImage("E:/beach.jpeg");  //Put a valid image just to test
             DataBase.Trips.Add(trip);
+
+            Trip trip2 = new Trip("3", t, "test", "Rome", "Paris", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
+            trip2.TripImage = new CustomImage("E:/Paris.jpg");  //Put a valid image just to test
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+
 
             int today = DateTime.Today.Day;
             if (DataBase.Trips.Count != 0)
@@ -104,10 +111,14 @@ namespace Travelley
         }
         private void Trips_Button_Click(object sender, RoutedEventArgs e)
         {
+            
             CurrentPanelName_Label.Content = "Trips";
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = Trips_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
+
+            ShowListOfTrips(DataBase.Trips);
+            CurrentCanvas.Height *= 10;
         }
 
         private void Button_Mouse_Enter(object sender, MouseEventArgs e)
@@ -124,7 +135,7 @@ namespace Travelley
             b.Foreground = Brushes.White;
         }
 
-        private void ShowTripFullData(Trip t)
+        public void ShowTripFullData(Trip t)
         {
             CurrentPanelName_Label.Content = "Trip Full Data";
             CurrentCanvas.Visibility = Visibility.Hidden;
@@ -145,5 +156,16 @@ namespace Travelley
         {
             ShowTripFullData(TripOfTheDay);
         }
+        private void ShowListOfTrips(List<Trip>list)
+        {
+            
+            for (int i=0; i<list.Count; i++)
+            {
+                TripDisplayCard t = new TripDisplayCard(list[i], i , ref CurrentCanvas,this);
+            }
+            
+            return;
+        }
+        
     }
 }

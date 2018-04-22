@@ -10,7 +10,7 @@ using Travelley.Back_End;
 
 namespace Travelley
 {
-    class Trip
+    public class Trip
     {
         private string tripId;
         private TourGuide tour;
