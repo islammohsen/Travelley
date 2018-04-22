@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace Travelley
 {
-    class TourGuide : Person
+   public class TourGuide : Person
     {
         private List<Trip> trips;
 
@@ -52,7 +52,6 @@ namespace Travelley
         }
         public static TourGuide GetBestTourGuide(int Month)
         {
-
             int year = DateTime.Today.Year;
             if (Month == 0)  //handles the case if we are in month 1
             {

@@ -21,7 +21,6 @@ D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley_log.ldf
 D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.exe.config
 D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.exe
 D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.pdb
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
 D:\OOP Project\Travelley\Travelley\obj\Debug\MainWindow.g.cs
 D:\OOP Project\Travelley\Travelley\obj\Debug\App.g.cs
 D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs

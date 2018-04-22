@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Travelley.Back_End;
-
 namespace Travelley
 {
     /// <summary>
@@ -21,7 +20,7 @@ namespace Travelley
     /// </summary>
     public partial class MainWindow : Window
     {
-        Canvas CurrentCanvas;
+        public Canvas CurrentCanvas;
         Trip TripOfTheDay;
         TourGuide TourGuideOfTheMonth;
         Customer cus;
@@ -57,6 +56,32 @@ namespace Travelley
             DataBase.Trips.Add(trip);
             
 
+            Trip trip2 = new Trip("3", t, "test", "Rome", "Paris", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
+            trip2.TripImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");  //Put a valid image just to test
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+
+
             int today = DateTime.Today.Day;
             if (DataBase.Trips.Count != 0)
                 TripOfTheDay = DataBase.Trips[today % DataBase.Trips.Count]; //generate trip based on today's date
@@ -83,6 +108,7 @@ namespace Travelley
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            TripsScrollViewer.Visibility = Visibility.Hidden;
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = Main_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
@@ -92,6 +118,7 @@ namespace Travelley
 
         private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
         {
+            TripsScrollViewer.Visibility = Visibility.Hidden;
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = Customers_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
@@ -100,6 +127,7 @@ namespace Travelley
 
         private void Ticket_Button_Click(object sender, RoutedEventArgs e)
         {
+            TripsScrollViewer.Visibility = Visibility.Hidden;
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = Tickets_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
@@ -108,6 +136,7 @@ namespace Travelley
 
         private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
+            TripsScrollViewer.Visibility = Visibility.Hidden;
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = TourGuides_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
@@ -116,6 +145,7 @@ namespace Travelley
 
         private void Transactions_Button_Click(object sender, RoutedEventArgs e)
         {
+            TripsScrollViewer.Visibility = Visibility.Hidden;
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = Transactions_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
@@ -123,10 +153,16 @@ namespace Travelley
         }
         private void Trips_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (CurrentCanvas == Trips_Canvas)
+                return;
+            TripsScrollViewer.Visibility = Visibility.Visible;
             CurrentPanelName_Label.Content = "Trips";
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = Trips_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
+
+            ShowListOfTrips(DataBase.Trips);
+            
         }
 
         private void Button_Mouse_Enter(object sender, MouseEventArgs e)
@@ -143,7 +179,7 @@ namespace Travelley
             b.Foreground = Brushes.White;
         }
 
-        private void ShowTripFullData(Trip t)
+        public void ShowTripFullData(Trip t)
         {
             CurrentPanelName_Label.Content = "Trip Full Data";
             CurrentCanvas.Visibility = Visibility.Hidden;
@@ -182,9 +218,22 @@ namespace Travelley
         {
             ShowTripFullData(TripOfTheDay);
         }
+
         private void Customer_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ShowCustomerFullData(cus);
         }
+        private void ShowListOfTrips(List<Trip>list)
+        {
+            
+            for (int i=0; i<list.Count; i++)
+            {
+                TripDisplayCard t = new TripDisplayCard(list[i], i , ref CurrentCanvas,this);
+            }
+            
+                return;
+        }
+        
+
     }
 }

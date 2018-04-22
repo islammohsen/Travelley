@@ -8,9 +8,12 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Travelley.Back_End;
 
+//ticket include type --> update price according to type.
+//number of seats constant per trip (no specific number of seats per type).
+//add trip status (closed or opened)
 namespace Travelley
 {
-    class Trip
+    public class Trip
     {
         private string tripId;
         private TourGuide tour;
