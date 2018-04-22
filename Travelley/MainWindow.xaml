@@ -72,9 +72,6 @@
         </Canvas.RenderTransform>
         <Canvas x:Name="Main_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True">
 
-
-
-
             <Label Content="Trip of the day" Canvas.Left="55" Canvas.Top="189" Height="89" Width="368" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label Content=" Tour Guide &#xA;of the month" Canvas.Left="647" Canvas.Top="157" Height="154" Width="313" FontSize="45" FontWeight="Bold" FontFamily="Roboto" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
             <Image x:Name="Best_TourGuide_IMG" Height="246" Canvas.Left="647" Canvas.Top="310" Width="308"/>
@@ -97,17 +94,52 @@
 
         </Canvas>
         <Canvas x:Name="CustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
-            <Button x:Name="CustomerFullData_Edit_Button" Content="Edit Customer" Canvas.Left="468" Canvas.Top="607" Width="256" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
+            <Button x:Name="CustomerFullData_Edit_Button" Content="Edit Customer" Canvas.Left="468" Canvas.Top="607" Width="256" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="CustomerFullData_Edit_Button_Click"/>
             <Button x:Name="CustomerFullData_Delete_Button" Content="Delete Customer" Canvas.Left="751" Canvas.Top="607" Width="277" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
 
             <Image x:Name="CustomerFullData_IMG"  Height="210" Canvas.Left="10" Canvas.Top="166" Width="221" Stretch="Fill" Cursor="None"/>
             <Label x:Name="CustomerFullData_Name"  Content=""  Canvas.Left="256" Canvas.Top="162" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="#FFE87E31" RenderTransformOrigin="0.517,0.598"/>
-            <Label x:Name="CustomerFullData_Id" Content="" Canvas.Left="10" Canvas.Top="402" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-            <Label x:Name="CustomerFullData_Nationality" Content="" Canvas.Left="10" Canvas.Top="609" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-            <Label x:Name="CustomerFullData_Gender" Content="" Canvas.Left="10" Canvas.Top="542" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-            <Label x:Name="CustomerFullData_Email" Content="" Canvas.Left="256" Canvas.Top="226" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-            <Label x:Name="CustomerFullData_PhoneNumber" Content="" Canvas.Left="256" Canvas.Top="290" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-            <Label x:Name="CustomerFullData_Language" Content="" Canvas.Left="10" Canvas.Top="475" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_Id" Content=""  Canvas.Left="72" Canvas.Top="402" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_Nationality" Content="" Canvas.Left="226" Canvas.Top="609" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_Gender" Content="" Canvas.Left="166" Canvas.Top="542" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_Email" Content="" Canvas.Left="380" Canvas.Top="226" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_PhoneNumber" Content="" Canvas.Left="536" Canvas.Top="290" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_Language" Content="" Canvas.Left="196" Canvas.Top="475" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="LabelCustomerFullData_Id" Content="ID: "  Canvas.Left="10" Canvas.Top="402" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="LabelCustomerFullData_Nationality" Content="Nationality : " Canvas.Left="10" Canvas.Top="609" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="LabelCustomerFullData_Gender" Content="Gender : " Canvas.Left="10" Canvas.Top="542" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="LabelCustomerFullData_Email" Content="Email :" Canvas.Left="256" Canvas.Top="226" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="LabelCustomerFullData_PhoneNumber" Content="Phone number : " Canvas.Left="256" Canvas.Top="290" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="LabelCustomerFullData_Language" Content="Language: " Canvas.Left="10" Canvas.Top="475" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+
+        </Canvas>
+        <Canvas x:Name="EditCustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="5" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+
+            <Label x:Name="EditCustomerFullData_NameLabel"  Content="Name : "  Canvas.Left="10" Canvas.Top="147" FontSize="36" FontWeight="Bold" FontFamily="Roboto" RenderTransformOrigin="0.517,0.598"/>
+            <Label x:Name="EditCustomerFullData_NationalityLAbel" Content="Nationality : " Canvas.Left="10" Canvas.Top="501" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="54"/>
+            <Label x:Name="EditCustomerFullData_GenderLabel" Content="Gender : " Canvas.Left="10" Canvas.Top="430" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="53"/>
+            <Label x:Name="EditCustomerFullData_EmailLabel" Content="Email : " Canvas.Left="10" Canvas.Top="215" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="EditCustomerFullData_PhoneNumberLabel" Content="PhoneNumber : " Canvas.Left="10" Canvas.Top="287" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="EditCustomerFullData_LanguageLabel" Content="Language : " Canvas.Left="10" Canvas.Top="358" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="53"/>
+
+            <TextBox x:Name="EditCustomerFullData_Name"  Text=""  Canvas.Left="156" Canvas.Top="155" FontSize="26"  FontFamily="Roboto" Foreground="#FFE87E31" RenderTransformOrigin="0.517,0.598"/>
+            <TextBox x:Name="EditCustomerFullData_Nationality" Text="" Canvas.Left="246" Canvas.Top="505" FontSize="26"  FontFamily="Roboto" Foreground="Black" Height="45"/>
+            <TextBox x:Name="EditCustomerFullData_Email" Text="" Canvas.Left="150" Canvas.Top="225" FontSize="26"  FontFamily="Roboto" Foreground="Black"/>
+            <TextBox x:Name="EditCustomerFullData_PhoneNumber" Text="" Canvas.Left="306" Canvas.Top="297" FontSize="26" FontFamily="Roboto" Foreground="Black"/>
+            <TextBox x:Name="EditCustomerFullData_Language" Text="" Canvas.Left="225" Canvas.Top="364" FontSize="26" FontFamily="Roboto" Foreground="Black" Height="45"/>
+            <ComboBox x:Name="Gender_ComboBox" Canvas.Left="174" Canvas.Top="437" Height="40" FontSize="26" FontFamily="Roboto" RenderTransformOrigin="0.5,0.5">
+                <ComboBoxItem>Male</ComboBoxItem>
+                <ComboBoxItem>Female</ComboBoxItem>
+                <ComboBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ComboBox.RenderTransform>
+            </ComboBox>
+            <Button x:Name="EditCustomerData_Save_Button" Content="Save" Canvas.Left="767" Canvas.Top="607" Width="245" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="EditCustomerData_Save_Button_Click"/>
 
         </Canvas>
         <Canvas x:Name="TripFullData_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="0.8" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
