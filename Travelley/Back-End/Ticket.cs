@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Travelley
 {
-    class Ticket
+   public class Ticket
     {
         private string serialNumber;
         private string ticketType;

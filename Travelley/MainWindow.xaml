@@ -61,7 +61,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Canvas x:Name="Header_Canvas" Height="675" VerticalAlignment="Top" HorizontalAlignment="Left" Width="235" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,-1">
+    <Canvas x:Name="Header_Canvas" Height="675" VerticalAlignment="Top" HorizontalAlignment="Left" Width="235" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,-1" ScrollViewer.CanContentScroll="True">
         <Canvas.RenderTransform>
             <TransformGroup>
                 <ScaleTransform/>
@@ -72,16 +72,18 @@
         </Canvas.RenderTransform>
         <Canvas x:Name="Main_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True">
 
-            <Image Source="D:\OOP Project\Travelley\Travelley\FrontEnd\Images\Main_IMG.jpg"/>
+
             <Label Content="Trip of the day" Canvas.Left="55" Canvas.Top="189" Height="89" Width="368" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label Content=" Tour Guide &#xA;of the month" Canvas.Left="647" Canvas.Top="157" Height="154" Width="313" FontSize="45" FontWeight="Bold" FontFamily="Roboto" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
             <Image x:Name="Best_TourGuide_IMG" Height="246" Canvas.Left="647" Canvas.Top="310" Width="308"/>
-            <Image x:Name="TripOfTheDay_IMG" Height="246" Canvas.Left="55" Canvas.Top="310" Width="308" Stretch="Fill" MouseLeftButtonDown="TripOfTheDay_IMG_MouseLeftButtonDown" Cursor="Hand"/>
             <Label x:Name="TripOfTheDay_Label" Content="" Canvas.Left="25" Canvas.Top="549" Height="89" Width="368" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <Label x:Name="TourGuideOfTheMonth_Label" Content="" Canvas.Left="617" Canvas.Top="549" Height="89" Width="368" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Image x:Name="TripOfTheDay_IMG" Height="246" Canvas.Left="55" Canvas.Top="310" Width="308" Stretch="Fill" MouseLeftButtonDown="TripOfTheDay_IMG_MouseLeftButtonDown" Cursor="Hand"/>
 
         </Canvas>
-        <Canvas x:Name="Trips_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+        <ScrollViewer x:Name="TripsScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
+            <Canvas x:Name="Trips_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True" Visibility="Hidden"/>
+        </ScrollViewer>
         <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         <Canvas x:Name="TourGuides_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>

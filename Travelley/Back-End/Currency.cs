@@ -13,6 +13,7 @@ namespace Travelley
             return 0;
         }
     }
+
     class Dollar:Currency
     {
        
