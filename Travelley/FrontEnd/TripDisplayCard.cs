@@ -29,7 +29,7 @@ namespace Travelley
         {
             FullTripData = t;
             window = m;
-            double baseLoc = (index * 215)+189;
+            double baseLoc = (index * 215)+100;
             BackGround = new Rectangle();
             BackGround.Width = 808;
             BackGround.Height = 210;
@@ -94,6 +94,8 @@ namespace Travelley
             MoreInfo.Click += MoreInfo_Click;
             MoreInfo.Cursor = Cursors.Hand;
             c.Children.Add(MoreInfo);
+            
+            c.Height =index* 230;
         }
 
         private void MoreInfo_Click(object sender, RoutedEventArgs e)
