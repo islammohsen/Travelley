@@ -73,6 +73,8 @@
         <Canvas x:Name="Main_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True">
 
 
+
+
             <Label Content="Trip of the day" Canvas.Left="55" Canvas.Top="189" Height="89" Width="368" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label Content=" Tour Guide &#xA;of the month" Canvas.Left="647" Canvas.Top="157" Height="154" Width="313" FontSize="45" FontWeight="Bold" FontFamily="Roboto" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
             <Image x:Name="Best_TourGuide_IMG" Height="246" Canvas.Left="647" Canvas.Top="310" Width="308"/>
@@ -81,13 +83,33 @@
             <Image x:Name="TripOfTheDay_IMG" Height="246" Canvas.Left="55" Canvas.Top="310" Width="308" Stretch="Fill" MouseLeftButtonDown="TripOfTheDay_IMG_MouseLeftButtonDown" Cursor="Hand"/>
 
         </Canvas>
+
         <ScrollViewer x:Name="TripsScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="Trips_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True" Visibility="Hidden"/>
         </ScrollViewer>
         <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         <Canvas x:Name="TourGuides_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
-        <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+        <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"
+                >
+
+            <Image x:Name="Customer_IMG" Height="307" Canvas.Left="170" Canvas.Top="240" Width="779" Source="C:/Users/Hadil/Desktop/bali-tour-package (1).png" MouseLeftButtonDown="Customer_IMG_MouseLeftButtonDown" Cursor="Hand" />
+
+        </Canvas>
+        <Canvas x:Name="CustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+            <Button x:Name="CustomerFullData_Edit_Button" Content="Edit Customer" Canvas.Left="468" Canvas.Top="607" Width="256" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
+            <Button x:Name="CustomerFullData_Delete_Button" Content="Delete Customer" Canvas.Left="751" Canvas.Top="607" Width="277" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
+
+            <Image x:Name="CustomerFullData_IMG"  Height="210" Canvas.Left="10" Canvas.Top="166" Width="221" Stretch="Fill" Cursor="None"/>
+            <Label x:Name="CustomerFullData_Name"  Content=""  Canvas.Left="256" Canvas.Top="162" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="#FFE87E31" RenderTransformOrigin="0.517,0.598"/>
+            <Label x:Name="CustomerFullData_Id" Content="" Canvas.Left="10" Canvas.Top="402" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_Nationality" Content="" Canvas.Left="10" Canvas.Top="609" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_Gender" Content="" Canvas.Left="10" Canvas.Top="542" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_Email" Content="" Canvas.Left="256" Canvas.Top="226" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_PhoneNumber" Content="" Canvas.Left="256" Canvas.Top="290" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="CustomerFullData_Language" Content="" Canvas.Left="10" Canvas.Top="475" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+
+        </Canvas>
         <Canvas x:Name="TripFullData_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="0.8" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
 
             <Image x:Name="TripFullData_IMG" Height="210" Canvas.Left="52" Canvas.Top="166" Width="221" Stretch="Fill" Cursor="None"/>
@@ -116,7 +138,7 @@
         <Button x:Name="Home_Button" Foreground="White" Background="#e87e31" Width="305" Height="116" BorderThickness="0" FontSize="30" FontFamily="Comic Sans MS" FontWeight="Bold" Click="Button_Click" Canvas.Top="-2" Cursor="Hand">
             <Image Height="116" Width="296" Source="FrontEnd/Images/White.png"/>
         </Button>
-        <Label x:Name="CurrentPanelName_Label" Content="Home Page" Canvas.Left="314" Canvas.Top="25" Height="89" Width="368" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+        <Label x:Name="CurrentPanelName_Label" Content="Home Page" Canvas.Left="314" Canvas.Top="25" Height="89" Width="491" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
 
     </Canvas>
 

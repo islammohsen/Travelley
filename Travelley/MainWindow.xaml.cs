@@ -23,22 +23,41 @@ namespace Travelley
         public Canvas CurrentCanvas;
         Trip TripOfTheDay;
         TourGuide TourGuideOfTheMonth;
+        Customer cus;
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+
+        }
         public MainWindow()
         {
+          
             InitializeComponent();
+           
             DataBase.Intialize();
+           
+            CurrentCanvas = CustomerFullDetails_Canvas;
+           
+            List<string> l = new List<string>();
+            l.Add("Arabic");
+            
+            cus = new Customer("1", "Ali Ahmed", "Egyption",l, "Male", "Ali@Gmail.com", "0114849551");
+            cus.UserImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");
+            DataBase.Customers.Add(cus);
+
             CurrentCanvas = Main_Canvas;
 
             TourGuide t = new TourGuide("1", "ahmed", "egy", "male", "asa", "011");
-            t.UserImage = new CustomImage("C:/Users/Ramy_/Pictures/Camera Roll/WIN_20180406_21_08_56_Pro.jpg");
+            t.UserImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");
             DataBase.TourGuides.Add(t);
 
             Trip trip = new Trip("2", t, "family", "Cairo", "Alex", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip.TripImage = new CustomImage("E:/beach.jpeg");  //Put a valid image just to test
+            trip.TripImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");  //Put a valid image just to test
             DataBase.Trips.Add(trip);
+            
 
             Trip trip2 = new Trip("3", t, "test", "Rome", "Paris", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip2.TripImage = new CustomImage("E:/Paris.jpg");  //Put a valid image just to test
+            trip2.TripImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");  //Put a valid image just to test
             DataBase.Trips.Add(trip2);
             DataBase.Trips.Add(trip2);
             DataBase.Trips.Add(trip2);
@@ -176,10 +195,33 @@ namespace Travelley
             TripFullData_TripType.Content = t.Type + " Trip";
             TripFullData_TripId.Content = t.TripId;
         }
+        private void ShowCustomerFullData(Customer c)
+        {
+            CurrentPanelName_Label.Content = "Customer Full Data";
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = CustomerFullDetails_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+           
+            CustomerFullData_Name.Content =c.Name;
+            CustomerFullData_Nationality.Content ="Nationality : " +c.Nationality;
+            CustomerFullData_Id.Content = "ID: "+c.Id;
+            CustomerFullData_Email.Content ="Email :"+ c.Email;
+            CustomerFullData_Gender.Content = "Gender : "+c.Gender;
+            CustomerFullData_Language.Content = "Language: "+c.Languages[0].ToString();
+            CustomerFullData_IMG.Source = c.UserImage.GetImage().Source;
+            CustomerFullData_PhoneNumber.Content = "Phone number : "+c.PhoneNumber;
+            
 
+
+        }
         private void TripOfTheDay_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ShowTripFullData(TripOfTheDay);
+        }
+
+        private void Customer_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ShowCustomerFullData(cus);
         }
         private void ShowListOfTrips(List<Trip>list)
         {
@@ -192,5 +234,6 @@ namespace Travelley
                 return;
         }
         
+
     }
 }
