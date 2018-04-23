@@ -67,3 +67,4 @@ E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.exe
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.pdb
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
 E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.pdb
+D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
