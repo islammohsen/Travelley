@@ -406,7 +406,6 @@ namespace Travelley
             {
                 if (T.Id == Id)
                     return false;
-
             }
             return true;
         }
