@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,39 +31,40 @@ namespace Travelley
         TourGuide t;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
 
         }
         public MainWindow()
         {
-          
+
             InitializeComponent();
-           
+
             DataBase.Intialize();
-          
+
             CurrentCanvas = CustomerFullDetails_Canvas;
-           
+
             List<string> l = new List<string>();
             l.Add("Arabic");
-            
-            cus = new Customer("1", "Ali Ahmed", "Egyption",l, "Male", "Ali@Gmail.com", "0114849551");
-            cus.UserImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");
+
+            cus = new Customer("1", "Ali Ahmed", "Egyption", l, "Male", "Ali@Gmail.com", "0114849551");
+            cus.UserImage = new CustomImage("D:/folder/27581424_155403238441579_578423273184821248_n.jpg");
             DataBase.Customers.Add(cus);
 
             CurrentCanvas = Main_Canvas;
 
-            t = new TourGuide("1", "ahmed", "egy", "Male", "asa", "011");
-            
+
+            t = new TourGuide("1", "ahmed", "egy", "Male", "asa", "011");            
             t.UserImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");
+
             DataBase.TourGuides.Add(t);
 
             Trip trip = new Trip("2", t, "family", "Cairo", "Alex", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip.TripImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");  //Put a valid image just to test
+            trip.TripImage = new CustomImage("D:/folder/27581424_155403238441579_578423273184821248_n.jpg");  //Put a valid image just to test
             DataBase.Trips.Add(trip);
-            
+
 
             Trip trip2 = new Trip("3", t, "test", "Rome", "Paris", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip2.TripImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");  //Put a valid image just to test
+            trip2.TripImage = new CustomImage("D:/folder/27581424_155403238441579_578423273184821248_n.jpg");  //Put a valid image just to test
             DataBase.Trips.Add(trip2);
             DataBase.Trips.Add(trip2);
             DataBase.Trips.Add(trip2);
@@ -168,7 +169,7 @@ namespace Travelley
             CurrentCanvas.Visibility = Visibility.Visible;
 
             ShowListOfTrips(DataBase.Trips);
-            
+
         }
 
         private void Button_Mouse_Enter(object sender, MouseEventArgs e)
@@ -292,20 +293,67 @@ namespace Travelley
         {
             ShowCustomerFullData(cus);
         }
+        
+        private void ShowListOfTrips(List<Trip> list)
+        {
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                TripDisplayCard t = new TripDisplayCard(list[i], i, ref CurrentCanvas, this);
+            }
+
+            return;
+        }
+
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+       
         private void TourGuide_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ShowTourGuideFullData(t);
         }
-
-        private void ShowListOfTrips(List<Trip>list)
+        
+        private void AddCustomer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            for (int i=0; i<list.Count; i++)
+            bool NationalId = String.IsNullOrEmpty(AddCustomer_National_Id_TextBox.Text);
+            bool name = String.IsNullOrEmpty(AddCustomer_Name_TextBox.Text);
+            bool phone = String.IsNullOrEmpty(AddCustomer_Phone_TextBox.Text);
+            bool email = String.IsNullOrEmpty(AddCustomer_Email_TextBox.Text);
+            bool nationality = String.IsNullOrEmpty(AddCustomer_Nationality_TextBox.Text);
+            bool gender = String.IsNullOrEmpty(AddCustomer_Gender_ComboBox.Text);
+
+            if (NationalId || name || phone || email || nationality || gender)
             {
-                TripDisplayCard t = new TripDisplayCard(list[i], i , ref CurrentCanvas,this);
-            }
-            
+                AddCustomer_Error_Label.Content = "Please Fill All Fields!";
                 return;
+            }
+
+            if (DataBase.CheckUniqueCustomerId(AddCustomer_National_Id_TextBox.Text.ToString()) == false)
+            {
+                AddCustomer_Error_Label.Content = "Customer Already Registered!";
+                return;
+            }
+
+            List<String> languages = new List<String>();
+            languages.Add("English");
+
+            Customer NewCustomer = new Customer(
+                AddCustomer_National_Id_TextBox.Text.ToString(),
+                AddCustomer_Name_TextBox.Text.ToString(),
+                AddCustomer_Nationality_TextBox.Text.ToString(),
+                languages,
+                AddCustomer_Gender_ComboBox.ToString(),
+                AddCustomer_Email_TextBox.Text.ToString(),
+                AddCustomer_Phone_TextBox.ToString()
+                );
+
+            DataBase.InsertCustomer(NewCustomer);
+
+            AddCustomer_Error_Label.Content = "Customer Added Successfuly";
         }
 
         private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
