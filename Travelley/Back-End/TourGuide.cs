@@ -69,6 +69,11 @@ namespace Travelley
                 return null;
             return ret;
         }
+		/*public bool CheckAvailability(DateTime start, DateTime end)
+		{
+
+		}*/
+
 
     }
 }
