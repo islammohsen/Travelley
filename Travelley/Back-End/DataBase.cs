@@ -352,7 +352,7 @@ namespace Travelley
             return;
         }
 
-        private static Customer SelectCustomer(string Id)
+        public static Customer SelectCustomer(string Id)
         {
             foreach (Customer C in Customers)
             {
@@ -364,7 +364,7 @@ namespace Travelley
             return null;
         }
 
-        private static Trip SelectTrip(string Id)
+        public static Trip SelectTrip(string Id)
         {
             foreach (Trip C in Trips)
             {
@@ -376,7 +376,7 @@ namespace Travelley
             return null;
         }
 
-        private static TourGuide SelectTourGuide(string Id)
+        public static TourGuide SelectTourGuide(string Id)
         {
             foreach (TourGuide C in TourGuides)
             {
@@ -389,7 +389,7 @@ namespace Travelley
         }
 
         //Return True if the given Id is unique
-        private static bool CheckUniqueCustomerId(string Id)
+        public static bool CheckUniqueCustomerId(string Id)
         {
             foreach (Customer C in Customers)
             {
@@ -399,7 +399,7 @@ namespace Travelley
             return true;
         }
 
-        private static bool CheckUniqueTourGuideId(string Id)
+        public static bool CheckUniqueTourGuideId(string Id)
         {
 
             foreach (TourGuide T in TourGuides)
@@ -411,7 +411,7 @@ namespace Travelley
             return true;
         }
 
-        private static bool CheckUniqueTripId(string Id)
+        public static bool CheckUniqueTripId(string Id)
         {
             foreach (Trip T in Trips)
             {

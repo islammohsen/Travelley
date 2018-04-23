@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Travelley.Back_End;
+
 namespace Travelley
 {
     /// <summary>
@@ -24,6 +26,7 @@ namespace Travelley
         Trip TripOfTheDay;
         TourGuide TourGuideOfTheMonth;
         Customer cus;
+		string SelectedPath = "";
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
@@ -42,44 +45,44 @@ namespace Travelley
             l.Add("Arabic");
             
             cus = new Customer("1", "Ali Ahmed", "Egyption",l, "Male", "Ali@Gmail.com", "0114849551");
-            cus.UserImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");
+            cus.UserImage = new CustomImage("E:/test.jpg");
             DataBase.Customers.Add(cus);
 
             CurrentCanvas = Main_Canvas;
 
             TourGuide t = new TourGuide("1", "ahmed", "egy", "male", "asa", "011");
-            t.UserImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");
+            t.UserImage = new CustomImage("E:/test.jpg");
             DataBase.TourGuides.Add(t);
 
             Trip trip = new Trip("2", t, "family", "Cairo", "Alex", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip.TripImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");  //Put a valid image just to test
+            trip.TripImage = new CustomImage("E:/test.jpg");  //Put a valid image just to test
             DataBase.Trips.Add(trip);
             
 
             Trip trip2 = new Trip("3", t, "test", "Rome", "Paris", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip2.TripImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");  //Put a valid image just to test
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
-            DataBase.Trips.Add(trip2);
+            trip2.TripImage = new CustomImage("E:/test.jpg");  //Put a valid image just to test
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
+            //DataBase.Trips.Add(trip2);
 
 
             int today = DateTime.Today.Day;
@@ -233,7 +236,95 @@ namespace Travelley
             
                 return;
         }
-        
 
-    }
+		private void Add_Button_Click(object sender, RoutedEventArgs e)
+		{
+            ShowAddTripCanvas();
+		}
+        private void ShowAddTripCanvas()
+        {
+            if (CurrentCanvas == AddTrip_Canvas)
+                return;
+            TripsScrollViewer.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Add Trip";
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = AddTrip_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+        }
+
+		private void BrowseButton_Click(object sender, RoutedEventArgs e)
+		{
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
+			dlg.Title = "Select Trip Photo";
+			dlg.ShowDialog();
+			SelectedPath = dlg.FileName.ToString();
+		}
+
+		private void SaveBut_Click(object sender, RoutedEventArgs e)
+		{
+			bool errorfound = false;
+			if(AddTrip_TripIDTextbox.Text.Trim() == "")
+			{
+				AddTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
+				errorfound = true;
+			}
+			if(DataBase.CheckUniqueTripId(AddTrip_TripIDTextbox.Text) == false)
+			{
+				AddTrip_TripID_ErrorLabel.Content = "This ID is already used";
+				errorfound = true;
+			}
+			if(AddTrip_TripDeptTextbox.Text.Trim() == "")
+			{
+				AddTrip_TripDep_ErrorLabel.Content = "This field can't be empty!";
+				errorfound = true;
+			}
+			if(AddTrip_TripDestTextbox.Text.Trim() == "")
+			{
+				AddTrip_TripDes_ErrorLabel.Content = "This field can't be empty!";
+				errorfound = true;
+			}
+			if(AddTrip_TripDiscTextbox.Text.Trim() == "")
+			{
+				AddTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
+				errorfound = true;
+			}
+			if (AddTrip_StTimePicker.SelectedDate < DateTime.Today)
+			{
+				AddTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
+				errorfound = true;
+			}
+			if(AddTrip_EnTimePicker.SelectedDate < DateTime.Today)
+			{
+				AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
+				errorfound = true;
+			}
+			if(AddTrip_EnTimePicker.SelectedDate < AddTrip_StTimePicker.SelectedDate)
+			{
+				AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
+				errorfound = true;
+			}
+			if(SelectedPath == "")
+			{
+				AddTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
+				errorfound = true;
+			}
+			if (AddTrip_EnTimePicker.Text == "")
+			{
+				AddTrip_TripEnTime_ErrorLabel.Content = "You must choose end time!";
+				errorfound = true;
+			}
+			if (AddTrip_StTimePicker.Text == "")
+			{
+				AddTrip_TripStTime_ErrorLabel.Content = "You must choose start time!";
+				errorfound = true;
+			}
+			if(errorfound == true)
+			{
+				return;
+			}
+			//TODO Insert Trip in data base
+			//TODO Clear all textboxes after saving
+			}
+	}
 }
