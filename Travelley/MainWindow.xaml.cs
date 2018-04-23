@@ -14,19 +14,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Travelley.Back_End;
-
 namespace Travelley
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    { 
+
         public Canvas CurrentCanvas;
         Trip TripOfTheDay;
         TourGuide TourGuideOfTheMonth;
         Customer cus;
-		string SelectedPath = "";
+        string SelectedPath = "";
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
@@ -38,7 +38,7 @@ namespace Travelley
             InitializeComponent();
            
             DataBase.Intialize();
-           
+          
             CurrentCanvas = CustomerFullDetails_Canvas;
            
             List<string> l = new List<string>();
@@ -61,28 +61,28 @@ namespace Travelley
 
             Trip trip2 = new Trip("3", t, "test", "Rome", "Paris", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
             trip2.TripImage = new CustomImage("E:/test.jpg");  //Put a valid image just to test
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
-            //DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
+            DataBase.Trips.Add(trip2);
 
 
             int today = DateTime.Today.Day;
@@ -205,17 +205,44 @@ namespace Travelley
             CurrentCanvas = CustomerFullDetails_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
            
-            CustomerFullData_Name.Content =c.Name;
-            CustomerFullData_Nationality.Content ="Nationality : " +c.Nationality;
-            CustomerFullData_Id.Content = "ID: "+c.Id;
-            CustomerFullData_Email.Content ="Email :"+ c.Email;
-            CustomerFullData_Gender.Content = "Gender : "+c.Gender;
-            CustomerFullData_Language.Content = "Language: "+c.Languages[0].ToString();
+            CustomerFullData_Name.Content = c.Name;
+            CustomerFullData_Nationality.Content = c.Nationality;
+            CustomerFullData_Id.Content = c.Id;
+            CustomerFullData_Email.Content =c.Email;
+            CustomerFullData_Gender.Content = c.Gender;
+            CustomerFullData_Language.Content = c.Languages[0].ToString();
             CustomerFullData_IMG.Source = c.UserImage.GetImage().Source;
-            CustomerFullData_PhoneNumber.Content = "Phone number : "+c.PhoneNumber;
+            CustomerFullData_PhoneNumber.Content = c.PhoneNumber;
             
 
 
+        }
+        private void DeleteCustomer(Customer c)
+        {
+
+           
+
+
+        }
+        private void EditCustomerDetails(Customer c)
+        {
+            string name = c.Name,nationality=c.Nationality,phone_number=c.PhoneNumber,
+                language=c.Languages[0],gender=c.Gender,email=c.Email;
+
+            if(EditCustomerFullData_Name.Text!="")
+                name = EditCustomerFullData_Name.Text;
+            if (EditCustomerFullData_Nationality.Text != "")
+               nationality = EditCustomerFullData_Nationality.Text;
+            if (EditCustomerFullData_PhoneNumber.Text != "")
+                phone_number = EditCustomerFullData_PhoneNumber.Text;
+            if (EditCustomerFullData_Language.Text != "")
+                language = EditCustomerFullData_Language.Text;
+            if (Gender_ComboBox.Text != "")
+                gender = Gender_ComboBox.Text;
+            if (EditCustomerFullData_Email.Text != "")
+                email = EditCustomerFullData_Email.Text;
+
+           // DataBase.UpdateCustomer(c, c.Id, name, nationality, language, gender, email, phone_number, c.UserImage);
         }
         private void TripOfTheDay_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -237,10 +264,103 @@ namespace Travelley
                 return;
         }
 
-		private void Add_Button_Click(object sender, RoutedEventArgs e)
-		{
+        private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
+        {
+            EditCustomerDetails(cus);
+        }
+
+        private void CustomerFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPanelName_Label.Content = "Edit Customer Data";
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = EditCustomerFullDetails_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            EditCustomerFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            EditCustomerFullData_Name.Text=CustomerFullData_Name.Content.ToString();
+
+            EditCustomerFullData_Nationality.Text = CustomerFullData_Nationality.Content.ToString();
+            EditCustomerFullData_Email.Text =CustomerFullData_Email.Content.ToString();
+            Gender_ComboBox.Text= CustomerFullData_Gender.Content.ToString();
+            EditCustomerFullData_Language.Text= CustomerFullData_Language.Content.ToString();
+            EditCustomerFullData_PhoneNumber.Text=  CustomerFullData_PhoneNumber.Content.ToString();
+        }
+        private void Add_Button_Click(object sender, RoutedEventArgs e)
+        {
             ShowAddTripCanvas();
-		}
+        }
+        private void SaveBut_Click(object sender, RoutedEventArgs e)
+        {
+            bool errorfound = false;
+            if (AddTrip_TripIDTextbox.Text.Trim() == "")
+            {
+                AddTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (DataBase.CheckUniqueTripId(AddTrip_TripIDTextbox.Text) == false)
+            {
+                AddTrip_TripID_ErrorLabel.Content = "This ID is already used";
+                errorfound = true;
+            }
+            if (AddTrip_TripDeptTextbox.Text.Trim() == "")
+            {
+                AddTrip_TripDep_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (AddTrip_TripDestTextbox.Text.Trim() == "")
+            {
+                AddTrip_TripDes_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (AddTrip_TripDiscTextbox.Text.Trim() == "")
+            {
+                AddTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (AddTrip_StTimePicker.SelectedDate < DateTime.Today)
+            {
+                AddTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
+                errorfound = true;
+            }
+            if (AddTrip_EnTimePicker.SelectedDate < DateTime.Today)
+            {
+                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
+                errorfound = true;
+            }
+            if (AddTrip_EnTimePicker.SelectedDate < AddTrip_StTimePicker.SelectedDate)
+            {
+                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
+                errorfound = true;
+            }
+            if (SelectedPath == "")
+            {
+                AddTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
+                errorfound = true;
+            }
+            if (AddTrip_EnTimePicker.Text == "")
+            {
+                AddTrip_TripEnTime_ErrorLabel.Content = "You must choose end time!";
+                errorfound = true;
+            }
+            if (AddTrip_StTimePicker.Text == "")
+            {
+                AddTrip_TripStTime_ErrorLabel.Content = "You must choose start time!";
+                errorfound = true;
+            }
+            if (errorfound == true)
+            {
+                return;
+            }
+            //TODO Insert Trip in data base
+            //TODO Clear all textboxes after saving
+        }
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
+            dlg.Title = "Select Trip Photo";
+            dlg.ShowDialog();
+            SelectedPath = dlg.FileName.ToString();
+        }
         private void ShowAddTripCanvas()
         {
             if (CurrentCanvas == AddTrip_Canvas)
@@ -251,80 +371,5 @@ namespace Travelley
             CurrentCanvas = AddTrip_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
         }
-
-		private void BrowseButton_Click(object sender, RoutedEventArgs e)
-		{
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
-			dlg.Title = "Select Trip Photo";
-			dlg.ShowDialog();
-			SelectedPath = dlg.FileName.ToString();
-		}
-
-		private void SaveBut_Click(object sender, RoutedEventArgs e)
-		{
-			bool errorfound = false;
-			if(AddTrip_TripIDTextbox.Text.Trim() == "")
-			{
-				AddTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
-				errorfound = true;
-			}
-			if(DataBase.CheckUniqueTripId(AddTrip_TripIDTextbox.Text) == false)
-			{
-				AddTrip_TripID_ErrorLabel.Content = "This ID is already used";
-				errorfound = true;
-			}
-			if(AddTrip_TripDeptTextbox.Text.Trim() == "")
-			{
-				AddTrip_TripDep_ErrorLabel.Content = "This field can't be empty!";
-				errorfound = true;
-			}
-			if(AddTrip_TripDestTextbox.Text.Trim() == "")
-			{
-				AddTrip_TripDes_ErrorLabel.Content = "This field can't be empty!";
-				errorfound = true;
-			}
-			if(AddTrip_TripDiscTextbox.Text.Trim() == "")
-			{
-				AddTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
-				errorfound = true;
-			}
-			if (AddTrip_StTimePicker.SelectedDate < DateTime.Today)
-			{
-				AddTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
-				errorfound = true;
-			}
-			if(AddTrip_EnTimePicker.SelectedDate < DateTime.Today)
-			{
-				AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
-				errorfound = true;
-			}
-			if(AddTrip_EnTimePicker.SelectedDate < AddTrip_StTimePicker.SelectedDate)
-			{
-				AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
-				errorfound = true;
-			}
-			if(SelectedPath == "")
-			{
-				AddTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
-				errorfound = true;
-			}
-			if (AddTrip_EnTimePicker.Text == "")
-			{
-				AddTrip_TripEnTime_ErrorLabel.Content = "You must choose end time!";
-				errorfound = true;
-			}
-			if (AddTrip_StTimePicker.Text == "")
-			{
-				AddTrip_TripStTime_ErrorLabel.Content = "You must choose start time!";
-				errorfound = true;
-			}
-			if(errorfound == true)
-			{
-				return;
-			}
-			//TODO Insert Trip in data base
-			//TODO Clear all textboxes after saving
-			}
-	}
+    }
 }
