@@ -45,22 +45,22 @@ namespace Travelley
             l.Add("Arabic");
             
             cus = new Customer("1", "Ali Ahmed", "Egyption",l, "Male", "Ali@Gmail.com", "0114849551");
-            cus.UserImage = new CustomImage("E:/test.JPG");
+            cus.UserImage = new CustomImage("E:/test.jpg");
             DataBase.Customers.Add(cus);
 
             CurrentCanvas = Main_Canvas;
 
             TourGuide t = new TourGuide("1", "ahmed", "egy", "male", "asa", "011");
-            t.UserImage = new CustomImage("E:/test.JPG");
+            t.UserImage = new CustomImage("E:/test.jpg");
             DataBase.TourGuides.Add(t);
 
             Trip trip = new Trip("2", t, "family", "Cairo", "Alex", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip.TripImage = new CustomImage("E:/test.JPG");  //Put a valid image just to test
+            trip.TripImage = new CustomImage("E:/test.jpg");  //Put a valid image just to test
             DataBase.Trips.Add(trip);
             
 
             Trip trip2 = new Trip("3", t, "test", "Rome", "Paris", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip2.TripImage = new CustomImage("E:/test.JPG");  //Put a valid image just to test
+            trip2.TripImage = new CustomImage("E:/test.jpg");  //Put a valid image just to test
             //DataBase.Trips.Add(trip2);
             //DataBase.Trips.Add(trip2);
             //DataBase.Trips.Add(trip2);
@@ -239,19 +239,23 @@ namespace Travelley
 
 		private void Add_Button_Click(object sender, RoutedEventArgs e)
 		{
-			if (CurrentCanvas == AddTrip_Canvas)
-				return;
-			TripsScrollViewer.Visibility = Visibility.Visible;
-			CurrentPanelName_Label.Content = "Add Trip";
-			CurrentCanvas.Visibility = Visibility.Hidden;
-			CurrentCanvas = AddTrip_Canvas;
-			CurrentCanvas.Visibility = Visibility.Visible;
+            ShowAddTripCanvas();
 		}
+        private void ShowAddTripCanvas()
+        {
+            if (CurrentCanvas == AddTrip_Canvas)
+                return;
+            TripsScrollViewer.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Add Trip";
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = AddTrip_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+        }
 
 		private void BrowseButton_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "JPG Files (*.jpg)|*.jpg|*.jpeg|GIF Files (*.gif)|*.gif|All Files (*.*)|*.*";
+			dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
 			dlg.Title = "Select Trip Photo";
 			dlg.ShowDialog();
 			SelectedPath = dlg.FileName.ToString();
