@@ -1,4 +1,4 @@
-﻿<Window x:Class="Travelley.MainWindow"
+<Window x:Class="Travelley.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -76,7 +76,6 @@
             <Label Content=" Tour Guide &#xA;of the month" Canvas.Left="647" Canvas.Top="157" Height="154" Width="313" FontSize="45" FontWeight="Bold" FontFamily="Roboto" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
             <Image x:Name="Best_TourGuide_IMG" Height="246" Canvas.Left="647" Canvas.Top="310" Width="308"/>
             <Label x:Name="TripOfTheDay_Label" Content="" Canvas.Left="25" Canvas.Top="549" Height="89" Width="368" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="TourGuideOfTheMonth_Label" Content="" Canvas.Left="617" Canvas.Top="549" Height="89" Width="368" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <Image x:Name="TripOfTheDay_IMG" Height="246" Canvas.Left="55" Canvas.Top="310" Width="308" Stretch="Fill" MouseLeftButtonDown="TripOfTheDay_IMG_MouseLeftButtonDown" Cursor="Hand"/>
 
         </Canvas>
@@ -117,16 +116,40 @@
             <Label x:Name="AddTrip_TripPhoto_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="875.2" Canvas.Top="601.8" FontSize="20" Foreground="Red"/>
         </Canvas>
         <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
+
+        <Canvas x:Name="AddCustomer_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="305" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+            <Label Content="Fill Customer Data" Canvas.Left="289" Canvas.Top="118" Height="164" Width="443" FontSize="48" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+            <Label Content="Name" Canvas.Left="49" Canvas.Top="275" FontSize="36"/>
+            <Label Content="Email" Canvas.Left="49" Canvas.Top="387" FontSize="36"/>
+            <Label Content="National Id" Canvas.Left="49" Canvas.Top="495" FontSize="36"/>
+            <Label Content="Phone" Canvas.Left="567" Canvas.Top="495" FontSize="36" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Height="84" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+            <Label Content="Nationality" Canvas.Left="567" Canvas.Top="389" FontSize="36"/>
+            <ComboBox x:Name="AddCustomer_Gender_ComboBox" Canvas.Left="788" Canvas.Top="294" Width="226" Height="39" SelectionChanged="ComboBox_SelectionChanged" FontSize="18">
+                <ComboBoxItem FontSize="18">Male</ComboBoxItem>
+                <ComboBoxItem FontSize="18">Female</ComboBoxItem>
+            </ComboBox>
+            <TextBox x:Name="AddCustomer_National_Id_TextBox" Height="40" Canvas.Left="289" TextWrapping="Wrap" Canvas.Top="513" Width="226" FontSize="18"/>
+            <Label x:Name="___No_Name_" Content="Gender" Canvas.Left="567" Canvas.Top="275" FontSize="36"/>
+            <Button x:Name="AddCustomer_AddCustomer_Button" Content="Add Customer" Canvas.Left="429" Canvas.Top="598" Width="164" Height="50" FontSize="24" Click="AddCustomer_AddCustomer_Button_Click"/>
+            <Label x:Name="AddCustomer_Error_Label" Content="" Canvas.Left="628" Canvas.Top="617" Width="247" FontSize="16"/>
+            <TextBox x:Name="AddCustomer_Email_TextBox" Height="40" Canvas.Left="291" TextWrapping="Wrap" Canvas.Top="402" Width="226" FontSize="20"/>
+            <TextBox x:Name="AddCustomer_Name_TextBox" Height="41" Canvas.Left="291" TextWrapping="Wrap" Canvas.Top="285" Width="226" FontSize="20" AutomationProperties.Name="CustomerName_TextBox"/>
+            <TextBox x:Name="AddCustomer_Nationality_TextBox" Height="40" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="402" Width="226" FontSize="18"/>
+            <TextBox x:Name="AddCustomer_Phone_TextBox" Height="41" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="520" Width="226" FontSize="18"/>
+        </Canvas>
+
         <Canvas x:Name="TourGuides_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Image x:Name="TourGuide_IMG" Height="307" Canvas.Left="170" Canvas.Top="240" Width="779" Source="C:/Users/Hadil/Desktop/bali-tour-package (1).png" MouseLeftButtonDown="TourGuide_IMG_MouseLeftButtonDown" Cursor="Hand" />
             <Button Content="AddTourGuide" Canvas.Left="439" Canvas.Top="144" Width="186" Height="64" FontWeight="Bold" FontSize="24" FontFamily="Roboto" Click="Button_Click_1"/>
-
         </Canvas>
+
         <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"
                 >
 
-            <Image x:Name="Customer_IMG" Height="307" Canvas.Left="170" Canvas.Top="240" Width="779" Source="FrontEnd/Images/Logo.png" MouseLeftButtonDown="Customer_IMG_MouseLeftButtonDown" Cursor="Hand" />
+
+
+            <Image x:Name="Customer_IMG" Height="307" Canvas.Left="170" Canvas.Top="240" Width="779" Source="FrontEnd/Images/Logo 3.jpg" MouseLeftButtonDown="Customer_IMG_MouseLeftButtonDown" Cursor="Hand" />
 
         </Canvas>
         <Canvas x:Name="CustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
