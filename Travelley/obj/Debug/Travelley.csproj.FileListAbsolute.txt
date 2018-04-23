@@ -58,7 +58,6 @@ E:\Projects\OOP\Travelley\Travelley\obj\Debug\App.g.cs
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.cache
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.lref
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\MainWindow.baml
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.g.resources
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.Properties.Resources.resources
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.csproj.GenerateResource.cache
@@ -68,3 +67,4 @@ E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.pdb
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
 E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.pdb
 D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
+E:\Projects\OOP\Travelley\Travelley\obj\Debug\MainWindow.baml

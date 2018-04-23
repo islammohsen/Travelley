@@ -1,3 +1,5 @@
+
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +24,17 @@ namespace Travelley
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    { 
+    {
 
         public Canvas CurrentCanvas;
         Trip TripOfTheDay;
         TourGuide TourGuideOfTheMonth;
         Customer cus;
+
+        string SelectedPath = "";
+
         TourGuide t;
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -47,24 +53,32 @@ namespace Travelley
             l.Add("Arabic");
 
             cus = new Customer("1", "Ali Ahmed", "Egyption", l, "Male", "Ali@Gmail.com", "0114849551");
-            cus.UserImage = new CustomImage("D:/folder/27581424_155403238441579_578423273184821248_n.jpg");
+
+            cus.UserImage = new CustomImage("E:/test.jpg");
+
             DataBase.Customers.Add(cus);
 
             CurrentCanvas = Main_Canvas;
 
 
-            t = new TourGuide("1", "ahmed", "egy", "Male", "asa", "011");            
-            t.UserImage = new CustomImage("C:/Users/Hadil/Desktop/bali-tour-package (1).png");
 
+            TourGuide t = new TourGuide("1", "ahmed", "egy", "male", "asa", "011");
+            t.UserImage = new CustomImage("E:/test.jpg");
+            DataBase.TourGuides.Add(t);
+
+            
             DataBase.TourGuides.Add(t);
 
             Trip trip = new Trip("2", t, "family", "Cairo", "Alex", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip.TripImage = new CustomImage("D:/folder/27581424_155403238441579_578423273184821248_n.jpg");  //Put a valid image just to test
+            trip.TripImage = new CustomImage("E:/test.jpg");  //Put a valid image just to test
+
             DataBase.Trips.Add(trip);
 
 
             Trip trip2 = new Trip("3", t, "test", "Rome", "Paris", 0, new DateTime(2017, 5, 4), new DateTime(2017, 6, 4));
-            trip2.TripImage = new CustomImage("D:/folder/27581424_155403238441579_578423273184821248_n.jpg");  //Put a valid image just to test
+            trip2.TripImage = new CustomImage("E:/test.jpg");  //Put a valid image just to test
+
+
             DataBase.Trips.Add(trip2);
             DataBase.Trips.Add(trip2);
             DataBase.Trips.Add(trip2);
@@ -208,11 +222,11 @@ namespace Travelley
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = CustomerFullDetails_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
-           
+
             CustomerFullData_Name.Content = c.Name;
             CustomerFullData_Nationality.Content = c.Nationality;
             CustomerFullData_Id.Content = c.Id;
-            CustomerFullData_Email.Content =c.Email;
+            CustomerFullData_Email.Content = c.Email;
             CustomerFullData_Gender.Content = c.Gender;
             CustomerFullData_Language.Content = c.Languages[0].ToString();
             CustomerFullData_IMG.Source = c.UserImage.GetImage().Source;
@@ -230,21 +244,21 @@ namespace Travelley
             TourGuideFullData_Id.Content = t.Id;
             TourGuideFullData_Email.Content = t.Email;
             TourGuideFullData_Gender.Content = t.Gender;
-          //  TourGuideFullData_Language.Content = t.Languages[0].ToString();
+            //  TourGuideFullData_Language.Content = t.Languages[0].ToString();
             TourGuideFullData_IMG.Source = t.UserImage.GetImage().Source;
             TourGuideFullData_PhoneNumber.Content = t.PhoneNumber;
 
         }
-     
+
         private void EditCustomerDetails(Customer c)
         {
-            string name = c.Name,nationality=c.Nationality,phone_number=c.PhoneNumber,
-                language=c.Languages[0],gender=c.Gender,email=c.Email;
+            string name = c.Name, nationality = c.Nationality, phone_number = c.PhoneNumber,
+                language = c.Languages[0], gender = c.Gender, email = c.Email;
 
-            if(EditCustomerFullData_Name.Text!="")
+            if (EditCustomerFullData_Name.Text != "")
                 name = EditCustomerFullData_Name.Text;
             if (EditCustomerFullData_Nationality.Text != "")
-               nationality = EditCustomerFullData_Nationality.Text;
+                nationality = EditCustomerFullData_Nationality.Text;
             if (EditCustomerFullData_PhoneNumber.Text != "")
                 phone_number = EditCustomerFullData_PhoneNumber.Text;
             if (EditCustomerFullData_Language.Text != "")
@@ -254,7 +268,7 @@ namespace Travelley
             if (EditCustomerFullData_Email.Text != "")
                 email = EditCustomerFullData_Email.Text;
 
-           // DataBase.UpdateCustomer(c, c.Id, name, nationality, language, gender, email, phone_number, c.UserImage);
+            // DataBase.UpdateCustomer(c, c.Id, name, nationality, language, gender, email, phone_number, c.UserImage);
         }
         private void EditTourGuideData(TourGuide t)
         {
@@ -316,6 +330,8 @@ namespace Travelley
         {
             ShowTourGuideFullData(t);
         }
+
+
         
         private void AddCustomer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -354,6 +370,7 @@ namespace Travelley
             DataBase.InsertCustomer(NewCustomer);
 
             AddCustomer_Error_Label.Content = "Customer Added Successfuly";
+
         }
 
         private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
@@ -368,157 +385,246 @@ namespace Travelley
             CurrentCanvas = EditCustomerFullDetails_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
             EditCustomerFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-            EditCustomerFullData_Name.Text=CustomerFullData_Name.Content.ToString();
+            EditCustomerFullData_Name.Text = CustomerFullData_Name.Content.ToString();
 
             EditCustomerFullData_Nationality.Text = CustomerFullData_Nationality.Content.ToString();
-            EditCustomerFullData_Email.Text =CustomerFullData_Email.Content.ToString();
-            Gender_ComboBox.Text= CustomerFullData_Gender.Content.ToString();
-            EditCustomerFullData_Language.Text= CustomerFullData_Language.Content.ToString();
-            EditCustomerFullData_PhoneNumber.Text=  CustomerFullData_PhoneNumber.Content.ToString();
+            EditCustomerFullData_Email.Text = CustomerFullData_Email.Content.ToString();
+            Gender_ComboBox.Text = CustomerFullData_Gender.Content.ToString();
+            EditCustomerFullData_Language.Text = CustomerFullData_Language.Content.ToString();
+            EditCustomerFullData_PhoneNumber.Text = CustomerFullData_PhoneNumber.Content.ToString();
         }
 
-        private void TourGuideFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
+        private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPanelName_Label.Content = "Edit TourGuide Data";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = EditTourGuideData_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            EditTourGuideFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-            EditTourGuideFullData_Name.Text = TourGuideFullData_Name.Content.ToString();
-
-            EditTourGuideFullData_Nationality.Text = TourGuideFullData_Nationality.Content.ToString();
-            EditTourGuideFullData_Email.Text = TourGuideFullData_Email.Content.ToString();
-            TourGuideGender_ComboBox.Text = TourGuideFullData_Gender.Content.ToString();
-            //EditTourGuideFullData_Language.Text = TourGuideFullData_Language.Content.ToString();
-            EditTourGuideFullData_PhoneNumber.Text = TourGuideFullData_PhoneNumber.Content.ToString();
-
+            ShowAddTripCanvas();
         }
-        private void AddTourGuide(TourGuide t)
+        private void SaveBut_Click(object sender, RoutedEventArgs e)
         {
-            string name = t.Name, nationality = t.Nationality, phone_number = t.PhoneNumber,
-               language = t.Languages[0], gender = t.Gender, email = t.Email;
-
-            if (AddTourGuideFullData_Name.Text != "")
-                name = AddTourGuideFullData_Name.Text;
-            if (AddTourGuideFullData_Nationality.Text != "")
-                nationality = AddTourGuideFullData_Nationality.Text;
-            if (AddTourGuideFullData_PhoneNumber.Text != "")
-                phone_number = AddTourGuideFullData_PhoneNumber.Text;
-            if (AddTourGuideFullData_language.Text != "")
-                language = AddTourGuideFullData_language.Text;
-            if (AddTourGuideGender_ComboBox.Text != "")
-                gender = AddTourGuideGender_ComboBox.Text;
-            if (AddTourGuideFullData_Email.Text != "")
-                email = AddTourGuideFullData_Email.Text;
-
-
-
+            bool errorfound = false;
+            if (AddTrip_TripIDTextbox.Text.Trim() == "")
+            {
+                AddTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (DataBase.CheckUniqueTripId(AddTrip_TripIDTextbox.Text) == false)
+            {
+                AddTrip_TripID_ErrorLabel.Content = "This ID is already used";
+                errorfound = true;
+            }
+            if (AddTrip_TripDeptTextbox.Text.Trim() == "")
+            {
+                AddTrip_TripDep_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (AddTrip_TripDestTextbox.Text.Trim() == "")
+            {
+                AddTrip_TripDes_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (AddTrip_TripDiscTextbox.Text.Trim() == "")
+            {
+                AddTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (AddTrip_StTimePicker.SelectedDate < DateTime.Today)
+            {
+                AddTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
+                errorfound = true;
+            }
+            if (AddTrip_EnTimePicker.SelectedDate < DateTime.Today)
+            {
+                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
+                errorfound = true;
+            }
+            if (AddTrip_EnTimePicker.SelectedDate < AddTrip_StTimePicker.SelectedDate)
+            {
+                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
+                errorfound = true;
+            }
+            if (SelectedPath == "")
+            {
+                AddTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
+                errorfound = true;
+            }
+            if (AddTrip_EnTimePicker.Text == "")
+            {
+                AddTrip_TripEnTime_ErrorLabel.Content = "You must choose end time!";
+                errorfound = true;
+            }
+            if (AddTrip_StTimePicker.Text == "")
+            {
+                AddTrip_TripStTime_ErrorLabel.Content = "You must choose start time!";
+                errorfound = true;
+            }
+            if (errorfound == true)
+            {
+                return;
+            }
+            //TODO Insert Trip in data base
+            //TODO Clear all textboxes after saving
         }
-
-        private void EditTourGuideData_Save_Button_Click(object sender, RoutedEventArgs e)
-        {
-            EditTourGuideData(t);
-        }
-
-        private void Browse_Button_Click(object sender, RoutedEventArgs e)
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "JPG Files (*.jpg)|*.jpg|All files (*.*)|*.*";
-            dlg.Title = "Select TourGuide Image";
+            dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
+            dlg.Title = "Select Trip Photo";
             dlg.ShowDialog();
-            dlg.FileName.ToString();
+            SelectedPath = dlg.FileName.ToString();
+        }
+        private void ShowAddTripCanvas()
+        {
+            if (CurrentCanvas == AddTrip_Canvas)
+                return;
+            TripsScrollViewer.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Add Trip";
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = AddTrip_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
         }
 
-        private void AddTourGuide_Add_Button_Click(object sender, RoutedEventArgs e)
-        {
-            bool tourErrorFound = false;
-            if (DataBase.CheckUniqueTourGuideId(t.Id) == true)
+            public void TourGuideFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
             {
-                AddTourGuide_Error_ID.Content = "This id is already found!";
-                tourErrorFound = true;
+                CurrentPanelName_Label.Content = "Edit TourGuide Data";
+                CurrentCanvas.Visibility = Visibility.Hidden;
+                CurrentCanvas = EditTourGuideData_Canvas;
+                CurrentCanvas.Visibility = Visibility.Visible;
+                EditTourGuideFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+                EditTourGuideFullData_Name.Text = TourGuideFullData_Name.Content.ToString();
+
+                EditTourGuideFullData_Nationality.Text = TourGuideFullData_Nationality.Content.ToString();
+                EditTourGuideFullData_Email.Text = TourGuideFullData_Email.Content.ToString();
+                TourGuideGender_ComboBox.Text = TourGuideFullData_Gender.Content.ToString();
+                //EditTourGuideFullData_Language.Text = TourGuideFullData_Language.Content.ToString();
+                EditTourGuideFullData_PhoneNumber.Text = TourGuideFullData_PhoneNumber.Content.ToString();
 
             }
-            else AddTourGuide_Error_ID.Content = "";
-            if (AddTourGuideFullData_Id.Text=="")
+            private void AddTourGuide(TourGuide t)
             {
-                AddTourGuide_Error_ID.Content = "This field can't be empty!";
-                tourErrorFound = true;
-            }
-            else
-                AddTourGuide_Error_ID.Content = "";
-          
+                string name = t.Name, nationality = t.Nationality, phone_number = t.PhoneNumber,
+                   language = t.Languages[0], gender = t.Gender, email = t.Email;
 
-            if (AddTourGuideFullData_Name.Text.Trim() == "")
-            {
-                AddTourGuide_Error_Name.Content = "This field can't be empty!";
-                tourErrorFound = true;
+                if (AddTourGuideFullData_Name.Text != "")
+                    name = AddTourGuideFullData_Name.Text;
+                if (AddTourGuideFullData_Nationality.Text != "")
+                    nationality = AddTourGuideFullData_Nationality.Text;
+                if (AddTourGuideFullData_PhoneNumber.Text != "")
+                    phone_number = AddTourGuideFullData_PhoneNumber.Text;
+                if (AddTourGuideFullData_language.Text != "")
+                    language = AddTourGuideFullData_language.Text;
+                if (AddTourGuideGender_ComboBox.Text != "")
+                    gender = AddTourGuideGender_ComboBox.Text;
+                if (AddTourGuideFullData_Email.Text != "")
+                    email = AddTourGuideFullData_Email.Text;
+
+
+
             }
-           else  AddTourGuide_Error_Name.Content = "";
-            if (AddTourGuideFullData_Email.Text.Trim() == "")
+
+            private void EditTourGuideData_Save_Button_Click(object sender, RoutedEventArgs e)
             {
-                AddTourGuide_Error_Email.Content = "This field can't be empty!";
-                tourErrorFound = true;
+                EditTourGuideData(t);
             }
-            else AddTourGuide_Error_Email.Content = "";
-            if (AddTourGuideFullData_language.Text.Trim() == "")
+
+            private void Browse_Button_Click(object sender, RoutedEventArgs e)
             {
-                AddTourGuide_Error_Language.Content = "This field can't be empty!";
-                tourErrorFound = true;
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.Filter = "JPG Files (*.jpg)|*.jpg|All files (*.*)|*.*";
+                dlg.Title = "Select TourGuide Image";
+                dlg.ShowDialog();
+                dlg.FileName.ToString();
             }
-            else AddTourGuide_Error_Language.Content = "";
-            if (AddTourGuideGender_ComboBox.Text=="")
+
+            private void AddTourGuide_Add_Button_Click(object sender, RoutedEventArgs e)
             {
-            AddTourGuide_Error_Gender.Content = "This field can't be empty!";
-                tourErrorFound = true;
-            }
-            else AddTourGuide_Error_Gender.Content = "";
-            if (AddTourGuideFullData_Nationality.Text == "")
-            {
-               AddTourGuide_Error__Natinaity.Content = "This field can't be empty!";
-                tourErrorFound = true;
-            }
-            else AddTourGuide_Error__Natinaity.Content = "";
-            if (AddTourGuideFullData_PhoneNumber.Text == "")
-            {
-                AddTourGuide_Error_PhoneNumber.Content = "This field can't be empty!";
-                tourErrorFound = true;
-            }
-            else AddTourGuide_Error_PhoneNumber.Content = "";
-            //if(SelectedPath=="")
-            //{
-              //  AddTourGuide_Error__Image.Content = "This field can't be empty!";
+                bool tourErrorFound = false;
+                if (DataBase.CheckUniqueTourGuideId(t.Id) == true)
+                {
+                    AddTourGuide_Error_ID.Content = "This id is already found!";
+                    tourErrorFound = true;
+
+                }
+                else AddTourGuide_Error_ID.Content = "";
+                if (AddTourGuideFullData_Id.Text == "")
+                {
+                    AddTourGuide_Error_ID.Content = "This field can't be empty!";
+                    tourErrorFound = true;
+                }
+                else
+                    AddTourGuide_Error_ID.Content = "";
+
+
+                if (AddTourGuideFullData_Name.Text.Trim() == "")
+                {
+                    AddTourGuide_Error_Name.Content = "This field can't be empty!";
+                    tourErrorFound = true;
+                }
+                else AddTourGuide_Error_Name.Content = "";
+                if (AddTourGuideFullData_Email.Text.Trim() == "")
+                {
+                    AddTourGuide_Error_Email.Content = "This field can't be empty!";
+                    tourErrorFound = true;
+                }
+                else AddTourGuide_Error_Email.Content = "";
+                if (AddTourGuideFullData_language.Text.Trim() == "")
+                {
+                    AddTourGuide_Error_Language.Content = "This field can't be empty!";
+                    tourErrorFound = true;
+                }
+                else AddTourGuide_Error_Language.Content = "";
+                if (AddTourGuideGender_ComboBox.Text == "")
+                {
+                    AddTourGuide_Error_Gender.Content = "This field can't be empty!";
+                    tourErrorFound = true;
+                }
+                else AddTourGuide_Error_Gender.Content = "";
+                if (AddTourGuideFullData_Nationality.Text == "")
+                {
+                    AddTourGuide_Error__Natinaity.Content = "This field can't be empty!";
+                    tourErrorFound = true;
+                }
+                else AddTourGuide_Error__Natinaity.Content = "";
+                if (AddTourGuideFullData_PhoneNumber.Text == "")
+                {
+                    AddTourGuide_Error_PhoneNumber.Content = "This field can't be empty!";
+                    tourErrorFound = true;
+                }
+                else AddTourGuide_Error_PhoneNumber.Content = "";
+                //if(SelectedPath=="")
+                //{
+                //  AddTourGuide_Error__Image.Content = "This field can't be empty!";
                 //tourErrorFound = true;
 
-            //}
-            if (tourErrorFound == true)
-                return;
+                //}
+                if (tourErrorFound == true)
+                    return;
 
-            //TourGuide temp = new TourGuide(AddTourGuideFullData_Id.Text, AddTourGuideFullData_Name.Text, AddTourGuideFullData_Nationality.Text
-            //     , AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text, AddTourGuideFullData_PhoneNumber.Text);
-            // temp.UserImage = new CustomImage(SelectedPath);
-            AddTourGuide_Error__Natinaity.Content = "";
-            AddTourGuide_Error_PhoneNumber.Content = "";
-            AddTourGuide_Error_ID.Content = "";
-            AddTourGuide_Error_Name.Content = "";
-            AddTourGuide_Error_Email.Content = "";
-            AddTourGuide_Error_Language.Content = "";
-            AddTourGuide_Error_Gender.Content = "";
-            AddTourGuideFullData_Email.Text = "";
-            AddTourGuideFullData_Name.Text = "";
-            AddTourGuideFullData_Id.Text = "";
-            AddTourGuideFullData_Nationality.Text = "";
-            AddTourGuideFullData_language.Text = "";
-            AddTourGuideFullData_PhoneNumber.Text = "";
-            AddTourGuideGender_ComboBox.Text = "";
+                //TourGuide temp = new TourGuide(AddTourGuideFullData_Id.Text, AddTourGuideFullData_Name.Text, AddTourGuideFullData_Nationality.Text
+                //     , AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text, AddTourGuideFullData_PhoneNumber.Text);
+                // temp.UserImage = new CustomImage(SelectedPath);
+                AddTourGuide_Error__Natinaity.Content = "";
+                AddTourGuide_Error_PhoneNumber.Content = "";
+                AddTourGuide_Error_ID.Content = "";
+                AddTourGuide_Error_Name.Content = "";
+                AddTourGuide_Error_Email.Content = "";
+                AddTourGuide_Error_Language.Content = "";
+                AddTourGuide_Error_Gender.Content = "";
+                AddTourGuideFullData_Email.Text = "";
+                AddTourGuideFullData_Name.Text = "";
+                AddTourGuideFullData_Id.Text = "";
+                AddTourGuideFullData_Nationality.Text = "";
+                AddTourGuideFullData_language.Text = "";
+                AddTourGuideFullData_PhoneNumber.Text = "";
+                AddTourGuideGender_ComboBox.Text = "";
 
-            MessageBox.Show("TourGuide is Succesfully Added");
-            //todo Image
+                MessageBox.Show("TourGuide is Succesfully Added");
+                //todo Image
 
-        }
+            }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            ShowAddTourGuideCanvas();
+            private void Button_Click_1(object sender, RoutedEventArgs e)
+            {
+                ShowAddTourGuideCanvas();
+            }
         }
     }
-}
+
