@@ -61,7 +61,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Canvas x:Name="Header_Canvas" Height="675" VerticalAlignment="Top" HorizontalAlignment="Left" Width="235" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,-1" ScrollViewer.CanContentScroll="True">
+    <Canvas x:Name="Header_Canvas" Height="675" VerticalAlignment="Top" HorizontalAlignment="Left" Width="235" RenderTransformOrigin="0.5,0.5" Margin="2,0,0,-1.4" ScrollViewer.CanContentScroll="True">
         <Canvas.RenderTransform>
             <TransformGroup>
                 <ScaleTransform/>
@@ -80,11 +80,19 @@
 
         </Canvas>
 
+        
+            
+
+        <ScrollViewer x:Name="TicketsTypes_ScrollViewr" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
+            <Canvas x:Name="TicketsTypes_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True" IsVisibleChanged="TicketsTypes_Canvas_IsVisibleChanged_1" Visibility="Hidden"/>
+        </ScrollViewer>
+
         <ScrollViewer x:Name="TripsScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="Trips_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True">
                 <Button x:Name="AddTrip_Button" Content="Add Trip" Foreground="White" Background="#e87e31" Width="238" Click="Add_Button_Click" Canvas.Left="771" Canvas.Top="10" Height="77" FontSize="36" FontWeight="Bold"/>
             </Canvas>
         </ScrollViewer>
+        
         <Canvas x:Name="AddTrip_Canvas" Height="100" Width="100" Visibility="Hidden">
             <Label Content="Label" RenderTransformOrigin="0.857,0.802" Height="46" Width="59"/>
             <Label x:Name="DepatLabel" Content="Trip Depature" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="363" Canvas.Top="219" FontWeight="Bold" FontSize="24"/>
@@ -144,13 +152,8 @@
         </Canvas>
 
         <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
-        <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"
-                >
-
-
-
+        <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Image x:Name="Customer_IMG" Height="307" Canvas.Left="170" Canvas.Top="240" Width="779" Source="FrontEnd/Images/Logo 3.jpg" MouseLeftButtonDown="Customer_IMG_MouseLeftButtonDown" Cursor="Hand" />
-
         </Canvas>
         <Canvas x:Name="CustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Button x:Name="CustomerFullData_Edit_Button" Content="Edit Customer" Canvas.Left="468" Canvas.Top="607" Width="256" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="CustomerFullData_Edit_Button_Click"/>
@@ -260,6 +263,8 @@
             <Label x:Name="TripFullData_Discount" Content="" Canvas.Left="216" Canvas.Top="538" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_TripId" Content="" Canvas.Left="180" Canvas.Top="417" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
         </Canvas>
+
+
         <Canvas x:Name="TourGuideFullData_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="0.8" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Image x:Name="TourGuideFullData_IMG"  Height="210" Canvas.Left="10" Canvas.Top="166" Width="221" Stretch="Fill" Cursor="None"/>
             <Label x:Name="TourGuideFullData_Name"  Content=""  Canvas.Left="256" Canvas.Top="162" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="#FFE87E31" RenderTransformOrigin="0.517,0.598"/>
@@ -308,7 +313,6 @@
             </ComboBox>
             <Button x:Name="EditTourGuideData_Save_Button" Content="Save" Canvas.Left="767" Canvas.Top="607" Width="245" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="EditTourGuideData_Save_Button_Click"/>
 
-
         </Canvas>
         <Rectangle Fill="#293541" Height="565" Canvas.Top="114" Width="305"/>
         <Button x:Name="Trip_Button" HorizontalContentAlignment="Left"  Foreground="White" Background="#293541" Content=" Trips" Canvas.Top="114" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Click="Trips_Button_Click" Canvas.Left="-1" RenderTransformOrigin="-1.435,0.143" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
@@ -323,6 +327,4 @@
         <Label x:Name="CurrentPanelName_Label" Content="Home Page" Canvas.Left="314" Canvas.Top="25" Height="89" Width="491" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
 
     </Canvas>
-
-
 </Window>
