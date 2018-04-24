@@ -147,7 +147,7 @@
             <Label x:Name="EditTrip_TripEnTime_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="393.8" FontSize="20" Foreground="Red"/>
             <Label x:Name="EditTrip_TourGuide_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="450" Canvas.Top="448.2" FontSize="20" Foreground="Red"/>
             <Label x:Name="EditTrip_Discount_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="350" Canvas.Top="524.2" FontSize="20" Foreground="Red"/>
-            <Label x:Name="EditTrip_TripPhoto_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="300" Canvas.Top="601.8" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTrip_TripPhoto_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="300" Canvas.Top="586" FontSize="20" Foreground="Red"/>
         </Canvas>
         <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
 
@@ -202,6 +202,9 @@
 
         </Canvas>
         <Canvas x:Name="EditCustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="5" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+            <Label x:Name="EditCustomerPhotoLabel" Content="Customer Photo" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="581" FontWeight="Bold" FontSize="24"/>
+            <Button x:Name="EditCustomer_BrowseButton" Content="Browse"  Canvas.Left="218" Canvas.Top="582" Width="103" Height="49" FontSize="24" FontWeight="Bold" Click="BrowseButton_Click"/>
+            <Label x:Name="EditCustomer_Photo_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="352" Canvas.Top="578" FontSize="20" Foreground="Red"/>
 
             <Label x:Name="EditCustomerFullData_NameLabel"  Content="Name : "  Canvas.Left="10" Canvas.Top="147" FontSize="36" FontWeight="Bold" FontFamily="Roboto" RenderTransformOrigin="0.517,0.598"/>
             <Label x:Name="EditCustomerFullData_NationalityLAbel" Content="Nationality : " Canvas.Left="10" Canvas.Top="501" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="54"/>
@@ -227,14 +230,21 @@
                     </TransformGroup>
                 </ComboBox.RenderTransform>
             </ComboBox>
-            <Button x:Name="EditTripData_Save_Button" Content="Save" Canvas.Left="767" Canvas.Top="607" Width="245" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="EditCustomerData_Save_Button_Click"/>
+            <Button x:Name="EditCustomerData_Save_Button" Content="Save" Canvas.Left="767" Canvas.Top="595" Width="245" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="EditCustomerData_Save_Button_Click"/>
+            <Label x:Name="EditCustomer_Name_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="148" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditCustomer_Email_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="219" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditCustomer_PhoneNumber_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="286" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditCustomer_Language_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="360" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditCustomer_Gender_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="430" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditCustomer_Nationality_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="508" FontSize="20" Foreground="Red"/>
+
 
         </Canvas>
 
 
         <Canvas x:Name="AddNewTourGuide_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="3" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Label x:Name="LabelAddTourGuideFullData_Id" Content="ID: "  Canvas.Left="10" Canvas.Top="342" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="51" Width="66"/>
-            <Label x:Name="LabelAddTourGuideFullData_Image" Content="Add Image"  Canvas.Left="817" Canvas.Top="333" FontSize="34" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="LabelAddTourGuideFullData_Image" Content="Add Image"  Canvas.Left="21" Canvas.Top="613" FontSize="28" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
 
             <Label x:Name="AddTourGuideFullDataLabel_Nationality" Content="Nationality : " Canvas.Left="10" Canvas.Top="551" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="51" Width="221"/>
             <Label x:Name="AddTourGuideFullDataLabel_Gender" Content="Gender : " Canvas.Left="10" Canvas.Top="482" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="52" Width="157"/>
@@ -262,7 +272,7 @@
                 </ComboBox.RenderTransform>
             </ComboBox>
             <Button x:Name="AddTourGuide_Add_Button" Content="Add" Canvas.Left="821" Canvas.Top="607" Width="191" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="AddTourGuide_Add_Button_Click" />
-            <Button x:Name="AddTourGuideBrowse_Button" Content="Browse" Canvas.Left="830" Canvas.Top="384" Width="170" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="Browse_Button_Click" />
+            <Button x:Name="AddTourGuide_BrowseButton" Content="Browse"  Canvas.Left="190" Canvas.Top="610" Width="103" Height="49" FontSize="24" FontWeight="Bold" Click="BrowseButton_Click"/>
             <Label x:Name="AddTourGuide_Error_ID" Content="" Canvas.Left="422" Canvas.Top="350" FontSize="26" FontWeight="Bold" FontFamily="Roboto" Foreground="Red" Height="43"/>
             <Label x:Name="AddTourGuide_Error_Name" Content="" Canvas.Left="598" Canvas.Top="130" FontSize="26" FontWeight="Bold" FontFamily="Roboto" Foreground="Red" Height="43"/>
             <Label x:Name="AddTourGuide_Error_PhoneNumber" Content="" Canvas.Left="590" Canvas.Top="287" FontSize="26" FontWeight="Bold" FontFamily="Roboto" Foreground="Red" Height="43"/>
@@ -270,7 +280,7 @@
             <Label x:Name="AddTourGuide_Error_Language" Content="" Canvas.Left="552" Canvas.Top="428" FontSize="26" FontWeight="Bold" FontFamily="Roboto" Foreground="Red" Height="43"/>
             <Label x:Name="AddTourGuide_Error_Gender" Content="" Canvas.Left="558" Canvas.Top="488" FontSize="26" FontWeight="Bold" FontFamily="Roboto" Foreground="Red" Height="43"/>
             <Label x:Name="AddTourGuide_Error__Natinaity" Content="" Canvas.Left="556" Canvas.Top="558" FontSize="26" FontWeight="Bold" FontFamily="Roboto" Foreground="Red" Height="43"/>
-            <Label  x:Name="AddTourGuide_Error__Image" Content="" FontSize="26" FontWeight="Bold" FontFamily="Roboto" Foreground="Red" Height="43" Canvas.Left="868" Canvas.Top="467"/>
+            <Label  x:Name="AddTourGuide_Error__Image" Content="" FontSize="26" FontWeight="Bold" FontFamily="Roboto" Foreground="Red" Height="43" Canvas.Left="324" Canvas.Top="615"/>
 
         </Canvas>
         <Canvas x:Name="TripFullData_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="0.8" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
@@ -284,7 +294,7 @@
             <Label x:Name="TripFullData_EndDate" Content="" Canvas.Left="636" Canvas.Top="240" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_DummyLabel1_Copy2" Content="Tour guide:" Canvas.Left="52" Canvas.Top="476" Height="56" Width="192" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_TourGuideName" Content="" Canvas.Left="249" Canvas.Top="478" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-            <Label x:Name="TripFullData_DummyLabel1_Copy3" Content="Discount:" Canvas.Left="52" Canvas.Top="537" Height="56" Width="163" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_DummyLabel1_Copy3" Content="Discount:" Canvas.Left="52" Canvas.Top="537" Height="56" Width="174" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Button x:Name="TripFullData_Edit_Button" Content="Edit Trip" Canvas.Left="589" Canvas.Top="607" Width="201" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_Edit_Button_Click"/>
             <Button x:Name="TripFullData_Delete_Button" Content="Delete Trip" Canvas.Left="817" Canvas.Top="607" Width="202" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
             <Label x:Name="TripFullData_TripType" Content="" Canvas.Left="297" Canvas.Top="317" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
@@ -315,6 +325,11 @@
         </Canvas>
         <Canvas x:Name="EditTourGuideData_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="0.8" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
 
+            <Label x:Name="EditTouGuidePhotoLabel" Content="Tour Guide Photo" RenderTransformOrigin="10.046,7.518" Height="60" Width="229" Canvas.Left="10" Canvas.Top="581" FontWeight="Bold" FontSize="24"/>
+            <Button x:Name="EditTourGuide_BrowseButton" Content="Browse"  Canvas.Left="250" Canvas.Top="586" Width="103" Height="49" FontSize="24" FontWeight="Bold" Click="BrowseButton_Click"/>
+            <Label x:Name="EditTourGuide_Photo_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="384" Canvas.Top="578" FontSize="20" Foreground="Red"/>
+
+
             <Label x:Name="EditTourGuideFullData_NameLabel"  Content="Name : "  Canvas.Left="10" Canvas.Top="147" FontSize="36" FontWeight="Bold" FontFamily="Roboto" RenderTransformOrigin="0.517,0.598"/>
             <Label x:Name="EditTourGuideFullData_NationalityLAbel" Content="Nationality : " Canvas.Left="10" Canvas.Top="501" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="54"/>
             <Label x:Name="EditTourGuideFullData_GenderLabel" Content="Gender : " Canvas.Left="10" Canvas.Top="430" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="53"/>
@@ -340,6 +355,13 @@
                 </ComboBox.RenderTransform>
             </ComboBox>
             <Button x:Name="EditTourGuideData_Save_Button" Content="Save" Canvas.Left="767" Canvas.Top="607" Width="245" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="EditTourGuideData_Save_Button_Click"/>
+            <Label x:Name="EditTourGuide_Name_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="148" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTourGuide_Email_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="219" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTourGuide_PhoneNumber_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="286" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTourGuide_Language_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="360" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTourGuide_Gender_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="430" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTourGuide_Nationality_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="624" Canvas.Top="508" FontSize="20" Foreground="Red"/>
+
 
         </Canvas>
         <Rectangle Fill="#293541" Height="565" Canvas.Top="114" Width="305"/>
