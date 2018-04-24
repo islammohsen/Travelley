@@ -80,8 +80,8 @@
 
         </Canvas>
 
-        
-            
+
+
 
         <ScrollViewer x:Name="TicketsTypes_ScrollViewr" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="TicketsTypes_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True" IsVisibleChanged="TicketsTypes_Canvas_IsVisibleChanged_1" Visibility="Hidden"/>
@@ -92,36 +92,62 @@
                 <Button x:Name="AddTrip_Button" Content="Add Trip" Foreground="White" Background="#e87e31" Width="238" Click="Add_Button_Click" Canvas.Left="771" Canvas.Top="10" Height="77" FontSize="36" FontWeight="Bold"/>
             </Canvas>
         </ScrollViewer>
-        
-        <Canvas x:Name="AddTrip_Canvas" Height="100" Width="100" Visibility="Hidden">
-            <Label Content="Label" RenderTransformOrigin="0.857,0.802" Height="46" Width="59"/>
-            <Label x:Name="DepatLabel" Content="Trip Depature" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="363" Canvas.Top="219" FontWeight="Bold" FontSize="24"/>
-            <Label x:Name="DestLabel" Content="Trip Destination" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="363" Canvas.Top="279" FontSize="24" FontWeight="Bold"/>
-            <Label x:Name="IDLabel" Content="Trip ID" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="363" Canvas.Top="159" FontWeight="Bold" FontSize="24"/>
-            <Label x:Name="StTimeLabel" Content="Trip StartTime" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="363" Canvas.Top="339" FontSize="24" FontWeight="Bold"/>
-            <Label x:Name="EnTimeLabel" Content="Trip EndTime" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="363" Canvas.Top="399" FontSize="24" FontWeight="Bold"/>
-            <Label x:Name="ToGuideLabel" Content="Tour Guide" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="363" Canvas.Top="459" FontSize="24" FontWeight="Bold"/>
-            <Label x:Name="DiscLabel" Content="Discount" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="363" Canvas.Top="519" FontSize="24" FontWeight="Bold"/>
-            <TextBox Height="104" TextWrapping="Wrap" Text="TextBox" Width="126" RenderTransformOrigin="1.481,1.047" Canvas.Left="87" Canvas.Top="50"/>
-            <TextBox x:Name="AddTrip_TripIDTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="710" Canvas.Top="153" RenderTransformOrigin="1.232,0.374" FontSize="24" FontWeight="Bold"/>
-            <TextBox x:Name="AddTrip_TripDeptTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="710" Canvas.Top="214" RenderTransformOrigin="1.232,0.374" FontSize="24" FontWeight="Bold"/>
-            <TextBox x:Name="AddTrip_TripDestTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="710" Canvas.Top="277" RenderTransformOrigin="1.232,0.374" FontWeight="Bold" FontSize="24"/>
-            <TextBox x:Name="AddTrip_TripDiscTextbox" Height="41" TextWrapping="Wrap" Text="" Width="95" Canvas.Left="710" Canvas.Top="520" RenderTransformOrigin="1.232,0.374" FontSize="24"/>
-            <DatePicker x:Name="AddTrip_StTimePicker" Canvas.Left="710" Canvas.Top="339" Width="265" Height="45" FontSize="24"/>
-            <DatePicker x:Name="AddTrip_EnTimePicker" Canvas.Left="710" Canvas.Top="399" Width="265" Height="45" RenderTransformOrigin="0.492,2.346" FontSize="24"/>
-            <Label x:Name="PercenLabel" Content="%" RenderTransformOrigin="10.046,7.518" Height="43" Width="58" Canvas.Left="810" Canvas.Top="520" FontWeight="Bold" FontSize="24"/>
-            <ComboBox x:Name="AddTrip_TourCombo" Width="267" RenderTransformOrigin="2.881,8.404" Canvas.Left="709" Canvas.Top="465" Height="42" FontSize="24"/>
-            <Button x:Name="AddTrip_SaveButton" Content="Save" Foreground="White" Background="#e87e31" Canvas.Left="1165" Canvas.Top="575" Width="149" Height="85" FontSize="36" FontWeight="Bold" Click="SaveBut_Click"/>
-            <Label x:Name="PhotoLabel" Content="Trip Photo" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="364" Canvas.Top="581" FontWeight="Bold" FontSize="24"/>
-            <Button x:Name="AddTrip_BrowseButton" Content="Browse"  Canvas.Left="710" Canvas.Top="598" Width="103" Height="49" FontSize="24" FontWeight="Bold" Click="BrowseButton_Click"/>
-            <Label x:Name="AddTrip_TripID_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="1020.8" Canvas.Top="148.2" FontSize="20" Foreground="Red"/>
-            <Label x:Name="AddTrip_TripDep_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="1020.8" Canvas.Top="207.4" FontSize="20" Foreground="Red"/>
-            <Label x:Name="AddTrip_TripDes_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="1020.8" Canvas.Top="265.8" FontSize="20" Foreground="Red"/>
-            <Label x:Name="AddTrip_TripStTime_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="1020.8" Canvas.Top="340.2" FontSize="20" Foreground="Red"/>
-            <Label x:Name="AddTrip_TripEnTime_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="1020.8" Canvas.Top="393.8" FontSize="20" Foreground="Red"/>
-            <Label x:Name="AddTrip_TourGuide_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="1020.8" Canvas.Top="448.2" FontSize="20" Foreground="Red"/>
-            <Label x:Name="AddTrip_Discount_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="875.2" Canvas.Top="524.2" FontSize="20" Foreground="Red"/>
-            <Label x:Name="AddTrip_TripPhoto_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="875.2" Canvas.Top="601.8" FontSize="20" Foreground="Red"/>
+
+        <Canvas x:Name="AddTrip_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+            <Label x:Name="DepatLabel" Content="Trip Depature" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="219" FontWeight="Bold" FontSize="24"/>
+            <Label x:Name="DestLabel" Content="Trip Destination" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="279" FontSize="24" FontWeight="Bold"/>
+            <Label x:Name="IDLabel" Content="Trip ID" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="159" FontWeight="Bold" FontSize="24"/>
+            <Label x:Name="StTimeLabel" Content="Trip StartTime" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="339" FontSize="24" FontWeight="Bold"/>
+            <Label x:Name="EnTimeLabel" Content="Trip EndTime" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="399" FontSize="24" FontWeight="Bold"/>
+            <Label x:Name="ToGuideLabel" Content="Tour Guide" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="459" FontSize="24" FontWeight="Bold"/>
+            <Label x:Name="DiscLabel" Content="Discount" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="519" FontSize="24" FontWeight="Bold"/>
+            <TextBox x:Name="AddTrip_TripIDTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="112" Canvas.Top="153" RenderTransformOrigin="1.232,0.374" FontSize="24" FontWeight="Bold"/>
+            <TextBox x:Name="AddTrip_TripDeptTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="200" Canvas.Top="214" RenderTransformOrigin="1.232,0.374" FontSize="24" FontWeight="Bold"/>
+            <TextBox x:Name="AddTrip_TripDestTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="230" Canvas.Top="277" RenderTransformOrigin="1.232,0.374" FontWeight="Bold" FontSize="24"/>
+            <TextBox x:Name="AddTrip_TripDiscTextbox" Height="41" TextWrapping="Wrap" Text="" Width="95" Canvas.Left="150" Canvas.Top="520" RenderTransformOrigin="1.232,0.374" FontSize="24"/>
+            <DatePicker x:Name="AddTrip_StTimePicker" Canvas.Left="200" Canvas.Top="339" Width="265" Height="45" FontSize="24"/>
+            <DatePicker x:Name="AddTrip_EnTimePicker" Canvas.Left="200" Canvas.Top="399" Width="265" Height="45" RenderTransformOrigin="0.492,2.346" FontSize="24"/>
+            <Label x:Name="PercenLabel" Content="%" RenderTransformOrigin="10.046,7.518" Height="43" Width="58" Canvas.Left="250" Canvas.Top="520" FontWeight="Bold" FontSize="24"/>
+            <ComboBox x:Name="AddTrip_TourCombo" Width="267" RenderTransformOrigin="2.881,8.404" Canvas.Left="150" Canvas.Top="465" Height="42" FontSize="24"/>
+            <Button x:Name="AddTrip_SaveButton" Content="Save" Foreground="White" Background="#e87e31" Canvas.Left="870" Canvas.Top="575" Width="149" Height="85" FontSize="36" FontWeight="Bold" Click="SaveBut_Click"/>
+            <Label x:Name="PhotoLabel" Content="Trip Photo" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="581" FontWeight="Bold" FontSize="24"/>
+            <Button x:Name="AddTrip_BrowseButton" Content="Browse"  Canvas.Left="150" Canvas.Top="598" Width="103" Height="49" FontSize="24" FontWeight="Bold" Click="BrowseButton_Click"/>
+            <Label x:Name="AddTrip_TripID_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="408" Canvas.Top="148" FontSize="20" Foreground="Red"/>
+            <Label x:Name="AddTrip_TripDep_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="207.4" FontSize="20" Foreground="Red"/>
+            <Label x:Name="AddTrip_TripDes_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="265.8" FontSize="20" Foreground="Red"/>
+            <Label x:Name="AddTrip_TripStTime_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="340.2" FontSize="20" Foreground="Red"/>
+            <Label x:Name="AddTrip_TripEnTime_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="393.8" FontSize="20" Foreground="Red"/>
+            <Label x:Name="AddTrip_TourGuide_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="450" Canvas.Top="448.2" FontSize="20" Foreground="Red"/>
+            <Label x:Name="AddTrip_Discount_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="350" Canvas.Top="524.2" FontSize="20" Foreground="Red"/>
+            <Label x:Name="AddTrip_TripPhoto_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="300" Canvas.Top="601.8" FontSize="20" Foreground="Red"/>
+        </Canvas>
+        <Canvas x:Name="EditTrip_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+            <Label x:Name="EditDepatLabel" Content="Trip Depature" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="219" FontWeight="Bold" FontSize="24"/>
+            <Label x:Name="EditDestLabel" Content="Trip Destination" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="279" FontSize="24" FontWeight="Bold"/>
+            <Label x:Name="EditIDLabel" Content="Trip ID" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="159" FontWeight="Bold" FontSize="24"/>
+            <Label x:Name="EditStTimeLabel" Content="Trip StartTime" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="339" FontSize="24" FontWeight="Bold"/>
+            <Label x:Name="EditEnTimeLabel" Content="Trip EndTime" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="399" FontSize="24" FontWeight="Bold"/>
+            <Label x:Name="EditToGuideLabel" Content="Tour Guide" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="459" FontSize="24" FontWeight="Bold"/>
+            <Label x:Name="EditDiscLabel" Content="Discount" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="519" FontSize="24" FontWeight="Bold"/>
+            <TextBox x:Name="EditTrip_TripIDTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="112" Canvas.Top="153" RenderTransformOrigin="1.232,0.374" FontSize="24" FontWeight="Bold"/>
+            <TextBox x:Name="EditTrip_TripDeptTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="200" Canvas.Top="214" RenderTransformOrigin="1.232,0.374" FontSize="24" FontWeight="Bold"/>
+            <TextBox x:Name="EditTrip_TripDestTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="230" Canvas.Top="277" RenderTransformOrigin="1.232,0.374" FontWeight="Bold" FontSize="24"/>
+            <TextBox x:Name="EditTrip_TripDiscTextbox" Height="41" TextWrapping="Wrap" Text="" Width="95" Canvas.Left="150" Canvas.Top="520" RenderTransformOrigin="1.232,0.374" FontSize="24"/>
+            <DatePicker x:Name="EditTrip_StTimePicker" Canvas.Left="200" Canvas.Top="339" Width="265" Height="45" FontSize="24"/>
+            <DatePicker x:Name="EditTrip_EnTimePicker" Canvas.Left="200" Canvas.Top="399" Width="265" Height="45" RenderTransformOrigin="0.492,2.346" FontSize="24"/>
+            <Label x:Name="EditPercenLabel" Content="%" RenderTransformOrigin="10.046,7.518" Height="43" Width="58" Canvas.Left="250" Canvas.Top="520" FontWeight="Bold" FontSize="24"/>
+            <ComboBox x:Name="EditTrip_TourCombo" Width="267" RenderTransformOrigin="2.881,8.404" Canvas.Left="150" Canvas.Top="465" Height="42" FontSize="24"/>
+            <Button x:Name="EditTrip_SaveButton" Content="Save" Foreground="White" Background="#e87e31" Canvas.Left="870" Canvas.Top="575" Width="149" Height="85" FontSize="36" FontWeight="Bold" Click="EditTrip_SaveButton_Click" />
+            <Label x:Name="EditPhotoLabel" Content="Trip Photo" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="581" FontWeight="Bold" FontSize="24"/>
+            <Button x:Name="EditTrip_BrowseButton" Content="Browse"  Canvas.Left="150" Canvas.Top="582" Width="103" Height="49" FontSize="24" FontWeight="Bold" Click="BrowseButton_Click"/>
+            <Label x:Name="EditTrip_TripID_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="400" Canvas.Top="148" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTrip_TripDep_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="207.4" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTrip_TripDes_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="265.8" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTrip_TripStTime_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="340.2" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTrip_TripEnTime_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="393.8" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTrip_TourGuide_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="450" Canvas.Top="448.2" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTrip_Discount_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="350" Canvas.Top="524.2" FontSize="20" Foreground="Red"/>
+            <Label x:Name="EditTrip_TripPhoto_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="300" Canvas.Top="601.8" FontSize="20" Foreground="Red"/>
         </Canvas>
         <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
 
@@ -201,9 +227,11 @@
                     </TransformGroup>
                 </ComboBox.RenderTransform>
             </ComboBox>
-            <Button x:Name="EditCustomerData_Save_Button" Content="Save" Canvas.Left="767" Canvas.Top="607" Width="245" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="EditCustomerData_Save_Button_Click"/>
+            <Button x:Name="EditTripData_Save_Button" Content="Save" Canvas.Left="767" Canvas.Top="607" Width="245" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="EditCustomerData_Save_Button_Click"/>
 
         </Canvas>
+
+
         <Canvas x:Name="AddNewTourGuide_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="3" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Label x:Name="LabelAddTourGuideFullData_Id" Content="ID: "  Canvas.Left="10" Canvas.Top="342" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="51" Width="66"/>
             <Label x:Name="LabelAddTourGuideFullData_Image" Content="Add Image"  Canvas.Left="817" Canvas.Top="333" FontSize="34" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
@@ -250,14 +278,14 @@
             <Image x:Name="TripFullData_IMG" Height="210" Canvas.Left="52" Canvas.Top="166" Width="221" Stretch="Fill" Cursor="None"/>
             <Label x:Name="TripFullData_DummyLabel1" Content="Trip id:" Canvas.Left="52" Canvas.Top="415" Height="56" Width="128" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_DepartureAndDestination" Content="" Canvas.Left="297" Canvas.Top="156" FontSize="48" FontWeight="Bold" FontFamily="Roboto" Foreground="#FFE87E31"/>
-            <Label x:Name="TripFullData_DummyLabel1_Copy" Content="from" Canvas.Left="297" Canvas.Top="238" Height="56" Width="85" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-            <Label x:Name="TripFullData_StartDate" Content="" Canvas.Left="393" Canvas.Top="240" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_DummyLabel1_Copy" Content="from" Canvas.Left="297" Canvas.Top="238" Height="56" Width="91" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_StartDate" Content="" Canvas.Left="405" Canvas.Top="240" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_DummyLabel1_Copy1" Content="to" Canvas.Left="584" Canvas.Top="238" Height="56" Width="44" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_EndDate" Content="" Canvas.Left="636" Canvas.Top="240" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_DummyLabel1_Copy2" Content="Tour guide:" Canvas.Left="52" Canvas.Top="476" Height="56" Width="192" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_TourGuideName" Content="" Canvas.Left="249" Canvas.Top="478" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_DummyLabel1_Copy3" Content="Discount:" Canvas.Left="52" Canvas.Top="537" Height="56" Width="163" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-            <Button x:Name="TripFullData_Edit_Button" Content="Edit Trip" Canvas.Left="589" Canvas.Top="607" Width="201" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
+            <Button x:Name="TripFullData_Edit_Button" Content="Edit Trip" Canvas.Left="589" Canvas.Top="607" Width="201" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_Edit_Button_Click"/>
             <Button x:Name="TripFullData_Delete_Button" Content="Delete Trip" Canvas.Left="817" Canvas.Top="607" Width="202" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
             <Label x:Name="TripFullData_TripType" Content="" Canvas.Left="297" Canvas.Top="317" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_Discount" Content="" Canvas.Left="216" Canvas.Top="538" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>

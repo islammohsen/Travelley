@@ -31,6 +31,9 @@ namespace Travelley
         Trip TripOfTheDay;
         TourGuide TourGuideOfTheMonth;
         Customer cus;
+        TourGuide ActiveTourGuide;
+        public Trip ActiveTrip;
+        Customer ActiveCustomer;
 
         string SelectedPath = "";
 
@@ -67,6 +70,7 @@ namespace Travelley
             {
                 TripOfTheDay_IMG.Source = TripOfTheDay.TripImage.GetImage().Source;
                 TripOfTheDay_Label.Content = TripOfTheDay.Departure + " - " + TripOfTheDay.Destination;
+                ActiveTrip = TripOfTheDay;
             }
 
             if (TourGuideOfTheMonth == null) ;
@@ -350,6 +354,26 @@ namespace Travelley
         {
             ShowAddTripCanvas();
         }
+
+        private void ShowEditTrip_Canvas(Trip t)
+        {
+            CurrentPanelName_Label.Content = "Edit Trip Data";
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = EditTrip_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+
+            EditTrip_TripIDTextbox.Text = TripFullData_TripId.Content.ToString();
+            EditTrip_TripDeptTextbox.Text = TripFullData_DepartureAndDestination.Content.ToString().Split('-')[0].Trim();
+            EditTrip_TripDestTextbox.Text = TripFullData_DepartureAndDestination.Content.ToString().Split('-')[1].Trim();
+            EditTrip_TripDiscTextbox.Text = TripFullData_Discount.Content.ToString();
+            EditTrip_EnTimePicker.Text = TripFullData_EndDate.Content.ToString();
+            EditTrip_StTimePicker.Text = TripFullData_StartDate.Content.ToString();
+            EditTrip_TourCombo.Text = TripFullData_TourGuideName.Content.ToString();
+
+
+
+        }
+
         private void SaveBut_Click(object sender, RoutedEventArgs e)
         {
             bool errorfound = false;
@@ -597,6 +621,91 @@ namespace Travelley
         {
             if (TicketsTypes_Canvas.Visibility == Visibility.Hidden)
                 TicketsTypes_Canvas.Visibility = Visibility.Hidden;
+        }
+
+        private void EditTrip_SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditTrip_Discount_ErrorLabel.Content = "";
+            EditTrip_TourGuide_ErrorLabel.Content = "";
+            EditTrip_TripDep_ErrorLabel.Content = "";
+            EditTrip_TripDes_ErrorLabel.Content = "";
+            EditTrip_TripEnTime_ErrorLabel.Content = "";
+            EditTrip_TripID_ErrorLabel.Content = "";
+            EditTrip_TripPhoto_ErrorLabel.Content = "";
+            EditTrip_TripStTime_ErrorLabel.Content = "";
+            
+
+
+
+            bool errorfound = false;
+            if (EditTrip_TripIDTextbox.Text.Trim() == "")
+            {
+                EditTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (DataBase.CheckUniqueTripId(EditTrip_TripIDTextbox.Text) == false)
+            {
+                EditTrip_TripID_ErrorLabel.Content = "This ID is already used";
+                errorfound = true;
+            }
+            if (EditTrip_TripDeptTextbox.Text.Trim() == "")
+            {
+                EditTrip_TripDep_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (EditTrip_TripDestTextbox.Text.Trim() == "")
+            {
+                EditTrip_TripDes_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (EditTrip_TripDiscTextbox.Text.Trim() == "")
+            {
+                EditTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (EditTrip_StTimePicker.SelectedDate < DateTime.Today)
+            {
+                EditTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
+                errorfound = true;
+            }
+            if (EditTrip_EnTimePicker.SelectedDate < DateTime.Today)
+            {
+                EditTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
+                errorfound = true;
+            }
+            if (EditTrip_EnTimePicker.SelectedDate < EditTrip_StTimePicker.SelectedDate)
+            {
+                EditTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
+                errorfound = true;
+            }
+            if (SelectedPath == "")
+            {
+                EditTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
+                errorfound = true;
+            }
+            if (EditTrip_EnTimePicker.Text == "")
+            {
+                EditTrip_TripEnTime_ErrorLabel.Content = "You must choose end time!";
+                errorfound = true;
+            }
+            if (EditTrip_StTimePicker.Text == "")
+            {
+                EditTrip_TripStTime_ErrorLabel.Content = "You must choose start time!";
+                errorfound = true;
+            }
+            if (errorfound == true)
+            {
+                return;
+            }
+            //string type = "Family";
+            //  DataBase.UpdateTrip(ActiveTrip, EditTrip_TripIDTextbox.Text, EditTrip_TourCombo.Text, type, EditTrip_TripDeptTextbox.Text, EditTrip_TripDestTextbox.Text, double.Parse(EditTrip_TripDiscTextbox.Text),DateTime.Parse( EditTrip_StTimePicker.Text),DateTime.Parse( EditTrip_EnTimePicker.Text), new CustomImage(SelectedPath));
+            //Todo Fe moseba hna fel type
+            //Todo check datetime
+        }
+
+        private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowEditTrip_Canvas(ActiveTrip);
         }
     }
 }
