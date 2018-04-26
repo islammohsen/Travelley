@@ -47,14 +47,10 @@ namespace Travelley
             InitializeComponent();
 
             DataBase.Intialize();
-
-
+            
             CurrentCanvas = Main_Canvas;
 
-            //Trip NewTrip = new Trip("2", DataBase.TourGuides[0], "General", "Alex", "Cairo", 0, new DateTime(2018, 5, 1), new DateTime(2018, 5, 10));
-            //NewTrip.TripImage = new CustomImage("D:/test.png");
-            //DataBase.InsertTrip(NewTrip);
-
+            DataBase.InsertCustomer(c);
             int today = DateTime.Today.Day;
             if (DataBase.Trips.Count != 0)
                 TripOfTheDay = DataBase.Trips[today % DataBase.Trips.Count]; //generate trip based on today's date
@@ -165,9 +161,9 @@ namespace Travelley
             TripFullData_StartDate.Content = t.Start.ToShortDateString();
             TripFullData_EndDate.Content = t.End.ToShortDateString();
             TripFullData_TourGuideName.Content = t.Tour.Name;
-            TripFullData_TripType.Content = t.Type + " Trip";
             TripFullData_TripId.Content = t.TripId;
         }
+
         private void ShowCustomerFullData(Customer c)
         {
             CurrentPanelName_Label.Content = "Customer Full Data";
@@ -180,7 +176,7 @@ namespace Travelley
             CustomerFullData_Id.Content = c.Id;
             CustomerFullData_Email.Content = c.Email;
             CustomerFullData_Gender.Content = c.Gender;
-            CustomerFullData_Language.Content = c.Languages[0].ToString();
+            CustomerFullData_Language.Content = c.Language;
             CustomerFullData_IMG.Source = c.UserImage.GetImage().Source;
             CustomerFullData_PhoneNumber.Content = c.PhoneNumber;
         }
@@ -205,7 +201,7 @@ namespace Travelley
         private void EditCustomerDetails(Customer c)
         {
             string name = c.Name, nationality = c.Nationality, phone_number = c.PhoneNumber,
-                language = c.Languages[0], gender = c.Gender, email = c.Email;
+                language = c.Language, gender = c.Gender, email = c.Email;
 
             if (EditCustomerFullData_Name.Text != "")
                 name = EditCustomerFullData_Name.Text;
@@ -225,7 +221,7 @@ namespace Travelley
         private void EditTourGuideData(TourGuide t)
         {
             string name = t.Name, nationality = t.Nationality, phone_number = t.PhoneNumber,
-                language = t.Languages[0], gender = t.Gender, email = t.Email;
+                language = t.Language, gender = t.Gender, email = t.Email;
 
             if (EditTourGuideFullData_Name.Text != "")
                 name = EditTourGuideFullData_Name.Text;
@@ -306,14 +302,12 @@ namespace Travelley
                 return;
             }
 
-            List<String> languages = new List<String>();
-            languages.Add("English");
-
+            //todo language
             Customer NewCustomer = new Customer(
                 AddCustomer_National_Id_TextBox.Text.ToString(),
                 AddCustomer_Name_TextBox.Text.ToString(),
                 AddCustomer_Nationality_TextBox.Text.ToString(),
-                languages,
+                "English",
                 AddCustomer_Gender_ComboBox.ToString(),
                 AddCustomer_Email_TextBox.Text.ToString(),
                 AddCustomer_Phone_TextBox.ToString()
@@ -453,7 +447,7 @@ namespace Travelley
         private void AddTourGuide(TourGuide t)
         {
             string name = t.Name, nationality = t.Nationality, phone_number = t.PhoneNumber,
-               language = t.Languages[0], gender = t.Gender, email = t.Email;
+               language = t.Language, gender = t.Gender, email = t.Email;
 
             if (AddTourGuideFullData_Name.Text != "")
                 name = AddTourGuideFullData_Name.Text;

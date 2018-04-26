@@ -22,7 +22,6 @@ namespace Travelley
         Image TripImage;
         Label DepartureAndDestination;
         Label FromStartToEndDate;
-        Label TripType;
         Button MoreInfo;
 
        public  TripDisplayCard(Trip t, int index,ref Canvas c, MainWindow m)
@@ -70,16 +69,6 @@ namespace Travelley
             FromStartToEndDate.Content = "From " + t.Start.ToShortDateString() + " to " + t.End.ToShortDateString();
             c.Children.Add(FromStartToEndDate);
 
-            TripType = new Label();
-            Canvas.SetLeft(TripType, 343);
-            Canvas.SetTop(TripType, baseLoc + 124);
-            TripType.FontSize = 30;
-            TripType.FontWeight = FontWeights.Bold;
-            //TripType.FontFamily =//todo;
-            TripType.HorizontalAlignment = HorizontalAlignment.Left;
-            TripType.VerticalAlignment = VerticalAlignment.Center;
-            TripType.Content = t.Type+" Trip";
-            c.Children.Add(TripType);
 
             MoreInfo = new Button();
             MoreInfo.Content = "View More";

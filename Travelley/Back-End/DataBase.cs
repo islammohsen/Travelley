@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using Travelley.Back_End;
+using System.IO;
 
 namespace Travelley
 {
@@ -15,7 +16,7 @@ namespace Travelley
         public static List<Customer> Customers;
         public static List<TourGuide> TourGuides;
         public static List<Trip> Trips;
-        private static SqlConnection Connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Travelley.mdf;Integrated Security=True;Connect Timeout=30");
+        private static SqlConnection Connection;
         private static SqlCommand Command = new SqlCommand();
         private static SqlDataReader Reader;
         private static bool IsIntialized = false;
@@ -24,13 +25,15 @@ namespace Travelley
         {
             if (!IsIntialized)
             {
+                string path = Directory.GetCurrentDirectory();
+
+                Connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Git\\Travelley\\Travelley\\TravelleyData.mdf;Integrated Security=True");
                 Connection.Open();
                 Command.Connection = Connection;
                 IsIntialized = true;
             }
             GetCustomers();
             GetTourGuides();
-            GetLanguages();
             GetTrips();
             TripsTickets();
             Transactions();
@@ -45,7 +48,7 @@ namespace Travelley
             }
         }
 
-        public static void GetCustomers()
+        private static void GetCustomers()
         {
             Customers = new List<Customer>();
 
@@ -63,13 +66,11 @@ namespace Travelley
                 string Name = (string)Reader["Name"];
                 string Nationality = (string)Reader["Nationality"];
                 string Language = (string)Reader["Language"];
-                List<string> Languages = new List<string>();
-                Languages.Add(Language);
                 string Gender = (string)Reader["Gender"];
                 string Email = (string)Reader["Email"];
                 string PhoneNumber = (string)Reader["PhoneNumber"];
                 byte[] CustomerImage = (byte[])Reader["Image"];
-                Customer Obj = new Customer(Id, Name, Nationality, Languages, Gender, Email, PhoneNumber);
+                Customer Obj = new Customer(Id, Name, Nationality, Language, Gender, Email, PhoneNumber);
                 Obj.UserImage = new CustomImage(CustomerImage);
                 Customers.Add(Obj);
             }
@@ -77,7 +78,7 @@ namespace Travelley
             return;
         }
 
-        public static void GetTourGuides()
+        private static void GetTourGuides()
         {
             TourGuides = new List<TourGuide>();
 
@@ -92,11 +93,12 @@ namespace Travelley
                 string Id = (string)Reader["Id"];
                 string Name = (string)Reader["Name"];
                 string Nationality = (string)Reader["Nationality"];
+                string Language = (string)Reader["Language"];
                 string Gender = (string)Reader["Gender"];
                 string Email = (string)Reader["Email"];
                 string PhoneNumber = (string)Reader["PhoneNumber"];
                 byte[] TourGuideImage = (byte[])Reader["Image"];
-                TourGuide Obj = new TourGuide(Id, Name, Nationality, Gender, Email, PhoneNumber);
+                TourGuide Obj = new TourGuide(Id, Name, Nationality, Language, Gender, Email, PhoneNumber);
                 Obj.UserImage = new CustomImage(TourGuideImage);
                 TourGuides.Add(Obj);
             }
@@ -104,12 +106,12 @@ namespace Travelley
             return;
         }
 
-        public static void GetTrips()
+        private static void GetTrips()
         {
             Trips = new List<Trip>();
 
             //created a command
-            Command.CommandText = "SELECT * FROM Trip";
+            Command.CommandText = "SELECT * FROM Trips";
 
             //excuted the command
             Reader = Command.ExecuteReader();
@@ -119,7 +121,6 @@ namespace Travelley
             {
                 String TripId = (string)Reader["TripId"];
                 String TourGuideId = (string)Reader["TourGuideId"];
-                String Type = (string)Reader["Type"];
                 String Depature = (string)Reader["Depature"];
                 String Destination = (string)Reader["Destination"];
                 Double Discount = (Double)Reader["Discount"];
@@ -129,7 +130,7 @@ namespace Travelley
                 TourGuide CurrentTourGuide = SelectTourGuide(TourGuideId);
                 if (CurrentTourGuide == null)
                     continue;
-                Trip Obj = new Trip(TripId, CurrentTourGuide, Type, Depature, Destination, Discount, Start, End);
+                Trip Obj = new Trip(TripId, CurrentTourGuide, Depature, Destination, Discount, Start, End);
                 Obj.TripImage = new CustomImage(TripImage);
                 Trips.Add(Obj);
             }
@@ -137,7 +138,7 @@ namespace Travelley
             return;
         }
 
-        public static void TripsTickets()
+        private static void TripsTickets()
         {
 
             //created a command
@@ -166,7 +167,7 @@ namespace Travelley
             return;
         }
 
-        public static void Transactions()
+        private static void Transactions()
         {
 
             //created a command
@@ -180,38 +181,29 @@ namespace Travelley
                 string CustomerId = (string)Reader["CustomerId"];
                 string TripId = (string)Reader["TripId"];
                 string TypeOfTicket = (string)Reader["TypeOfTicket"];
+                string TypeOfTrip = (string)Reader["TypeOfTrip"];
                 double Price = (double)Reader["Price"];
                 int NumberOfSeats = (int)Reader["NumberOfSeats"];
                 Customer CurrentCustomer = SelectCustomer(CustomerId);
                 Trip CurrentTrip = SelectTrip(TripId);
                 if (CurrentCustomer == null || CurrentTrip == null)
                     continue;
-                Ticket CurrentTicket = new Ticket(SerialNumber, CurrentTrip, TypeOfTicket, Price, NumberOfSeats);
+
+                //gets typeoftrip
+                TripType tripType = null;
+                if (TypeOfTrip == "Family")
+                    tripType = new Family();
+                else if (TypeOfTrip == "Couple")
+                    tripType = new Couple();
+                else if (TypeOfTrip == "Genral")
+                    tripType = new General();
+                else if (TypeOfTrip == "Lonely")
+                    tripType = new Lonely();
+
+
+                Ticket CurrentTicket = new Ticket(SerialNumber, CurrentTrip, TypeOfTicket, tripType, Price, NumberOfSeats);
                 CurrentCustomer.AddTicket(CurrentTicket);
                 CurrentTrip.AddTicket(CurrentTicket);
-            }
-            Reader.Close();
-            return;
-        }
-
-        public static void GetLanguages()
-        {
-            Command.CommandText = "SELECT * FROM TourGuideLanguage";
-
-            Reader = Command.ExecuteReader();
-
-            while (Reader.Read())
-            {
-                string Id = (string)Reader["Id"];
-                string Language = (string)Reader["Language"];
-                foreach (TourGuide C in TourGuides)
-                {
-                    if (C.Id == Id)
-                    {
-                        C.Languages.Add(Language);
-                        break;
-                    }
-                }
             }
             Reader.Close();
             return;
@@ -231,18 +223,18 @@ namespace Travelley
             CurrentCustomer.Id = Id;
             CurrentCustomer.Name = Name;
             CurrentCustomer.Nationality = Nationality;
-            CurrentCustomer.Languages[0] = Language;
+            CurrentCustomer.Language = Language;
             CurrentCustomer.Gender = Gender;
             CurrentCustomer.Email = Email;
             CurrentCustomer.PhoneNumber = PhoneNumber;
             CurrentCustomer.UserImage = CustomerImage;
         }
 
-        public static void UpdateTourGuide(TourGuide CurrentTourGuide, string Id, string Name, string Nationality, string Gender, string Email, string PhoneNumber, CustomImage TourGuideImage)
+        public static void UpdateTourGuide(TourGuide CurrentTourGuide, string Id, string Name, string Nationality, string Language,string Gender, string Email, string PhoneNumber, CustomImage TourGuideImage)
         {
             //update databae
             Command.CommandText = $"UPDATE Customer set Id = '{Id}', set Name = '{Name}', set Nationality = '{Nationality}', " +
-                $"set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}', " +
+                $"set Language = '{Language}',set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}', " +
                 $"set Image = @image where Id = '{CurrentTourGuide.Id}'";
             Command.Parameters.AddWithValue("@image", TourGuideImage.GetByteImage());
             Command.ExecuteNonQuery();
@@ -258,11 +250,11 @@ namespace Travelley
             CurrentTourGuide.UserImage = TourGuideImage;
         }
 
-        public static void UpdateTrip(Trip CurrentTrip, string TripId, string TourGuideId, string Type, string Depature, string Destination, double Discount, DateTime Start, DateTime End, CustomImage TripImage)
+        public static void UpdateTrip(Trip CurrentTrip, string TripId, string TourGuideId, string Depature, string Destination, double Discount, DateTime Start, DateTime End, CustomImage TripImage)
         {
             //update database
             //update Trip table
-            Command.CommandText = $"UPDATE Trips set TripId = '{TripId}', set TourGuideId = '{TourGuideId}', set Type = '{Type}', " +
+            Command.CommandText = $"UPDATE Trips set TripId = '{TripId}', set TourGuideId = '{TourGuideId}', " +
                 $"set Depature = '{Depature}', set Destination = '{Destination}', set Discont = {Discount}, set Start = '{Start}'," +
                 $"set End = '{End}', set Image = @Image  where TripId = '{CurrentTrip.TripId}'";
             Command.Parameters.AddWithValue("@image", TripImage.GetByteImage());
@@ -285,9 +277,7 @@ namespace Travelley
             TourGuide NewTour = SelectTourGuide(TourGuideId);
             CurrentTrip.Tour = NewTour;
             NewTour.Trips.Add(CurrentTrip);
-
-
-            CurrentTrip.Type = Type;
+            
             CurrentTrip.Departure = Depature;
             CurrentTrip.Destination = Destination;
             CurrentTrip.Discount = Discount;
@@ -306,16 +296,10 @@ namespace Travelley
             Command.ExecuteNonQuery();
         }
 
-        public static bool UpdateTourGuideLanguage()
-        {
-            //todo
-            return false;
-        }
-
         public static void InsertCustomer(Customer CurrentCustomer)
         {
             Command.CommandText = $"INSERT INTO Customer values('{ CurrentCustomer.Id }','{CurrentCustomer.Name }' ," +
-                $" '{CurrentCustomer.Nationality}' , '{CurrentCustomer.Languages[0]}' ,'{ CurrentCustomer.Gender}','{CurrentCustomer.Email}'," +
+                $" '{CurrentCustomer.Nationality}' , '{CurrentCustomer.Language}' ,'{ CurrentCustomer.Gender}','{CurrentCustomer.Email}'," +
                 $"'{CurrentCustomer.PhoneNumber}', @image );";
             Command.Parameters.AddWithValue("@image", CurrentCustomer.UserImage.GetByteImage());
             Command.ExecuteNonQuery();
@@ -327,7 +311,7 @@ namespace Travelley
         public static void InsertTourGuide(TourGuide CurrentTourGuide)
         {
             Command.CommandText = $"INSERT INTO TourGuide values('{ CurrentTourGuide.Id }','{CurrentTourGuide.Name }' ," +
-                $" '{CurrentTourGuide.Nationality}','{ CurrentTourGuide.Gender}','{CurrentTourGuide.Email}'," +
+                $" '{CurrentTourGuide.Nationality}', '{CurrentTourGuide.Language}', '{ CurrentTourGuide.Gender}','{CurrentTourGuide.Email}'," +
                 $"'{CurrentTourGuide.PhoneNumber}', @image)";
             Command.Parameters.AddWithValue("@image", CurrentTourGuide.UserImage.GetByteImage());
             Command.ExecuteNonQuery();
@@ -338,7 +322,7 @@ namespace Travelley
 
         public static void InsertTrip(Trip CurrentTrip)
         {
-            Command.CommandText = $"INSERT INTO Trip values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Type}', '{CurrentTrip.Departure}', " +
+            Command.CommandText = $"INSERT INTO Trips values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Departure}', " +
                 $"'{CurrentTrip.Destination}', {CurrentTrip.Discount}, '{CurrentTrip.Start.ToString()}', '{CurrentTrip.End.ToString()}'," +
                 $"@image)";
             Command.Parameters.AddWithValue("@image", CurrentTrip.TripImage.GetByteImage());
@@ -359,13 +343,6 @@ namespace Travelley
         {
             Command.CommandText = $"INSERT INTO Transactions values( '{SerialNumber}', '{CustomerId}', '{TripId}'," +
                 $" '{Type}', {Price}, {NumberOfSeats} )";
-            Command.ExecuteNonQuery();
-            return;
-        }
-
-        public static void InsertLanguage(string TourGuideId, string Language)
-        {
-            Command.CommandText = $"INSERT INTO TourGuideLanguage values('{TourGuideId}', '{Language}')";
             Command.ExecuteNonQuery();
             return;
         }

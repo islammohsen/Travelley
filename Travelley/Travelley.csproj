@@ -84,6 +84,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Back-End\TripType.cs" />
     <Compile Include="FrontEnd\TicketsTypesCard.cs" />
     <Compile Include="FrontEnd\TripDisplayCard.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -130,19 +131,20 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="TravelleyData.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TravelleyData_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>TravelleyData.mdf</DependentUpon>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="FrontEnd\Images\Logo.png" />
     <Resource Include="FrontEnd\Images\Logo 2.png" />
     <Resource Include="FrontEnd\Images\Logo 3.jpg" />
     <Resource Include="FrontEnd\Images\White.png" />
-    <Content Include="Travelley.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Travelley_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Travelley.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

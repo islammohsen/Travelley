@@ -1,7 +1,5 @@
 E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.exe
 D:\Git\Travelley\Travelley\bin\Debug\Travelley.exe
-D:\Git\Travelley\Travelley\bin\Debug\Travelley.mdf
-D:\Git\Travelley\Travelley\bin\Debug\Travelley_log.ldf
 D:\Git\Travelley\Travelley\bin\Debug\Travelley.exe.config
 D:\Git\Travelley\Travelley\obj\Debug\MainWindow.g.cs
 D:\Git\Travelley\Travelley\obj\Debug\App.g.cs
@@ -69,3 +67,5 @@ E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.pdb
 D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
 E:\Projects\OOP\Travelley\Travelley\obj\Debug\MainWindow.baml
 D:\Git\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
+D:\Git\Travelley\Travelley\bin\Debug\TravelleyData.mdf
+D:\Git\Travelley\Travelley\bin\Debug\TravelleyData_log.ldf

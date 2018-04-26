@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Travelley.Back_End;
 
 namespace Travelley
 {
@@ -13,12 +14,14 @@ namespace Travelley
         private double price;
         private Trip ticketTrip;
         private int numberOfSeats;
-        
-        public Ticket(string SerialNumber, Trip TicketTrip, string TicketType, double Price, int NumberOfSeats)
+        private TripType tripType;
+
+        public Ticket(string SerialNumber, Trip TicketTrip, string TicketType, TripType tripType, double Price, int NumberOfSeats)
         {
             this.SerialNumber = SerialNumber;
             this.TicketTrip = TicketTrip;
             this.TicketType = TicketType;
+            this.tripType = tripType;
             this.Price = Price;
             this.NumberOfSeats = NumberOfSeats;
         }

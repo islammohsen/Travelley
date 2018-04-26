@@ -15,16 +15,16 @@ namespace Travelley
 
         internal List<Trip> Trips { get => trips; set => trips = value; }
 
-        public TourGuide(string Id, string Name, string Nationality, string Gender, string Email, string PhoneNumber)
+        public TourGuide(string Id, string Name, string Nationality, string Language,string Gender, string Email, string PhoneNumber)
         {
             this.Id = Id;
             this.Name = Name;
             this.Nationality = Nationality;
-            this.Languages = new List<string>();
+            this.Language = Language;
             this.Gender = Gender;
+            this.Email = Email;
             this.PhoneNumber = PhoneNumber;
             Trips = new List<Trip>();
-            this.Email = Email;
         }
 
         void AddTrip(Trip obj)

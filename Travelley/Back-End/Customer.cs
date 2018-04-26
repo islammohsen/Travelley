@@ -22,17 +22,17 @@ namespace Travelley
         public int NumberOfTrips { get => NumberOfTrips; }
         public bool Discount { get => Discount; }
 
-        public Customer(string Id, string Name, string Nationality, List<string> Languages, string Gender, string Email, string PhoneNumber)
+        public Customer(string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber)
         {
             this.Id = Id;
             this.Name = Name;
             this.Nationality = Nationality;
-            this.Languages = Languages;
+            this.Language = Language;
             this.Gender = Gender;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
-            this.discount = false;
-            this.Tickets = new List<Ticket>();
+            discount = false;
+            Tickets = new List<Ticket>();
             Mark = new HashSet<Trip>();
         }
 
@@ -46,9 +46,10 @@ namespace Travelley
 
         }
 
-        public bool ReserveTicket(Trip obj, string Type)
+        public void ReserveTicket(Trip CurrentTrip, TripType tripType, string TicketType, int NumberOfOrderedSeats)
         {
-            return true;
+            Ticket obj = CurrentTrip.ReserveTicket(tripType, TicketType, NumberOfOrderedSeats);
+            Tickets.Add(obj);
         }
 
         public List<Ticket> GetTickets()

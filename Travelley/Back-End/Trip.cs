@@ -17,7 +17,6 @@ namespace Travelley
     {
         private string tripId;
         private TourGuide tour;
-        private string type;
         private string departure;
         private string destination;
         private Double discount;
@@ -33,7 +32,6 @@ namespace Travelley
         public string Destination { get => destination; set => destination = value; }
         internal TourGuide Tour { get => tour; set => tour = value; }
         public double Discount { get => discount; set => discount = value; }
-        public string Type { get => type; set => type = value; }
         public string TripId { get => tripId; set => tripId = value; }
         internal List<Ticket> Tickets { get => tickets; set => tickets = value; }
         public Dictionary<string, int> NumberOfSeats { get => numberOfSeats; set => numberOfSeats = value; }
@@ -46,11 +44,10 @@ namespace Travelley
             PriceOfSeat[Type] = Price;
         }
 
-        public Trip(string TripId, TourGuide Tour, string Type, string Depature, string Destination, Double Discount, DateTime Start, DateTime End)
+        public Trip(string TripId, TourGuide Tour, string Depature, string Destination, Double Discount, DateTime Start, DateTime End)
         {
             this.tripId = TripId;
             this.tour = Tour;
-            this.type = Type;
             this.departure = Depature;
             this.destination = Destination;
             this.discount = Discount;
@@ -67,17 +64,13 @@ namespace Travelley
             return;
         }
 
-        public Ticket ReserveTicket(string Type, int NumberOfOrderedSeats)
+        public Ticket ReserveTicket(TripType tripType,  string TicketType, int NumberOfOrderedSeats)
         {
-            if (NumberOfSeats[Type] == 0 || NumberOfOrderedSeats > NumberOfSeats[Type])
-                return null;
-
-
             string serial = Guid.NewGuid().ToString();
-            NumberOfSeats[Type] -= NumberOfOrderedSeats;
+            NumberOfSeats[TicketType] -= NumberOfOrderedSeats;
 
-            double TicketPrice = PriceOfSeat[Type] * NumberOfOrderedSeats * (1.0 - discount);
-            Ticket T = new Ticket(serial, this, Type, TicketPrice, NumberOfOrderedSeats);
+            double TicketPrice = PriceOfSeat[TicketType] * NumberOfOrderedSeats * (1.0 - discount);
+            Ticket T = new Ticket(serial, this, TicketType, tripType, TicketPrice, NumberOfOrderedSeats);
             return T;
         }
 

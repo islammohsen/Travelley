@@ -15,7 +15,7 @@ namespace Travelley
         private string gender;
         private string email;
         private string phoneNumber;
-        private List<string> languages;
+        private string language;
         private string nationality;
 
         public string Id { get => id; set => id = value; }
@@ -23,8 +23,9 @@ namespace Travelley
         public string Gender { get => gender; set => gender = value; }
         public string Email { get => email; set => email = value; }
         public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
-        public List<string> Languages { get => languages; set => languages = value; }
         public string Nationality { get => nationality; set => nationality = value; }
+        public string Language { get => language; set => language = value; }
+
         public CustomImage UserImage;
     }
 }
