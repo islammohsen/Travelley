@@ -1,6 +1,8 @@
-E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.exe
-D:\Git\Travelley\Travelley\bin\Debug\Travelley.exe
+D:\Git\Travelley\Travelley\bin\Debug\TravelleyData.mdf
+D:\Git\Travelley\Travelley\bin\Debug\TravelleyData_log.ldf
 D:\Git\Travelley\Travelley\bin\Debug\Travelley.exe.config
+D:\Git\Travelley\Travelley\bin\Debug\Travelley.exe
+D:\Git\Travelley\Travelley\bin\Debug\Travelley.pdb
 D:\Git\Travelley\Travelley\obj\Debug\MainWindow.g.cs
 D:\Git\Travelley\Travelley\obj\Debug\App.g.cs
 D:\Git\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs
@@ -13,59 +15,3 @@ D:\Git\Travelley\Travelley\obj\Debug\Travelley.csproj.GenerateResource.cache
 D:\Git\Travelley\Travelley\obj\Debug\Travelley.csproj.CoreCompileInputs.cache
 D:\Git\Travelley\Travelley\obj\Debug\Travelley.exe
 D:\Git\Travelley\Travelley\obj\Debug\Travelley.pdb
-D:\Git\Travelley\Travelley\bin\Debug\Travelley.pdb
-D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.mdf
-D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley_log.ldf
-D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.exe.config
-D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.exe
-D:\OOP Project\Travelley\Travelley\bin\Debug\Travelley.pdb
-D:\OOP Project\Travelley\Travelley\obj\Debug\MainWindow.g.cs
-D:\OOP Project\Travelley\Travelley\obj\Debug\App.g.cs
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.cache
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.lref
-D:\OOP Project\Travelley\Travelley\obj\Debug\MainWindow.baml
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.g.resources
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.Properties.Resources.resources
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.csproj.GenerateResource.Cache
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.exe
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.pdb
-E:\Work\OOP project\Travelley\Travelley\bin\Debug\Travelley.mdf
-E:\Work\OOP project\Travelley\Travelley\bin\Debug\Travelley_log.ldf
-E:\Work\OOP project\Travelley\Travelley\bin\Debug\Travelley.exe.config
-E:\Work\OOP project\Travelley\Travelley\bin\Debug\Travelley.exe
-E:\Work\OOP project\Travelley\Travelley\bin\Debug\Travelley.pdb
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\MainWindow.g.cs
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\App.g.cs
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.cache
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.lref
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\MainWindow.baml
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley.g.resources
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley.Properties.Resources.resources
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley.csproj.GenerateResource.Cache
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley.csproj.CoreCompileInputs.cache
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley.exe
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley.pdb
-E:\Work\OOP project\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
-E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.mdf
-E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley_log.ldf
-E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.exe.config
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\MainWindow.g.cs
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\App.g.cs
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_Content.g.cs
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.cache
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley_MarkupCompile.lref
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.g.resources
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.Properties.Resources.resources
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.csproj.GenerateResource.cache
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.csproj.CoreCompileInputs.cache
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.exe
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.pdb
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
-E:\Projects\OOP\Travelley\Travelley\bin\Debug\Travelley.pdb
-D:\OOP Project\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
-E:\Projects\OOP\Travelley\Travelley\obj\Debug\MainWindow.baml
-D:\Git\Travelley\Travelley\obj\Debug\Travelley.csprojResolveAssemblyReference.cache
-D:\Git\Travelley\Travelley\bin\Debug\TravelleyData.mdf
-D:\Git\Travelley\Travelley\bin\Debug\TravelleyData_log.ldf

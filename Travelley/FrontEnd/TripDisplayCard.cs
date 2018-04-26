@@ -90,6 +90,7 @@ namespace Travelley
         private void MoreInfo_Click(object sender, RoutedEventArgs e)
         {
             window.ShowTripFullData(FullTripData);
+            window.ActiveTrip = FullTripData;
         }
         
     }
