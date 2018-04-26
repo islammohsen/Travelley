@@ -350,10 +350,10 @@ namespace Travelley
             return;
         }
 
-        public static void InsertTransactions(string SerialNumber, string CustomerId, string TripId, string Type, double Price, int NumberOfSeats)
+        public static void InsertTransactions(string SerialNumber, string CustomerId, string TripId, string TypeOfTicket, string TypeOfTrip, double Price, int NumberOfSeats)
         {
             Command.CommandText = $"INSERT INTO Transactions values( '{SerialNumber}', '{CustomerId}', '{TripId}'," +
-                $" '{Type}', {Price}, {NumberOfSeats} )";
+                $" '{TypeOfTicket}', '{TypeOfTrip}', {Price}, {NumberOfSeats} )";
             Command.ExecuteNonQuery();
             return;
         }
