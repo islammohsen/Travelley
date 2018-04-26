@@ -20,14 +20,25 @@ namespace Travelley
         private static SqlCommand Command = new SqlCommand();
         private static SqlDataReader Reader;
         private static bool IsIntialized = false;
+        
+        private static string GetPath()
+        {
+            string path = Directory.GetCurrentDirectory();
+            char[] c = { '\\', '\\' };
+            string[] paths = path.Split(c);
+            path = "";
+            for (int i = 0; i < paths.Length - 2; i++)
+                path += paths[i] + "\\";
+            path += "TravelleyData.mdf";
+            return path;
+        }
 
         public static void Intialize()
         {
             if (!IsIntialized)
             {
-                string path = Directory.GetCurrentDirectory();
-
-                Connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Git\\Travelley\\Travelley\\TravelleyData.mdf;Integrated Security=True");
+                string path = GetPath();
+                Connection = new SqlConnection($"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={path};Integrated Security=True");
                 Connection.Open();
                 Command.Connection = Connection;
                 IsIntialized = true;
