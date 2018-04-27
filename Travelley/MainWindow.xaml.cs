@@ -419,6 +419,13 @@ namespace Travelley
         }
 
 
+        private void ShowAddCustomerCanvas()
+        {
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = AddCustomer_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Add Customer";
+        }
 
         private void AddCustomer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -428,8 +435,9 @@ namespace Travelley
             bool email = String.IsNullOrEmpty(AddCustomer_Email_TextBox.Text);
             bool nationality = String.IsNullOrEmpty(AddCustomer_Nationality_TextBox.Text);
             bool gender = String.IsNullOrEmpty(AddCustomer_Gender_ComboBox.Text);
+            bool language = String.IsNullOrEmpty(AddCustomer_Language_TextBox.Text);
 
-            if (NationalId || name || phone || email || nationality || gender)
+            if (NationalId || name || phone || email || nationality || gender || language)
             {
                 AddCustomer_Error_Label.Content = "Please Fill All Fields!";
                 return;
@@ -441,12 +449,12 @@ namespace Travelley
                 return;
             }
 
-            //todo language
+            
             Customer NewCustomer = new Customer(
                 AddCustomer_National_Id_TextBox.Text.ToString(),
                 AddCustomer_Name_TextBox.Text.ToString(),
                 AddCustomer_Nationality_TextBox.Text.ToString(),
-                "English",
+                AddCustomer_Language_TextBox.Text.ToString(),
                 AddCustomer_Gender_ComboBox.ToString(),
                 AddCustomer_Email_TextBox.Text.ToString(),
                 AddCustomer_Phone_TextBox.ToString()
@@ -454,7 +462,9 @@ namespace Travelley
 
             DataBase.InsertCustomer(NewCustomer);
 
-            AddCustomer_Error_Label.Content = "Customer Added Successfuly";
+            MessageBox.Show("Customer Added Successfully");
+
+            //TODO Show Reserve ticket canvas
 
         }
 
@@ -866,7 +876,21 @@ namespace Travelley
             //TODO show New/Exist customer Canvas
         }
 
-        
+        private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO view search for existing Customer Canvas
+        }
+
+        private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)
+        {
+           //TODO View Add Customer Canvas
+        }
+
+
+        private void GetCustomerById_Done_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO setActiveCustomer By selectCustomer from database
+        }
     }
 }
 

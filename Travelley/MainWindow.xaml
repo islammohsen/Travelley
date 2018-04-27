@@ -151,25 +151,26 @@
         </Canvas>
         <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
 
-        <Canvas x:Name="AddCustomer_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="305" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
-            <Label Content="Fill Customer Data" Canvas.Left="289" Canvas.Top="118" Height="164" Width="443" FontSize="48" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
-            <Label Content="Name" Canvas.Left="49" Canvas.Top="275" FontSize="36"/>
-            <Label Content="Email" Canvas.Left="49" Canvas.Top="387" FontSize="36"/>
-            <Label Content="National Id" Canvas.Left="49" Canvas.Top="495" FontSize="36"/>
-            <Label Content="Phone" Canvas.Left="567" Canvas.Top="495" FontSize="36" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Height="84" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
-            <Label Content="Nationality" Canvas.Left="567" Canvas.Top="389" FontSize="36"/>
-            <ComboBox x:Name="AddCustomer_Gender_ComboBox" Canvas.Left="788" Canvas.Top="294" Width="226" Height="39" SelectionChanged="ComboBox_SelectionChanged" FontSize="18">
+        <Canvas x:Name="AddCustomer_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="305" Background="#E1DDDF" ForceCursor="True" >
+            <Label Content="Name" Canvas.Left="49" Canvas.Top="171" FontSize="36"/>
+            <Label Content="Email" Canvas.Left="49" Canvas.Top="267" FontSize="36"/>
+            <Label Content="ID" Canvas.Left="49" Canvas.Top="375" FontSize="36"/>
+            <Label Content="Phone" Canvas.Left="47" Canvas.Top="479" FontSize="36" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Height="84" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+            <Label Content="Nationality" Canvas.Left="547" Canvas.Top="277" FontSize="36"/>
+            <Label Content="Language" Canvas.Left="547" Canvas.Top="385" FontSize="36"/>
+            <ComboBox x:Name="AddCustomer_Gender_ComboBox" Canvas.Left="748" Canvas.Top="170" Width="226" Height="40" SelectionChanged="ComboBox_SelectionChanged" FontSize="18">
                 <ComboBoxItem FontSize="18">Male</ComboBoxItem>
                 <ComboBoxItem FontSize="18">Female</ComboBoxItem>
             </ComboBox>
-            <TextBox x:Name="AddCustomer_National_Id_TextBox" Height="40" Canvas.Left="289" TextWrapping="Wrap" Canvas.Top="513" Width="226" FontSize="18"/>
-            <Label x:Name="___No_Name_" Content="Gender" Canvas.Left="567" Canvas.Top="275" FontSize="36"/>
+            <TextBox x:Name="AddCustomer_National_Id_TextBox" Height="40" Canvas.Left="215" TextWrapping="Wrap" Canvas.Top="393" Width="226" FontSize="18"/>
+            <Label x:Name="___No_Name_" Content="Gender" Canvas.Left="547" Canvas.Top="163" FontSize="36"/>
             <Button x:Name="AddCustomer_AddCustomer_Button" Content="Add Customer" Canvas.Left="429" Canvas.Top="598" Width="164" Height="50" FontSize="24" Click="AddCustomer_AddCustomer_Button_Click"/>
             <Label x:Name="AddCustomer_Error_Label" Content="" Canvas.Left="628" Canvas.Top="617" Width="247" FontSize="16"/>
-            <TextBox x:Name="AddCustomer_Email_TextBox" Height="40" Canvas.Left="291" TextWrapping="Wrap" Canvas.Top="402" Width="226" FontSize="20"/>
-            <TextBox x:Name="AddCustomer_Name_TextBox" Height="41" Canvas.Left="291" TextWrapping="Wrap" Canvas.Top="285" Width="226" FontSize="20" AutomationProperties.Name="CustomerName_TextBox"/>
-            <TextBox x:Name="AddCustomer_Nationality_TextBox" Height="40" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="402" Width="226" FontSize="18"/>
-            <TextBox x:Name="AddCustomer_Phone_TextBox" Height="41" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="520" Width="226" FontSize="18"/>
+            <TextBox x:Name="AddCustomer_Email_TextBox" Height="40" Canvas.Left="215" TextWrapping="Wrap" Canvas.Top="285" Width="226" FontSize="20"/>
+            <TextBox x:Name="AddCustomer_Name_TextBox" Height="41" Canvas.Left="215" TextWrapping="Wrap" Canvas.Top="181" Width="226" FontSize="20" AutomationProperties.Name="CustomerName_TextBox"/>
+            <TextBox x:Name="AddCustomer_Nationality_TextBox" Height="40" Canvas.Left="748" TextWrapping="Wrap" Canvas.Top="286" Width="226" FontSize="18"/>
+            <TextBox x:Name="AddCustomer_Phone_TextBox" Height="41" Canvas.Left="215" TextWrapping="Wrap" Canvas.Top="502" Width="226" FontSize="18"/>
+            <TextBox x:Name="AddCustomer_Language_TextBox" Height="40" Canvas.Left="748" TextWrapping="Wrap" Canvas.Top="402" Width="226" FontSize="18"/>
         </Canvas>
 
         <Canvas x:Name="TourGuides_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
@@ -283,7 +284,7 @@
             <Label  x:Name="AddTourGuide_Error__Image" Content="" FontSize="26" FontWeight="Bold" FontFamily="Roboto" Foreground="Red" Height="43" Canvas.Left="324" Canvas.Top="615"/>
 
         </Canvas>
-        <Canvas x:Name="TripFullData_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="0.8" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" >
+        <Canvas x:Name="TripFullData_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="0.8" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
 
             <Image x:Name="TripFullData_IMG" Height="210" Canvas.Left="52" Canvas.Top="166" Width="221" Stretch="Fill" Cursor="None"/>
             <Label x:Name="TripFullData_DummyLabel1" Content="Trip id:" Canvas.Left="52" Canvas.Top="415" Height="56" Width="128" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
@@ -376,6 +377,15 @@
             <Image Height="116" Width="296" Source="FrontEnd/Images/White.png"/>
         </Button>
         <Label x:Name="CurrentPanelName_Label" Content="Home Page" Canvas.Left="311" Canvas.Top="25" Height="89" Width="491" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+        <Canvas x:Name="NewOrExistingCustomer_Canvas" Height="555" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="119" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+            <Button x:Name="NewOrExistingCustomer_Existing_Button" Content="Existing Customer" Canvas.Left="55" Canvas.Top="219" Width="406" Height="108" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="NewOrExistingCustomer_Existing_Button_Click" />
+            <Button x:Name="NewOrExistingCustomer_New_Button" Content="New Customer" Canvas.Left="535" Canvas.Top="219" Width="406" Height="108" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="NewOrExistingCustomer_New_Button_Click" />
+        </Canvas>
+        <Canvas x:Name="GetCustomerById_Canvas" Height="555" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="119.2" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" >
+            <Label x:Name="GetCustomerById_Label" Content="Enter Customer ID" Canvas.Left="247" Canvas.Top="150" Height="89" Width="392" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <TextBox x:Name="GetCustomerById_CustomerId_TextBox" Height="54" Canvas.Left="156" TextWrapping="Wrap" Canvas.Top="244" Width="603" FontSize="40" FontFamily="Roboto"/>
+            <Button x:Name="GetCustomerById_Done_Button" Content="Done" Canvas.Left="356" Canvas.Top="352" Width="189" Height="64" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="GetCustomerById_Done_Button_Click" />
+        </Canvas>
 
     </Canvas>
 </Window>
