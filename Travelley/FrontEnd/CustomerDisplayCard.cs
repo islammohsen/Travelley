@@ -30,7 +30,7 @@ namespace Travelley.FrontEnd
 
             //creating BackGroung
             BackGround = new Rectangle();
-            BackGround.Width = 700;
+            BackGround.Width = 800;
             BackGround.Height = 220;
             Canvas.SetLeft(BackGround, 111);
             Canvas.SetTop(BackGround, BaseLoc);
@@ -68,7 +68,7 @@ namespace Travelley.FrontEnd
 
             this.View_More = new Button();
             this.View_More.Content = "View More";
-            Canvas.SetLeft(this.View_More, 650);
+            Canvas.SetLeft(this.View_More, 750);
             Canvas.SetTop(this.View_More, BaseLoc + 150);
             View_More.Width = 152;
             View_More.Height = 48;

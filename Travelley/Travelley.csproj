@@ -87,6 +87,7 @@
     <Compile Include="Back-End\TripType.cs" />
     <Compile Include="FrontEnd\CustomerDisplayCard.cs" />
     <Compile Include="FrontEnd\TicketsTypesCard.cs" />
+    <Compile Include="FrontEnd\TourGuideDisplayCard.cs" />
     <Compile Include="FrontEnd\TripDisplayCard.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

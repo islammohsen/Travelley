@@ -172,14 +172,13 @@
             <TextBox x:Name="AddCustomer_Phone_TextBox" Height="41" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="520" Width="226" FontSize="18"/>
         </Canvas>
 
-        <Canvas x:Name="TourGuides_Canvas"  Height="560" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" IsVisibleChanged="TourGuides_Canvas_IsVisibleChanged">
-            <Image x:Name="TourGuide_IMG" Height="307" Canvas.Left="170" Canvas.Top="240" Width="779" Source="C:/Users/Hadil/Desktop/bali-tour-package (1).png" MouseLeftButtonDown="TourGuide_IMG_MouseLeftButtonDown" Cursor="Hand" />
+        <Canvas x:Name="TourGuides_Canvas"  Height="560" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Button x:Name="TourGuides_AddTourGuide_Button" Content="Add TourGuide" Foreground="White" Background="#e87e31"  Canvas.Left="713" Canvas.Top="12" Height="77" FontSize="36" FontWeight="Bold" Width="300"/>
         </Canvas>
 
         <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         
-        <ScrollViewer x:Name="Customers_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden" IsVisibleChanged="Customers_ScrollViewer_IsVisibleChanged">
+        <ScrollViewer x:Name="Customers_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="Customers_Canvas"  Height="149" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
                 <Button x:Name="Customer_AddCustomer_Button" Content="Add Customer" Foreground="White" Background="#e87e31" Canvas.Left="709" Canvas.Top="14" Height="77" FontSize="36" FontWeight="Bold" Width="309"/>
             </Canvas>
