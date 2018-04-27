@@ -143,7 +143,7 @@ namespace Travelley.FrontEnd
             SaveButton.Cursor = Cursors.Hand;
             CurrentCanvas.Children.Add(SaveButton);
 
-            CurrentCanvas.Height = index * 240;
+            CurrentCanvas.Height = BaseLoc + 175;
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)

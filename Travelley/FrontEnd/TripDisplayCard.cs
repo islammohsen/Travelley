@@ -84,7 +84,7 @@ namespace Travelley
             MoreInfo.Cursor = Cursors.Hand;
             c.Children.Add(MoreInfo);
             
-            c.Height =index* 230;
+            c.Height = baseLoc + 230;
         }
 
         private void MoreInfo_Click(object sender, RoutedEventArgs e)

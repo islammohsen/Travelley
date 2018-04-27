@@ -164,13 +164,15 @@
             </ComboBox>
             <TextBox x:Name="AddCustomer_National_Id_TextBox" Height="40" Canvas.Left="215" TextWrapping="Wrap" Canvas.Top="289" Width="226" FontSize="18"/>
             <Label x:Name="___No_Name_" FontWeight="Bold" FontFamily="Roboto" Content="Gender" Canvas.Left="547" Canvas.Top="59" FontSize="36"/>
-            <Button x:Name="AddCustomer_AddCustomer_Button" Content="Add Customer" Foreground="White" Background="#e87e31" Width="238"  Canvas.Left="713" Canvas.Top="486" Height="50" FontSize="30" Click="AddCustomer_AddCustomer_Button_Click"/>
+            <Button x:Name="AddCustomer_AddCustomer_Button" Content="Add Customer" Foreground="White" Background="#e87e31" Width="238"  Canvas.Left="748" Canvas.Top="500" Height="50" FontSize="30" Click="AddCustomer_AddCustomer_Button_Click"/>
             <Label x:Name="AddCustomer_Error_Label" Content="" Canvas.Left="252" Canvas.Top="513" Width="247" FontSize="16"/>
             <TextBox x:Name="AddCustomer_Email_TextBox" Height="40" Canvas.Left="215" TextWrapping="Wrap" Canvas.Top="181" Width="226" FontSize="20"/>
             <TextBox x:Name="AddCustomer_Name_TextBox" Height="41" Canvas.Left="215" TextWrapping="Wrap" Canvas.Top="77" Width="226" FontSize="20" AutomationProperties.Name="CustomerName_TextBox"/>
             <TextBox x:Name="AddCustomer_Nationality_TextBox" Height="40" Canvas.Left="748" TextWrapping="Wrap" Canvas.Top="182" Width="226" FontSize="18"/>
             <TextBox x:Name="AddCustomer_Phone_TextBox" Height="41" Canvas.Left="215" TextWrapping="Wrap" Canvas.Top="398" Width="226" FontSize="18"/>
             <TextBox x:Name="AddCustomer_Language_TextBox" Height="40" Canvas.Left="748" TextWrapping="Wrap" Canvas.Top="298" Width="226" FontSize="18"/>
+            <Label Content="Photo" FontWeight="Bold" FontFamily="Roboto" Canvas.Left="547" Canvas.Top="389" FontSize="36"/>
+            <Button x:Name="AddCustomer_Browse_Button" Content="Browse" Foreground="Black"  Width="238"  Canvas.Left="748" Canvas.Top="392" Height="50" FontSize="30" Click="AddCustomer_Browse_Button_Click"/>
         </Canvas>
 
         <ScrollViewer x:Name="TourGuides_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
@@ -183,7 +185,7 @@
 
         <ScrollViewer x:Name="Customers_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="Customers_Canvas"  Height="149" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
-                <Button x:Name="Customer_AddCustomer_Button" Content="Add Customer" Foreground="White" Background="#e87e31" Canvas.Left="709" Canvas.Top="14" Height="77" FontSize="36" FontWeight="Bold" Width="309"/>
+                <Button x:Name="Customer_AddCustomer_Button" Content="Add Customer" Foreground="White" Background="#e87e31" Canvas.Left="709" Canvas.Top="14" Height="77" FontSize="36" FontWeight="Bold" Width="309" Click="Customer_AddCustomer_Button_Click"/>
             </Canvas>
         </ScrollViewer>
 
