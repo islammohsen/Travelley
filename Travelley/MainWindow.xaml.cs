@@ -837,9 +837,57 @@ namespace Travelley
             CurrentPanelName_Label.Content = Header;
         }
 
+        private void ShowNewOrExistingCustomerCanvas()
+        {
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = NewOrExistingCustomer_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Set Customer Status";
+        }
+
         private void TourGuides_AddTourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowAddTourGuideCanvas();
+        }
+
+        private void TripFullData_ReserveTrip_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowNewOrExistingCustomerCanvas();
+        }
+        private void GetCustomerById_Done_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Customer SelectedCustomer = DataBase.SelectCustomer(GetCustomerById_CustomerId_TextBox.Text.ToString());
+            if (SelectedCustomer == null)
+            {
+                MessageBox.Show("Customer id invalid, Please Enter valid one");
+                return;
+            }
+            ActiveCustomer = SelectedCustomer;
+            //TODO show Reserve Ticket Panel   
+        }
+        private void ShowGetCustomerById()
+        {
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = GetCustomerById_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Get Customer By Id";
+        }
+        private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowGetCustomerById();
+        }
+        private void ShowAddCustomerCanvas()
+        {
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = AddCustomer_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Add Customer";
+        }
+
+        private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO View Add Customer Canvas
+            ShowAddCustomerCanvas();
         }
     }
 }

@@ -180,13 +180,13 @@
         </ScrollViewer>
 
         <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
-        
+
         <ScrollViewer x:Name="Customers_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="Customers_Canvas"  Height="149" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
                 <Button x:Name="Customer_AddCustomer_Button" Content="Add Customer" Foreground="White" Background="#e87e31" Canvas.Left="709" Canvas.Top="14" Height="77" FontSize="36" FontWeight="Bold" Width="309"/>
             </Canvas>
         </ScrollViewer>
-        
+
         <Canvas x:Name="CustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Button x:Name="CustomerFullData_Edit_Button" Content="Edit Customer" Canvas.Left="468" Canvas.Top="607" Width="256" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="CustomerFullData_Edit_Button_Click"/>
             <Button x:Name="CustomerFullData_Delete_Button" Content="Delete Customer" Canvas.Left="751" Canvas.Top="607" Width="277" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
@@ -386,7 +386,7 @@
             <Button x:Name="NewOrExistingCustomer_Existing_Button" Content="Existing Customer" Canvas.Left="55" Canvas.Top="219" Width="406" Height="108" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="NewOrExistingCustomer_Existing_Button_Click" />
             <Button x:Name="NewOrExistingCustomer_New_Button" Content="New Customer" Canvas.Left="535" Canvas.Top="219" Width="406" Height="108" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="NewOrExistingCustomer_New_Button_Click" />
         </Canvas>
-        <Canvas x:Name="GetCustomerById_Canvas" Height="555" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="119.2" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" >
+        <Canvas x:Name="GetCustomerById_Canvas" Height="555" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="119" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" >
             <Label x:Name="GetCustomerById_Label" Content="Enter Customer ID" Canvas.Left="247" Canvas.Top="150" Height="89" Width="392" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <TextBox x:Name="GetCustomerById_CustomerId_TextBox" Height="54" Canvas.Left="156" TextWrapping="Wrap" Canvas.Top="244" Width="603" FontSize="40" FontFamily="Roboto"/>
             <Button x:Name="GetCustomerById_Done_Button" Content="Done" Canvas.Left="356" Canvas.Top="352" Width="189" Height="64" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="GetCustomerById_Done_Button_Click" />
