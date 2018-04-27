@@ -860,6 +860,13 @@ namespace Travelley
         
             ShowEditTrip_Canvas(ActiveTrip);
         }
+
+        private void TripFullData_ReserveTrip_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO show New/Exist customer Canvas
+        }
+
+        
     }
 }
 
