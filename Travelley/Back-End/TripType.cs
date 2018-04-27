@@ -62,7 +62,7 @@ namespace Travelley.Back_End
     {
         public Lonely()
         {
-            name = "Normies";
+            name = "Lonely";
             minNumberOfSeats = 1;
             maxNumberOfSeats = 1;
         }

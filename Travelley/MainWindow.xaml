@@ -172,15 +172,19 @@
             <TextBox x:Name="AddCustomer_Phone_TextBox" Height="41" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="520" Width="226" FontSize="18"/>
         </Canvas>
 
-        <Canvas x:Name="TourGuides_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+        <Canvas x:Name="TourGuides_Canvas"  Height="560" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" IsVisibleChanged="TourGuides_Canvas_IsVisibleChanged">
             <Image x:Name="TourGuide_IMG" Height="307" Canvas.Left="170" Canvas.Top="240" Width="779" Source="C:/Users/Hadil/Desktop/bali-tour-package (1).png" MouseLeftButtonDown="TourGuide_IMG_MouseLeftButtonDown" Cursor="Hand" />
-            <Button Content="AddTourGuide" Canvas.Left="439" Canvas.Top="144" Width="186" Height="64" FontWeight="Bold" FontSize="24" FontFamily="Roboto" Click="Button_Click_1"/>
+            <Button x:Name="TourGuides_AddTourGuide_Button" Content="Add TourGuide" Foreground="White" Background="#e87e31"  Canvas.Left="713" Canvas.Top="12" Height="77" FontSize="36" FontWeight="Bold" Width="300"/>
         </Canvas>
 
         <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
-        <Canvas x:Name="Customers_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
-            <Image x:Name="Customer_IMG" Height="307" Canvas.Left="170" Canvas.Top="240" Width="779" Source="FrontEnd/Images/Logo 3.jpg" MouseLeftButtonDown="Customer_IMG_MouseLeftButtonDown" Cursor="Hand" />
-        </Canvas>
+        
+        <ScrollViewer x:Name="Customers_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden" IsVisibleChanged="Customers_ScrollViewer_IsVisibleChanged">
+            <Canvas x:Name="Customers_Canvas"  Height="149" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+                <Button x:Name="Customer_AddCustomer_Button" Content="Add Customer" Foreground="White" Background="#e87e31" Canvas.Left="709" Canvas.Top="14" Height="77" FontSize="36" FontWeight="Bold" Width="309"/>
+            </Canvas>
+        </ScrollViewer>
+        
         <Canvas x:Name="CustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Button x:Name="CustomerFullData_Edit_Button" Content="Edit Customer" Canvas.Left="468" Canvas.Top="607" Width="256" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="CustomerFullData_Edit_Button_Click"/>
             <Button x:Name="CustomerFullData_Delete_Button" Content="Delete Customer" Canvas.Left="751" Canvas.Top="607" Width="277" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>

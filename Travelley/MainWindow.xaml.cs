@@ -32,7 +32,7 @@ namespace Travelley
         Customer cus;
         TourGuide ActiveTourGuide;
         public Trip ActiveTrip;
-        Customer ActiveCustomer;
+        public Customer ActiveCustomer;
 
         string SelectedPath = "";
 
@@ -50,7 +50,7 @@ namespace Travelley
 
             DataBase.Intialize();
 
-            
+
             CurrentCanvas = Main_Canvas;
 
 
@@ -95,7 +95,9 @@ namespace Travelley
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = Customers_Canvas;
             CurrentCanvas.Visibility = Visibility.Visible;
+            Customers_ScrollViewer.Visibility = Visibility.Visible;
             CurrentPanelName_Label.Content = "Customers";
+            ShowListOfCustomers(DataBase.Customers);
         }
 
         private void Ticket_Button_Click(object sender, RoutedEventArgs e)
@@ -168,8 +170,9 @@ namespace Travelley
             TripFullData_TripId.Content = t.TripId;
         }
 
-        private void ShowCustomerFullData(Customer c)
+        public void ShowCustomerFullData(Customer c)
         {
+            this.ActiveCustomer = c;
             CurrentPanelName_Label.Content = "Customer Full Data";
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentCanvas = CustomerFullDetails_Canvas;
@@ -209,11 +212,11 @@ namespace Travelley
 
 
             bool tourErrorFound = false;
-         
-           
+
+
             if (EditCustomerFullData_Name.Text == "")
             {
-               EditCustomer_Name_ErrorLabel.Content = "This field can't be empty!";
+                EditCustomer_Name_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else
@@ -222,7 +225,7 @@ namespace Travelley
 
             if (EditCustomerFullData_Nationality.Text.Trim() == "")
             {
-             EditCustomer_Nationality_ErrorLabel .Content = "This field can't be empty!";
+                EditCustomer_Nationality_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else EditCustomer_Nationality_ErrorLabel.Content = "";
@@ -234,7 +237,7 @@ namespace Travelley
             else EditCustomer_PhoneNumber_ErrorLabel.Content = "";
             if (EditCustomerFullData_Language.Text.Trim() == "")
             {
-               EditCustomer_Language_ErrorLabel.Content = "This field can't be empty!";
+                EditCustomer_Language_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else EditCustomer_Language_ErrorLabel.Content = "";
@@ -260,8 +263,19 @@ namespace Travelley
 
             if (tourErrorFound == true)
                 return;
+            
+            name = EditCustomerFullData_Name.Text;
 
-         
+            nationality = EditCustomerFullData_Nationality.Text;
+
+            phone_number = EditCustomerFullData_PhoneNumber.Text;
+
+            language = EditCustomerFullData_Language.Text;
+
+            gender = Gender_ComboBox.Text;
+
+            email = EditCustomerFullData_Email.Text;
+
             EditCustomerFullData_Name.Text = "";
             EditCustomerFullData_Nationality.Text = "";
             EditCustomerFullData_PhoneNumber.Text = "";
@@ -269,19 +283,8 @@ namespace Travelley
             Gender_ComboBox.Text = "";
             EditCustomerFullData_Email.Text = "";
 
-           
-           
-                name = EditCustomerFullData_Name.Text;
-           
-                nationality = EditCustomerFullData_Nationality.Text;
-         
-                phone_number = EditCustomerFullData_PhoneNumber.Text;
-        
-                language = EditCustomerFullData_Language.Text;
-           
-                gender = Gender_ComboBox.Text;
-           
-                email = EditCustomerFullData_Email.Text;
+            DataBase.UpdateCustomer(ActiveCustomer, ActiveCustomer.Id, name, nationality, language, gender, email, phone_number, new CustomImage(SelectedPath));
+
             MessageBox.Show("Customer is Succesfully Added");
             //Todo Add customer in the database
             // DataBase.UpdateCustomer(c, c.Id, name, nationality, language, gender, email, phone_number, c.UserImage);
@@ -310,25 +313,26 @@ namespace Travelley
 
             if (EditTourGuideFullData_Nationality.Text.Trim() == "")
             {
-              EditTourGuide_Nationality_ErrorLabel.Content = "This field can't be empty!";
+                EditTourGuide_Nationality_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else EditTourGuide_Nationality_ErrorLabel.Content = "";
             if (EditTourGuideFullData_Email.Text.Trim() == "")
             {
-               EditTourGuide_Email_ErrorLabel.Content = "This field can't be empty!";
+                EditTourGuide_Email_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else EditTourGuide_Email_ErrorLabel.Content = "";
-           /* if (EditTourGuideFullData_Language.Text.Trim() == "")
+            /* if (EditTourGuideFullData_Language.Text.Trim() == "")
+             {
+                 EditTourGuide_Language_ErrorLabel.Content = "This field can't be empty!";
+                 tourErrorFound = true;
+             }
+             else EditTourGuide_Language_ErrorLabel.Content = "";
+            */
+            if (TourGuideGender_ComboBox.Text == "")
             {
-                EditTourGuide_Language_ErrorLabel.Content = "This field can't be empty!";
-                tourErrorFound = true;
-            }
-            else EditTourGuide_Language_ErrorLabel.Content = "";
-           */ if (TourGuideGender_ComboBox.Text == "")
-            {
-               EditTourGuide_Gender_ErrorLabel.Content = "This field can't be empty!";
+                EditTourGuide_Gender_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else EditTourGuide_Gender_ErrorLabel.Content = "";
@@ -338,7 +342,7 @@ namespace Travelley
                 tourErrorFound = true;
             }
             else EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
-          
+
             if (SelectedPath == "")
             {
                 EditTourGuide_Photo_ErrorLabel.Content = "This field can't be empty!";
@@ -356,24 +360,24 @@ namespace Travelley
             EditTourGuide_Name_ErrorLabel.Content = "";
             EditTourGuide_Email_ErrorLabel.Content = "";
             EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
-           // EditTourGuide_Language_ErrorLabel.Content = "";
+            // EditTourGuide_Language_ErrorLabel.Content = "";
             EditTourGuide_Gender_ErrorLabel.Content = "";
             EditTourGuide_Nationality_ErrorLabel.Content = "";
-           
-           
 
-           
-                name = EditTourGuideFullData_Name.Text;
-         
-                nationality = EditTourGuideFullData_Nationality.Text;
-          
-                phone_number = EditTourGuideFullData_PhoneNumber.Text;
-         
-             //   language = EditTourGuideFullData_Language.Text;
-           
-                gender = TourGuideGender_ComboBox.Text;
-           
-                email = EditTourGuideFullData_Email.Text;
+
+
+
+            name = EditTourGuideFullData_Name.Text;
+
+            nationality = EditTourGuideFullData_Nationality.Text;
+
+            phone_number = EditTourGuideFullData_PhoneNumber.Text;
+
+            //   language = EditTourGuideFullData_Language.Text;
+
+            gender = TourGuideGender_ComboBox.Text;
+
+            email = EditTourGuideFullData_Email.Text;
             //  DataBase.UpdateTourGuide(t, t.Id, name, nationality, gender, email, phone_number, t.UserImage);
             //Todo 7war el language
         }
@@ -460,7 +464,7 @@ namespace Travelley
 
         private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
         {
-            EditCustomerDetails(cus);
+            EditCustomerDetails(ActiveCustomer);
         }
 
         private void CustomerFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
@@ -616,7 +620,7 @@ namespace Travelley
             TourGuideGender_ComboBox.Text = TourGuideFullData_Gender.Content.ToString();
             //EditTourGuideFullData_Language.Text = TourGuideFullData_Language.Content.ToString();
             EditTourGuideFullData_PhoneNumber.Text = TourGuideFullData_PhoneNumber.Content.ToString();
-          
+
 
         }
         private void AddTourGuide(TourGuide t)
@@ -643,7 +647,7 @@ namespace Travelley
 
         private void EditTourGuideData_Save_Button_Click(object sender, RoutedEventArgs e)
         {
-          
+
             EditTourGuideData(t);
         }
 
@@ -659,10 +663,10 @@ namespace Travelley
         private void AddTourGuide_Add_Button_Click(object sender, RoutedEventArgs e)
         {
             bool tourErrorFound = false;
-           // if (DataBase.CheckUniqueTourGuideId(t.Id) == true)
+            // if (DataBase.CheckUniqueTourGuideId(t.Id) == true)
             //{
-              //  AddTourGuide_Error_ID.Content = "This id is already found!";
-                //tourErrorFound = true;
+            //  AddTourGuide_Error_ID.Content = "This id is already found!";
+            //tourErrorFound = true;
 
             //}
             //else AddTourGuide_Error_ID.Content = "";
@@ -712,12 +716,13 @@ namespace Travelley
                 tourErrorFound = true;
             }
             else AddTourGuide_Error_PhoneNumber.Content = "";
-            if(SelectedPath=="")
+            if (SelectedPath == "")
             {
-              AddTourGuide_Error__Image.Content = "This field can't be empty!";
-            tourErrorFound = true;
+                AddTourGuide_Error__Image.Content = "This field can't be empty!";
+                tourErrorFound = true;
 
-            } else AddTourGuide_Error__Image.Content ="";
+            }
+            else AddTourGuide_Error__Image.Content = "";
             if (tourErrorFound == true)
                 return;
 
@@ -757,8 +762,8 @@ namespace Travelley
             CurrentCanvas.Visibility = Visibility.Visible;
             TicketsTypes_ScrollViewr.Visibility = Visibility.Visible;
             int index = 0;
-            
-            foreach(KeyValuePair<string, int> x in CurrentTrip.NumberOfSeats)
+
+            foreach (KeyValuePair<string, int> x in CurrentTrip.NumberOfSeats)
             {
                 TicketsTypesCard T2 = new TicketsTypesCard(index, TicketsTypes_Canvas, CurrentTrip, x.Key, x.Value, CurrentTrip.PriceOfSeat[x.Key]);
                 index++;
@@ -857,8 +862,22 @@ namespace Travelley
         }
         private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
         {
-        
             ShowEditTrip_Canvas(ActiveTrip);
+        }
+        private void ShowListOfCustomers(List<Customer> Customers)
+        {
+            for (int i = 0; i < Customers.Count; i++)
+                new CustomerDisplayCard(i, CurrentCanvas, Customers[i], this);
+        }
+
+        private void TourGuides_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+
+        private void Customers_ScrollViewer_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Customers_ScrollViewer.Visibility = Customers_Canvas.Visibility;
         }
     }
 }

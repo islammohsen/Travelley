@@ -223,9 +223,9 @@ namespace Travelley
         public static void UpdateCustomer(Customer CurrentCustomer, string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber, CustomImage CustomerImage)
         {
             //update database
-            Command.CommandText = $"UPDATE Customer set Id = '{Id}', set Name = '{Name}', set Nationality = '{Nationality}', " +
-                $"set Language = '{Language}', set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}'," +
-                $"set Image = @image where Id = '{CurrentCustomer.Id}'";
+            Command.CommandText = $"UPDATE Customer set Id = '{Id}', Name = '{Name}', Nationality = '{Nationality}', " +
+                $"Language = '{Language}', Gender = '{Gender}', Email = '{Email}', PhoneNumber = '{PhoneNumber}'," +
+                $"Image = @image where Id = '{CurrentCustomer.Id}'";
             Command.Parameters.AddWithValue("@image", CustomerImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
