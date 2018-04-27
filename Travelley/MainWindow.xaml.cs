@@ -391,8 +391,9 @@ namespace Travelley
             bool email = String.IsNullOrEmpty(AddCustomer_Email_TextBox.Text);
             bool nationality = String.IsNullOrEmpty(AddCustomer_Nationality_TextBox.Text);
             bool gender = String.IsNullOrEmpty(AddCustomer_Gender_ComboBox.Text);
-
-            if (NationalId || name || phone || email || nationality || gender)
+            bool language = String.IsNullOrEmpty(AddCustomer_Language_TextBox.Text);
+            bool image = String.IsNullOrEmpty(SelectedPath);
+            if (NationalId || name || phone || email || nationality || gender || image)
             {
                 AddCustomer_Error_Label.Content = "Please Fill All Fields!";
                 return;
@@ -404,21 +405,22 @@ namespace Travelley
                 return;
             }
 
-            //todo language
+
             Customer NewCustomer = new Customer(
-                AddCustomer_National_Id_TextBox.Text.ToString(),
-                AddCustomer_Name_TextBox.Text.ToString(),
-                AddCustomer_Nationality_TextBox.Text.ToString(),
-                "English",
-                AddCustomer_Gender_ComboBox.ToString(),
-                AddCustomer_Email_TextBox.Text.ToString(),
-                AddCustomer_Phone_TextBox.ToString()
+                AddCustomer_National_Id_TextBox.Text,
+                AddCustomer_Name_TextBox.Text,
+                AddCustomer_Nationality_TextBox.Text,
+                AddCustomer_Language_TextBox.Text,
+                AddCustomer_Gender_ComboBox.Text,
+                AddCustomer_Email_TextBox.Text,
+                AddCustomer_Phone_TextBox.Text
                 );
+            NewCustomer.UserImage = new CustomImage(SelectedPath);
 
             DataBase.InsertCustomer(NewCustomer);
+            MessageBox.Show("Added Customer sucessfully");
 
-            AddCustomer_Error_Label.Content = "Customer Added Successfuly";
-
+            ShowListOfCustomers(DataBase.Customers);
         }
 
         private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
@@ -837,9 +839,62 @@ namespace Travelley
             CurrentPanelName_Label.Content = Header;
         }
 
+        private void ShowNewOrExistingCustomerCanvas()
+        {
+            UpdateCurrentCanvas(NewOrExistingCustomer_Canvas, "Set Customer Status");
+        }
+
         private void TourGuides_AddTourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowAddTourGuideCanvas();
+        }
+
+        private void TripFullData_ReserveTrip_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowNewOrExistingCustomerCanvas();
+        }
+        private void GetCustomerById_Done_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Customer SelectedCustomer = DataBase.SelectCustomer(GetCustomerById_CustomerId_TextBox.Text.ToString());
+            if (SelectedCustomer == null)
+            {
+                MessageBox.Show("Customer id invalid, Please Enter valid one");
+                return;
+            }
+            ActiveCustomer = SelectedCustomer;
+            //TODO show Reserve Ticket Panel   
+        }
+        private void ShowGetCustomerById()
+        {
+            UpdateCurrentCanvas(GetCustomerById_Canvas, "Get Customer By Id");
+        }
+        private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowGetCustomerById();
+        }
+        private void ShowAddCustomerCanvas()
+        {
+            UpdateCurrentCanvas(AddCustomer_Canvas, "Add Customer");
+        }
+
+        private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO View Add Customer Canvas
+            ShowAddCustomerCanvas();
+        }
+
+        private void AddCustomer_Browse_Button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
+            dlg.Title = "Select Customer Photo";
+            dlg.ShowDialog();
+            SelectedPath = dlg.FileName.ToString();
+        }
+
+        private void Customer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAddCustomerCanvas();
         }
     }
 }

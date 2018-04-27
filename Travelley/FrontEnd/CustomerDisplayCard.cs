@@ -79,7 +79,7 @@ namespace Travelley.FrontEnd
             View_More.Cursor = Cursors.Hand;
             CurrentCanvas.Children.Add(this.View_More);
 
-            CurrentCanvas.Height = index * 700;
+            CurrentCanvas.Height = BaseLoc + 250;
         }
 
         private void View_More_Click(object sender, RoutedEventArgs e)
