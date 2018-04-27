@@ -25,18 +25,15 @@ namespace Travelley
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public Canvas CurrentCanvas;
+        public ScrollViewer CurrentScrollViewer;
         Trip TripOfTheDay;
         TourGuide TourGuideOfTheMonth;
-        Customer cus;
         TourGuide ActiveTourGuide;
         public Trip ActiveTrip;
-        Customer ActiveCustomer;
+        public Customer ActiveCustomer;
 
         string SelectedPath = "";
-
-        TourGuide t;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -50,7 +47,7 @@ namespace Travelley
 
             DataBase.Intialize();
 
-            
+            CurrentScrollViewer = Customers_ScrollViewer;
             CurrentCanvas = Main_Canvas;
 
 
@@ -81,59 +78,34 @@ namespace Travelley
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TripsScrollViewer.Visibility = Visibility.Hidden;
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = Main_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Home Page";
+            UpdateCurrentCanvas(Main_Canvas, "Home Page");
         }
 
 
         private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
         {
-            TripsScrollViewer.Visibility = Visibility.Hidden;
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = Customers_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Customers";
+            ShowListOfCustomers(DataBase.Customers);
         }
 
         private void Ticket_Button_Click(object sender, RoutedEventArgs e)
         {
-            TripsScrollViewer.Visibility = Visibility.Hidden;
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = Tickets_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Tickets";
+            UpdateCurrentCanvas(Tickets_Canvas, "Tickets");
         }
 
         private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
-            TripsScrollViewer.Visibility = Visibility.Hidden;
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = TourGuides_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Tour Guides";
+            ShowListOfTourGuides(DataBase.TourGuides);
         }
 
         private void Transactions_Button_Click(object sender, RoutedEventArgs e)
         {
-            TripsScrollViewer.Visibility = Visibility.Hidden;
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = Transactions_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Transactions";
+            UpdateCurrentCanvas(Transactions_Canvas, "Transactions");
         }
         private void Trips_Button_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentCanvas == Trips_Canvas)
                 return;
-            TripsScrollViewer.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Trips";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = Trips_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-
+            UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer);
             ShowListOfTrips(DataBase.Trips);
 
         }
@@ -154,10 +126,8 @@ namespace Travelley
 
         public void ShowTripFullData(Trip t)
         {
-            CurrentPanelName_Label.Content = "Trip Full Data";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = TripFullData_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
+            ActiveTrip = t;
+            UpdateCurrentCanvas(TripFullData_Canvas, "Trip Full Data");
 
             TripFullData_Discount.Content = t.Discount.ToString() + " %";
             TripFullData_DepartureAndDestination.Content = t.Departure + " - " + t.Destination;
@@ -168,12 +138,10 @@ namespace Travelley
             TripFullData_TripId.Content = t.TripId;
         }
 
-        private void ShowCustomerFullData(Customer c)
+        public void ShowCustomerFullData(Customer c)
         {
-            CurrentPanelName_Label.Content = "Customer Full Data";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = CustomerFullDetails_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
+            ActiveCustomer = c;
+            UpdateCurrentCanvas(CustomerFullDetails_Canvas, "Customer Full Data");
 
             CustomerFullData_Name.Content = c.Name;
             CustomerFullData_Nationality.Content = c.Nationality;
@@ -184,19 +152,17 @@ namespace Travelley
             CustomerFullData_IMG.Source = c.UserImage.GetImage().Source;
             CustomerFullData_PhoneNumber.Content = c.PhoneNumber;
         }
-        private void ShowTourGuideFullData(TourGuide t)
+        public void ShowTourGuideFullData(TourGuide t)
         {
-            CurrentPanelName_Label.Content = "TourGuide Full Data";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = TourGuideFullData_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
+            ActiveTourGuide = t;
+            UpdateCurrentCanvas(TourGuideFullData_Canvas, "Tour Guide Full Data");
 
             TourGuideFullData_Name.Content = t.Name;
             TourGuideFullData_Nationality.Content = t.Nationality;
             TourGuideFullData_Id.Content = t.Id;
             TourGuideFullData_Email.Content = t.Email;
             TourGuideFullData_Gender.Content = t.Gender;
-            //  TourGuideFullData_Language.Content = t.Languages[0].ToString();
+            TourGuideFullData_Language.Content = t.Language;
             TourGuideFullData_IMG.Source = t.UserImage.GetImage().Source;
             TourGuideFullData_PhoneNumber.Content = t.PhoneNumber;
 
@@ -209,11 +175,11 @@ namespace Travelley
 
 
             bool tourErrorFound = false;
-         
-           
+
+
             if (EditCustomerFullData_Name.Text == "")
             {
-               EditCustomer_Name_ErrorLabel.Content = "This field can't be empty!";
+                EditCustomer_Name_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else
@@ -222,7 +188,7 @@ namespace Travelley
 
             if (EditCustomerFullData_Nationality.Text.Trim() == "")
             {
-             EditCustomer_Nationality_ErrorLabel .Content = "This field can't be empty!";
+                EditCustomer_Nationality_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else EditCustomer_Nationality_ErrorLabel.Content = "";
@@ -234,7 +200,7 @@ namespace Travelley
             else EditCustomer_PhoneNumber_ErrorLabel.Content = "";
             if (EditCustomerFullData_Language.Text.Trim() == "")
             {
-               EditCustomer_Language_ErrorLabel.Content = "This field can't be empty!";
+                EditCustomer_Language_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else EditCustomer_Language_ErrorLabel.Content = "";
@@ -261,7 +227,18 @@ namespace Travelley
             if (tourErrorFound == true)
                 return;
 
-         
+            name = EditCustomerFullData_Name.Text;
+
+            nationality = EditCustomerFullData_Nationality.Text;
+
+            phone_number = EditCustomerFullData_PhoneNumber.Text;
+
+            language = EditCustomerFullData_Language.Text;
+
+            gender = Gender_ComboBox.Text;
+
+            email = EditCustomerFullData_Email.Text;
+
             EditCustomerFullData_Name.Text = "";
             EditCustomerFullData_Nationality.Text = "";
             EditCustomerFullData_PhoneNumber.Text = "";
@@ -269,20 +246,10 @@ namespace Travelley
             Gender_ComboBox.Text = "";
             EditCustomerFullData_Email.Text = "";
 
-           
-           
-                name = EditCustomerFullData_Name.Text;
-           
-                nationality = EditCustomerFullData_Nationality.Text;
-         
-                phone_number = EditCustomerFullData_PhoneNumber.Text;
-        
-                language = EditCustomerFullData_Language.Text;
-           
-                gender = Gender_ComboBox.Text;
-           
-                email = EditCustomerFullData_Email.Text;
-            MessageBox.Show("Customer is Succesfully Added");
+            DataBase.UpdateCustomer(ActiveCustomer, ActiveCustomer.Id, name, nationality, language, gender, email, phone_number, new CustomImage(SelectedPath));
+
+            MessageBox.Show("Customer Updated");
+            ShowListOfCustomers(DataBase.Customers);
             //Todo Add customer in the database
             // DataBase.UpdateCustomer(c, c.Id, name, nationality, language, gender, email, phone_number, c.UserImage);
         }
@@ -310,35 +277,40 @@ namespace Travelley
 
             if (EditTourGuideFullData_Nationality.Text.Trim() == "")
             {
-              EditTourGuide_Nationality_ErrorLabel.Content = "This field can't be empty!";
+                EditTourGuide_Nationality_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else EditTourGuide_Nationality_ErrorLabel.Content = "";
+            else
+                EditTourGuide_Nationality_ErrorLabel.Content = "";
             if (EditTourGuideFullData_Email.Text.Trim() == "")
             {
-               EditTourGuide_Email_ErrorLabel.Content = "This field can't be empty!";
+                EditTourGuide_Email_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else EditTourGuide_Email_ErrorLabel.Content = "";
-           /* if (EditTourGuideFullData_Language.Text.Trim() == "")
+            else
+                EditTourGuide_Email_ErrorLabel.Content = "";
+            if (EditTourGuideFullData_Language.Text.Trim() == "")
             {
                 EditTourGuide_Language_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else EditTourGuide_Language_ErrorLabel.Content = "";
-           */ if (TourGuideGender_ComboBox.Text == "")
+            else
+                EditTourGuide_Language_ErrorLabel.Content = "";
+            if (TourGuideGender_ComboBox.Text == "")
             {
-               EditTourGuide_Gender_ErrorLabel.Content = "This field can't be empty!";
+                EditTourGuide_Gender_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else EditTourGuide_Gender_ErrorLabel.Content = "";
+            else
+                EditTourGuide_Gender_ErrorLabel.Content = "";
             if (EditTourGuideFullData_PhoneNumber.Text == "")
             {
                 EditTourGuide_PhoneNumber_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
-          
+            else
+                EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
+
             if (SelectedPath == "")
             {
                 EditTourGuide_Photo_ErrorLabel.Content = "This field can't be empty!";
@@ -356,26 +328,29 @@ namespace Travelley
             EditTourGuide_Name_ErrorLabel.Content = "";
             EditTourGuide_Email_ErrorLabel.Content = "";
             EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
-           // EditTourGuide_Language_ErrorLabel.Content = "";
+            EditTourGuide_Language_ErrorLabel.Content = "";
             EditTourGuide_Gender_ErrorLabel.Content = "";
             EditTourGuide_Nationality_ErrorLabel.Content = "";
-           
-           
 
-           
-                name = EditTourGuideFullData_Name.Text;
-         
-                nationality = EditTourGuideFullData_Nationality.Text;
-          
-                phone_number = EditTourGuideFullData_PhoneNumber.Text;
-         
-             //   language = EditTourGuideFullData_Language.Text;
-           
-                gender = TourGuideGender_ComboBox.Text;
-           
-                email = EditTourGuideFullData_Email.Text;
-            //  DataBase.UpdateTourGuide(t, t.Id, name, nationality, gender, email, phone_number, t.UserImage);
-            //Todo 7war el language
+
+
+
+            name = EditTourGuideFullData_Name.Text;
+
+            nationality = EditTourGuideFullData_Nationality.Text;
+
+            phone_number = EditTourGuideFullData_PhoneNumber.Text;
+
+            language = EditTourGuideFullData_Language.Text;
+
+            gender = TourGuideGender_ComboBox.Text;
+
+            email = EditTourGuideFullData_Email.Text;
+
+
+            DataBase.UpdateTourGuide(t, ActiveTourGuide.Id, name, nationality, language, gender, email, phone_number, new CustomImage(SelectedPath));
+            MessageBox.Show("TourGuide updated");
+            ShowListOfTourGuides(DataBase.TourGuides);
         }
         private void TripOfTheDay_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -383,17 +358,10 @@ namespace Travelley
         }
         private void ShowAddTourGuideCanvas()
         {
-            CurrentPanelName_Label.Content = "Add New TourGuide";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = AddNewTourGuide_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-
+            UpdateCurrentCanvas(AddNewTourGuide_Canvas, "Add New TourGuide");
         }
 
-        private void Customer_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ShowCustomerFullData(cus);
-        }
+
 
         private void ShowListOfTrips(List<Trip> list)
         {
@@ -413,19 +381,7 @@ namespace Travelley
         }
 
 
-        private void TourGuide_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ShowTourGuideFullData(t);
-        }
 
-
-        private void ShowAddCustomerCanvas()
-        {
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = AddCustomer_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Add Customer";
-        }
 
         private void AddCustomer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -435,9 +391,8 @@ namespace Travelley
             bool email = String.IsNullOrEmpty(AddCustomer_Email_TextBox.Text);
             bool nationality = String.IsNullOrEmpty(AddCustomer_Nationality_TextBox.Text);
             bool gender = String.IsNullOrEmpty(AddCustomer_Gender_ComboBox.Text);
-            bool language = String.IsNullOrEmpty(AddCustomer_Language_TextBox.Text);
 
-            if (NationalId || name || phone || email || nationality || gender || language)
+            if (NationalId || name || phone || email || nationality || gender)
             {
                 AddCustomer_Error_Label.Content = "Please Fill All Fields!";
                 return;
@@ -449,12 +404,12 @@ namespace Travelley
                 return;
             }
 
-            
+            //todo language
             Customer NewCustomer = new Customer(
                 AddCustomer_National_Id_TextBox.Text.ToString(),
                 AddCustomer_Name_TextBox.Text.ToString(),
                 AddCustomer_Nationality_TextBox.Text.ToString(),
-                AddCustomer_Language_TextBox.Text.ToString(),
+                "English",
                 AddCustomer_Gender_ComboBox.ToString(),
                 AddCustomer_Email_TextBox.Text.ToString(),
                 AddCustomer_Phone_TextBox.ToString()
@@ -462,23 +417,19 @@ namespace Travelley
 
             DataBase.InsertCustomer(NewCustomer);
 
-            MessageBox.Show("Customer Added Successfully");
-
-            ActiveCustomer = NewCustomer;
+            AddCustomer_Error_Label.Content = "Customer Added Successfuly";
 
         }
 
         private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
         {
-            EditCustomerDetails(cus);
+            EditCustomerDetails(ActiveCustomer);
         }
 
         private void CustomerFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPanelName_Label.Content = "Edit Customer Data";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = EditCustomerFullDetails_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
+            UpdateCurrentCanvas(EditCustomerFullDetails_Canvas, "Edit Customer Data");
+
             EditCustomerFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
             EditCustomerFullData_Name.Text = CustomerFullData_Name.Content.ToString();
 
@@ -496,10 +447,7 @@ namespace Travelley
 
         private void ShowEditTrip_Canvas(Trip t)
         {
-            CurrentPanelName_Label.Content = "Edit Trip Data";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = EditTrip_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
+            UpdateCurrentCanvas(EditTrip_Canvas, "Edit Trip Data");
 
             EditTrip_TripIDTextbox.Text = TripFullData_TripId.Content.ToString();
             EditTrip_TripDeptTextbox.Text = TripFullData_DepartureAndDestination.Content.ToString().Split('-')[0].Trim();
@@ -586,6 +534,7 @@ namespace Travelley
             //TODO Insert Trip in data base
             //TODO Clear all textboxes after saving
         }
+
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -594,39 +543,31 @@ namespace Travelley
             dlg.ShowDialog();
             SelectedPath = dlg.FileName.ToString();
         }
+
         private void ShowAddTripCanvas()
         {
-            if (CurrentCanvas == AddTrip_Canvas)
-                return;
-            TripsScrollViewer.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Add Trip";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = AddTrip_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
+            UpdateCurrentCanvas(AddTrip_Canvas, "Add Trip");
         }
 
         public void TourGuideFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
         {
+            UpdateCurrentCanvas(EditTourGuideData_Canvas, "Edit TourGuide Data");
 
-            CurrentPanelName_Label.Content = "Edit TourGuide Data";
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = EditTourGuideData_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
             EditTourGuideFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
             EditTourGuideFullData_Name.Text = TourGuideFullData_Name.Content.ToString();
             EditTourGuide_Name_ErrorLabel.Content = "";
             EditTourGuide_Email_ErrorLabel.Content = "";
             EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
-            // EditTourGuide_Language_ErrorLabel.Content = "";
+            EditTourGuide_Language_ErrorLabel.Content = "";
             EditTourGuide_Gender_ErrorLabel.Content = "";
             EditTourGuide_Nationality_ErrorLabel.Content = "";
 
             EditTourGuideFullData_Nationality.Text = TourGuideFullData_Nationality.Content.ToString();
             EditTourGuideFullData_Email.Text = TourGuideFullData_Email.Content.ToString();
             TourGuideGender_ComboBox.Text = TourGuideFullData_Gender.Content.ToString();
-            //EditTourGuideFullData_Language.Text = TourGuideFullData_Language.Content.ToString();
+            EditTourGuideFullData_Language.Text = TourGuideFullData_Language.Content.ToString();
             EditTourGuideFullData_PhoneNumber.Text = TourGuideFullData_PhoneNumber.Content.ToString();
-          
+
 
         }
         private void AddTourGuide(TourGuide t)
@@ -653,8 +594,8 @@ namespace Travelley
 
         private void EditTourGuideData_Save_Button_Click(object sender, RoutedEventArgs e)
         {
-          
-            EditTourGuideData(t);
+
+            EditTourGuideData(ActiveTourGuide);
         }
 
         private void Browse_Button_Click(object sender, RoutedEventArgs e)
@@ -669,14 +610,8 @@ namespace Travelley
         private void AddTourGuide_Add_Button_Click(object sender, RoutedEventArgs e)
         {
             bool tourErrorFound = false;
-           // if (DataBase.CheckUniqueTourGuideId(t.Id) == true)
-            //{
-              //  AddTourGuide_Error_ID.Content = "This id is already found!";
-                //tourErrorFound = true;
-
-            //}
-            //else AddTourGuide_Error_ID.Content = "";
-            //todo check unique id
+            
+           
             if (AddTourGuideFullData_Id.Text == "")
             {
                 AddTourGuide_Error_ID.Content = "This field can't be empty!";
@@ -684,8 +619,12 @@ namespace Travelley
             }
             else
                 AddTourGuide_Error_ID.Content = "";
+            if(!DataBase.CheckUniqueTourGuideId(AddTourGuideFullData_Id.Text))
+            {
+                AddTourGuide_Error_ID.Content = "Id not unique";
+                tourErrorFound = true;
+            }
 
-                
             if (AddTourGuideFullData_Name.Text.Trim() == "")
             {
                 AddTourGuide_Error_Name.Content = "This field can't be empty!";
@@ -722,18 +661,20 @@ namespace Travelley
                 tourErrorFound = true;
             }
             else AddTourGuide_Error_PhoneNumber.Content = "";
-            if(SelectedPath=="")
+            if (SelectedPath == "")
             {
-              AddTourGuide_Error__Image.Content = "This field can't be empty!";
-            tourErrorFound = true;
+                AddTourGuide_Error__Image.Content = "This field can't be empty!";
+                tourErrorFound = true;
 
-            } else AddTourGuide_Error__Image.Content ="";
+            }
+            else AddTourGuide_Error__Image.Content = "";
             if (tourErrorFound == true)
                 return;
 
-            //TourGuide temp = new TourGuide(AddTourGuideFullData_Id.Text, AddTourGuideFullData_Name.Text, AddTourGuideFullData_Nationality.Text
-            //     , AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text, AddTourGuideFullData_PhoneNumber.Text);
-            // temp.UserImage = new CustomImage(SelectedPath);
+            TourGuide temp = new TourGuide(AddTourGuideFullData_Id.Text, AddTourGuideFullData_Name.Text, AddTourGuideFullData_Nationality.Text
+                 ,AddTourGuideFullData_language.Text ,AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text, AddTourGuideFullData_PhoneNumber.Text);
+            temp.UserImage = new CustomImage(SelectedPath);
+            DataBase.InsertTourGuide(temp);
             AddTourGuide_Error__Natinaity.Content = "";
             AddTourGuide_Error_PhoneNumber.Content = "";
             AddTourGuide_Error_ID.Content = "";
@@ -751,6 +692,7 @@ namespace Travelley
 
 
             MessageBox.Show("TourGuide is Succesfully Added");
+            ShowListOfTourGuides(DataBase.TourGuides);
             //todo Image
 
         }
@@ -762,13 +704,10 @@ namespace Travelley
 
         private void ShowTicketsTypes(Trip CurrentTrip)
         {
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = TicketsTypes_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            TicketsTypes_ScrollViewr.Visibility = Visibility.Visible;
+            UpdateCurrentCanvas(TicketsTypes_Canvas, "Tickets Types", TicketsTypes_ScrollViewr);
+
             int index = 0;
-            
-            foreach(KeyValuePair<string, int> x in CurrentTrip.NumberOfSeats)
+            foreach (KeyValuePair<string, int> x in CurrentTrip.NumberOfSeats)
             {
                 TicketsTypesCard T2 = new TicketsTypesCard(index, TicketsTypes_Canvas, CurrentTrip, x.Key, x.Value, CurrentTrip.PriceOfSeat[x.Key]);
                 index++;
@@ -865,54 +804,42 @@ namespace Travelley
             //Todo Fe moseba hna fel type
             //Todo check datetime
         }
+
         private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
         {
-        
             ShowEditTrip_Canvas(ActiveTrip);
         }
 
-        private void TripFullData_ReserveTrip_Button_Click(object sender, RoutedEventArgs e)
+        private void ShowListOfCustomers(List<Customer> Customers)
         {
-            ShowNewOrExistingCustomerCanvas();
+            UpdateCurrentCanvas(Customers_Canvas, "Customers", Customers_ScrollViewer);
+            for (int i = 0; i < Customers.Count; i++)
+                new CustomerDisplayCard(i, CurrentCanvas, Customers[i], this);
+        }
+        private void ShowListOfTourGuides(List<TourGuide> TourGuides)
+        {
+            UpdateCurrentCanvas(TourGuides_Canvas, "Tour Guides", TourGuides_ScrollViewer);
+            for (int i = 0; i < TourGuides.Count; i++)
+                new TourGuideDisplayCard(i, CurrentCanvas, TourGuides[i], this);
         }
 
-        private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
-        {
-            ShowGetCustomerById(); 
-        }
-
-        private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO View Add Customer Canvas
-            ShowAddCustomerCanvas();
-        }
-
-        private void ShowNewOrExistingCustomerCanvas()
+        public void UpdateCurrentCanvas(Canvas NewCanvas, string Header, ScrollViewer NewScrollViewer = null)
         {
             CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = NewOrExistingCustomer_Canvas;
+            CurrentScrollViewer.Visibility = Visibility.Hidden;
+            CurrentCanvas = NewCanvas;
             CurrentCanvas.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Set Customer Status";
-        }
-        private void ShowGetCustomerById()
-        {
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentCanvas = GetCustomerById_Canvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            CurrentPanelName_Label.Content = "Get Customer By Id";
-        }
-        private void GetCustomerById_Done_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Customer SelectedCustomer = DataBase.SelectCustomer(GetCustomerById_CustomerId_TextBox.Text.ToString());
-            if (SelectedCustomer == null)
+            if (NewScrollViewer != null)
             {
-                MessageBox.Show("Customer id invalid, Please Enter valid one");
-                return;
+                CurrentScrollViewer = NewScrollViewer;
+                CurrentScrollViewer.Visibility = Visibility.Visible;
             }
-            ActiveCustomer = SelectedCustomer;
-            //TODO show Reserve Ticket Panel
+            CurrentPanelName_Label.Content = Header;
+        }
 
-            
+        private void TourGuides_AddTourGuide_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAddTourGuideCanvas();
         }
     }
 }

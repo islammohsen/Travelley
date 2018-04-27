@@ -223,9 +223,9 @@ namespace Travelley
         public static void UpdateCustomer(Customer CurrentCustomer, string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber, CustomImage CustomerImage)
         {
             //update database
-            Command.CommandText = $"UPDATE Customer set Id = '{Id}', set Name = '{Name}', set Nationality = '{Nationality}', " +
-                $"set Language = '{Language}', set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}'," +
-                $"set Image = @image where Id = '{CurrentCustomer.Id}'";
+            Command.CommandText = $"UPDATE Customer set Id = '{Id}', Name = '{Name}', Nationality = '{Nationality}', " +
+                $"Language = '{Language}', Gender = '{Gender}', Email = '{Email}', PhoneNumber = '{PhoneNumber}'," +
+                $"Image = @image where Id = '{CurrentCustomer.Id}'";
             Command.Parameters.AddWithValue("@image", CustomerImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
@@ -244,9 +244,9 @@ namespace Travelley
         public static void UpdateTourGuide(TourGuide CurrentTourGuide, string Id, string Name, string Nationality, string Language,string Gender, string Email, string PhoneNumber, CustomImage TourGuideImage)
         {
             //update databae
-            Command.CommandText = $"UPDATE Customer set Id = '{Id}', set Name = '{Name}', set Nationality = '{Nationality}', " +
-                $"set Language = '{Language}',set Gender = '{Gender}', set Email = '{Email}', set PhoneNumber = '{PhoneNumber}', " +
-                $"set Image = @image where Id = '{CurrentTourGuide.Id}'";
+            Command.CommandText = $"UPDATE TourGuide set Id = '{Id}', Name = '{Name}', Nationality = '{Nationality}', " +
+                $"Language = '{Language}', Gender = '{Gender}', Email = '{Email}', PhoneNumber = '{PhoneNumber}', " +
+                $"Image = @image where Id = '{CurrentTourGuide.Id}'";
             Command.Parameters.AddWithValue("@image", TourGuideImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
@@ -265,9 +265,9 @@ namespace Travelley
         {
             //update database
             //update Trip table
-            Command.CommandText = $"UPDATE Trips set TripId = '{TripId}', set TourGuideId = '{TourGuideId}', " +
-                $"set Depature = '{Depature}', set Destination = '{Destination}', set Discont = {Discount}, set Start = '{Start}'," +
-                $"set End = '{End}', set Image = @Image  where TripId = '{CurrentTrip.TripId}'";
+            Command.CommandText = $"UPDATE Trips set TripId = '{TripId}', TourGuideId = '{TourGuideId}', " +
+                $" Depature = '{Depature}', Destination = '{Destination}', Discont = {Discount}, Start = '{Start}'," +
+                $" End = '{End}', Image = @Image  where TripId = '{CurrentTrip.TripId}'";
             Command.Parameters.AddWithValue("@image", TripImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
@@ -299,7 +299,7 @@ namespace Travelley
 
         public static void UpdateTripsTickets(Trip CurrentTrip, string PrevType, string NewType, int NumberOfSeats, double Price)
         {
-            Command.CommandText = $"UPDATE TripsTickets set Type = '{NewType}', set NumberOfSeats = {NumberOfSeats}, set Price = {Price} where TripId = '{CurrentTrip.TripId} And Type = '{PrevType}'";
+            Command.CommandText = $"UPDATE TripsTickets set Type = '{NewType}', NumberOfSeats = {NumberOfSeats}, Price = {Price} where TripId = '{CurrentTrip.TripId} And Type = '{PrevType}'";
             CurrentTrip.NumberOfSeats.Remove(PrevType);
             CurrentTrip.PriceOfSeat.Remove(PrevType);
             CurrentTrip.NumberOfSeats.Add(NewType, NumberOfSeats);
