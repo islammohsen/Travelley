@@ -359,7 +359,7 @@ namespace Travelley
         }
 
         //select with id
-        private static Customer SelectCustomer(string Id)
+        public static Customer SelectCustomer(string Id)
         {
             foreach (Customer C in Customers)
             {

@@ -464,7 +464,7 @@ namespace Travelley
 
             MessageBox.Show("Customer Added Successfully");
 
-            //TODO Show Reserve ticket canvas
+            ActiveCustomer = NewCustomer;
 
         }
 
@@ -685,7 +685,7 @@ namespace Travelley
             else
                 AddTourGuide_Error_ID.Content = "";
 
-
+                
             if (AddTourGuideFullData_Name.Text.Trim() == "")
             {
                 AddTourGuide_Error_Name.Content = "This field can't be empty!";
@@ -873,23 +873,46 @@ namespace Travelley
 
         private void TripFullData_ReserveTrip_Button_Click(object sender, RoutedEventArgs e)
         {
-            //TODO show New/Exist customer Canvas
+            ShowNewOrExistingCustomerCanvas();
         }
 
         private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
         {
-            //TODO view search for existing Customer Canvas
+            ShowGetCustomerById(); 
         }
 
         private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)
         {
-           //TODO View Add Customer Canvas
+            //TODO View Add Customer Canvas
+            ShowAddCustomerCanvas();
         }
 
-
+        private void ShowNewOrExistingCustomerCanvas()
+        {
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = NewOrExistingCustomer_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Set Customer Status";
+        }
+        private void ShowGetCustomerById()
+        {
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentCanvas = GetCustomerById_Canvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            CurrentPanelName_Label.Content = "Get Customer By Id";
+        }
         private void GetCustomerById_Done_Button_Click(object sender, RoutedEventArgs e)
         {
-            //TODO setActiveCustomer By selectCustomer from database
+            Customer SelectedCustomer = DataBase.SelectCustomer(GetCustomerById_CustomerId_TextBox.Text.ToString());
+            if (SelectedCustomer == null)
+            {
+                MessageBox.Show("Customer id invalid, Please Enter valid one");
+                return;
+            }
+            ActiveCustomer = SelectedCustomer;
+            //TODO show Reserve Ticket Panel
+
+            
         }
     }
 }
