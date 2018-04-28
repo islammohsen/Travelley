@@ -9,12 +9,17 @@ namespace Travelley.Back_End
     public abstract class TripType
     {
         protected string name;
-        protected int minNumberOfSeats;
-        protected int maxNumberOfSeats;
+        public int minNumberOfSeats;
+        public int maxNumberOfSeats;
 
         virtual public bool InRange(int NumberOfSeats)
         {
             return NumberOfSeats >= minNumberOfSeats && NumberOfSeats <= maxNumberOfSeats;
+        }
+
+        public override string ToString()
+        {
+            return name;
         }
     }
 

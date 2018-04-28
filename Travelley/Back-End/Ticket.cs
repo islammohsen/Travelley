@@ -21,7 +21,7 @@ namespace Travelley
             this.SerialNumber = SerialNumber;
             this.TicketTrip = TicketTrip;
             this.TicketType = TicketType;
-            this.tripType = tripType;
+            this.TripType = tripType;
             this.Price = Price;
             this.NumberOfSeats = NumberOfSeats;
         }
@@ -31,5 +31,6 @@ namespace Travelley
         public string TicketType { get => ticketType; set => ticketType = value; }
         public double Price { get => price; set => price = value; }
         public int NumberOfSeats { get => numberOfSeats; set => numberOfSeats = value; }
+        public TripType TripType { get => tripType; set => tripType = value; }
     }
 }

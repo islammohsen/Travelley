@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Travelley
 {
-   abstract class Currency
+    public abstract class Currency
     {
         virtual public double GetValue(double EGP)
         {
@@ -14,25 +14,25 @@ namespace Travelley
         }
     }
 
-    class Dollar:Currency
+    public class Dollar : Currency
     {
-       
-    public override double GetValue(double EGP)
+
+        public override double GetValue(double EGP)
         {
             double dollar = EGP * 0.057;
             return dollar;
         }
     }
-    class EURO:Currency
+    public class EURO : Currency
     {
 
         public override double GetValue(double EGP)
         {
-            double euro= EGP * 0.046;
+            double euro = EGP * 0.046;
             return euro;
         }
     }
-    class RiyalSaudi:Currency
+    public class RiyalSaudi : Currency
     {
         public override double GetValue(double EGP)
         {

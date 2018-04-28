@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="Back-End\TripType.cs" />
     <Compile Include="FrontEnd\CustomerDisplayCard.cs" />
+    <Compile Include="FrontEnd\TicketDisplayCard.cs" />
     <Compile Include="FrontEnd\TicketsTypesCard.cs" />
     <Compile Include="FrontEnd\TourGuideDisplayCard.cs" />
     <Compile Include="FrontEnd\TripDisplayCard.cs" />

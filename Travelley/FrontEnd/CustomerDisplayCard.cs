@@ -26,7 +26,7 @@ namespace Travelley.FrontEnd
             this.CurrentCustomer = CurrentCustomer;
             this.CurrentWindow = CurrentWindow;
 
-            double BaseLoc = (index * 230) + 140;
+            double BaseLoc = (index * 230) + 40;
 
             //creating BackGroung
             BackGround = new Rectangle();
@@ -40,7 +40,7 @@ namespace Travelley.FrontEnd
             CurrentCanvas.Children.Add(BackGround);
 
             this.CustomerImage = CurrentCustomer.UserImage.GetImage();
-            this.CustomerImage.MaxHeight = 220;
+            this.CustomerImage.MaxHeight = 200;
             this.CustomerImage.MaxWidth = 300;
             Canvas.SetLeft(this.CustomerImage, 140);
             Canvas.SetTop(this.CustomerImage, BaseLoc + 20);

@@ -181,12 +181,11 @@
             </Canvas>
         </ScrollViewer>
 
-        <Canvas x:Name="Transactions_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
-
+        <ScrollViewer x:Name="Transactions_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
+            <Canvas x:Name="Transactions_Canvas" Height="567" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1039" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Visible"/>
+        </ScrollViewer>
         <ScrollViewer x:Name="Customers_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
-            <Canvas x:Name="Customers_Canvas"  Height="149" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
-                <Button x:Name="Customer_AddCustomer_Button" Content="Add Customer" Foreground="White" Background="#e87e31" Canvas.Left="709" Canvas.Top="14" Height="77" FontSize="36" FontWeight="Bold" Width="309" Click="Customer_AddCustomer_Button_Click"/>
-            </Canvas>
+            <Canvas x:Name="Customers_Canvas"  Height="149" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         </ScrollViewer>
 
         <Canvas x:Name="CustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
@@ -394,5 +393,82 @@
             <Button x:Name="GetCustomerById_Done_Button" Content="Done" Canvas.Left="356" Canvas.Top="352" Width="189" Height="64" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="GetCustomerById_Done_Button_Click" />
         </Canvas>
 
+        <Canvas x:Name="ReserveTicket_Canvas" Height="565" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1035" Canvas.Top="116" Canvas.Left="308" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+            <StackPanel>
+
+                <Grid Margin="0 30 0 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Margin="10 0 10 0" Grid.Column="0" Content="Customer Name:" FontSize="25"/>
+                    <Label x:Name="ReserveTicket_CustomerName_Label" FontSize="25" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Margin="0 30 0 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Margin="10 0 10 0" Grid.Column="0" Content="Trip:" FontSize="25"/>
+                    <Label x:Name="ReserveTicket_Trip_Label" Grid.Column ="1" FontSize="25"/>
+                </Grid>
+
+                <Grid Margin="0 30 0 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Margin="10 0 10 0" Grid.Column="0" Content="Number of seats" FontSize="25"/>
+                    <TextBox x:Name="ReserveTicket_NumberOfSeats_TextBox" Grid.Column="1" Width="200" FontSize="25" TextAlignment="Center" TextChanged="ReserveTicket_NumberOfSeats_TextBox_TextChanged"/>
+                </Grid>
+
+                <Grid Margin="0 30 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Margin ="10 0 10 0" Grid.Column="0"  Content="Trip Type" FontSize="25"/>
+                    <ComboBox Grid.Column="1" FontSize="25" x:Name="ReserveTicket_TripType_ComboxBox">
+                        <ComboBoxItem IsSelected="True">Family</ComboBoxItem>
+                        <ComboBoxItem>Couple</ComboBoxItem>
+                        <ComboBoxItem>General</ComboBoxItem>
+                        <ComboBoxItem>Friends</ComboBoxItem>
+                        <ComboBoxItem>Lonely</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+
+                <Grid Margin="0 30 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Margin ="10 0 10 0" Grid.Column="0"  Content="Ticket Type" FontSize="25"/>
+                    <ComboBox Grid.Column="1" FontSize="25" x:Name="ReserveTicket_TicketType_ComboxBox">
+                    </ComboBox>
+                </Grid>
+
+                <Grid Margin="0 120 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column = "0" Margin = "10 0 10 0" Content="Price:" FontSize="25"/>
+                    <TextBox Grid.Column="1" IsReadOnly="True" Background="LightGray" FontSize="25" Text="0" x:Name="ReserveTicket_Price_TextBox" TextAlignment="Center" Width="200"/>
+                </Grid>
+            </StackPanel>
+            <Image x:Name="ReserveTicket_TripImage_Image" MaxHeight="400" MaxWidth="500" Canvas.Left="500" Canvas.Top="100"/>
+            <Button x:Name="ReserveTicket_Reserve_Button" Content="Reserve" Foreground="White" FontSize="25" Canvas.Left="803" Canvas.Top="483" Width="205" Height="48" Background="#e87e31" RenderTransformOrigin="0.645,0.06" Click="ReserveTicket_Reserve_Button_Click"/>
+        </Canvas>
     </Canvas>
 </Window>

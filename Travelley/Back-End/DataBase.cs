@@ -299,7 +299,7 @@ namespace Travelley
 
         public static void UpdateTripsTickets(Trip CurrentTrip, string PrevType, string NewType, int NumberOfSeats, double Price)
         {
-            Command.CommandText = $"UPDATE TripsTickets set Type = '{NewType}', NumberOfSeats = {NumberOfSeats}, Price = {Price} where TripId = '{CurrentTrip.TripId} And Type = '{PrevType}'";
+            Command.CommandText = $"UPDATE TripsTickets set Type = '{NewType}', NumberOfSeats = {NumberOfSeats}, Price = {Price} where TripId = '{CurrentTrip.TripId}' And Type = '{PrevType}'";
             CurrentTrip.NumberOfSeats.Remove(PrevType);
             CurrentTrip.PriceOfSeat.Remove(PrevType);
             CurrentTrip.NumberOfSeats.Add(NewType, NumberOfSeats);
@@ -355,6 +355,8 @@ namespace Travelley
             Command.CommandText = $"INSERT INTO Transactions values( '{SerialNumber}', '{CustomerId}', '{TripId}'," +
                 $" '{TypeOfTicket}', '{TypeOfTrip}', {Price}, {NumberOfSeats} )";
             Command.ExecuteNonQuery();
+            Trip t = SelectTrip(TripId);
+            UpdateTripsTickets(t, TypeOfTicket, TypeOfTicket, t.NumberOfSeats[TypeOfTicket] - NumberOfSeats, t.PriceOfSeat[TypeOfTicket]);
             return;
         }
 

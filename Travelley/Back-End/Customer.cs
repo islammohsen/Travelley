@@ -46,10 +46,11 @@ namespace Travelley
 
         }
 
-        public void ReserveTicket(Trip CurrentTrip, TripType tripType, string TicketType, int NumberOfOrderedSeats)
+        public Ticket ReserveTicket(Trip CurrentTrip, TripType tripType, string TicketType, int NumberOfOrderedSeats)
         {
             Ticket obj = CurrentTrip.ReserveTicket(tripType, TicketType, NumberOfOrderedSeats);
             Tickets.Add(obj);
+            return obj;
         }
 
         public List<Ticket> GetTickets()
@@ -60,6 +61,11 @@ namespace Travelley
                 Ret.Add(c);
             }
             return Ret;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

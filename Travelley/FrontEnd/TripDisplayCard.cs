@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace Travelley
 {
-    class TripDisplayCard
+    public class TripDisplayCard
     {
         MainWindow window;
         Trip FullTripData;
@@ -89,8 +89,8 @@ namespace Travelley
 
         private void MoreInfo_Click(object sender, RoutedEventArgs e)
         {
-            window.ShowTripFullData(FullTripData);
             window.ActiveTrip = FullTripData;
+            window.ShowTripFullData(FullTripData);
         }
         
     }

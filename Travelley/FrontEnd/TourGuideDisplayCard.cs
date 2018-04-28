@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace Travelley.FrontEnd
 {
-    class TourGuideDisplayCard
+    public class TourGuideDisplayCard
     {
         Rectangle BackGround;
         Label TourGuideName;
@@ -40,7 +40,7 @@ namespace Travelley.FrontEnd
             CurrentCanvas.Children.Add(BackGround);
 
             this.TourGuideImage = CurrentTourGuide.UserImage.GetImage();
-            this.TourGuideImage.MaxHeight = 220;
+            this.TourGuideImage.MaxHeight = 200;
             this.TourGuideImage.MaxWidth = 300;
             Canvas.SetLeft(this.TourGuideImage, 140);
             Canvas.SetTop(this.TourGuideImage, BaseLoc + 20);

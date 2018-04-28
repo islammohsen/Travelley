@@ -67,7 +67,6 @@ namespace Travelley
         public Ticket ReserveTicket(TripType tripType,  string TicketType, int NumberOfOrderedSeats)
         {
             string serial = Guid.NewGuid().ToString();
-            NumberOfSeats[TicketType] -= NumberOfOrderedSeats;
 
             double TicketPrice = PriceOfSeat[TicketType] * NumberOfOrderedSeats * (1.0 - discount);
             Ticket T = new Ticket(serial, this, TicketType, tripType, TicketPrice, NumberOfOrderedSeats);

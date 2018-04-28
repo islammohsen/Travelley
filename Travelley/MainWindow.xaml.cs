@@ -49,8 +49,7 @@ namespace Travelley
 
             CurrentScrollViewer = Customers_ScrollViewer;
             CurrentCanvas = Main_Canvas;
-
-
+            
             int today = DateTime.Today.Day;
             if (DataBase.Trips.Count != 0)
                 TripOfTheDay = DataBase.Trips[today % DataBase.Trips.Count]; //generate trip based on today's date
@@ -99,13 +98,12 @@ namespace Travelley
 
         private void Transactions_Button_Click(object sender, RoutedEventArgs e)
         {
-            UpdateCurrentCanvas(Transactions_Canvas, "Transactions");
+            ShowListOfTickets(DataBase.Trips[0].Tickets);
         }
         private void Trips_Button_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentCanvas == Trips_Canvas)
                 return;
-            UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer);
             ShowListOfTrips(DataBase.Trips);
 
         }
@@ -365,7 +363,7 @@ namespace Travelley
 
         private void ShowListOfTrips(List<Trip> list)
         {
-
+            UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer);
             for (int i = 0; i < list.Count; i++)
             {
                 TripDisplayCard t = new TripDisplayCard(list[i], i, ref CurrentCanvas, this);
@@ -862,11 +860,26 @@ namespace Travelley
                 return;
             }
             ActiveCustomer = SelectedCustomer;
+            ReserveTicket();
             //TODO show Reserve Ticket Panel   
         }
         private void ShowGetCustomerById()
         {
             UpdateCurrentCanvas(GetCustomerById_Canvas, "Get Customer By Id");
+        }
+        private void ReserveTicket()
+        {
+            UpdateCurrentCanvas(ReserveTicket_Canvas, "Reserve Ticket");
+            ReserveTicket_CustomerName_Label.Content = ActiveCustomer.ToString();
+            ReserveTicket_Trip_Label.Content = ActiveTrip.Departure + " - " + ActiveTrip.Destination;
+            ReserveTicket_TripImage_Image.Source = ActiveTrip.TripImage.GetImage().Source;
+            ReserveTicket_TicketType_ComboxBox.Items.Clear();
+            foreach(KeyValuePair<string, int> c in ActiveTrip.NumberOfSeats)
+            {
+                ReserveTicket_TicketType_ComboxBox.Items.Add(c.Key);
+            }
+            if (ReserveTicket_TicketType_ComboxBox.Items.Count > 0)
+                ReserveTicket_TicketType_ComboxBox.SelectedItem = ReserveTicket_TicketType_ComboxBox.Items[0];
         }
         private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -895,6 +908,60 @@ namespace Travelley
         private void Customer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowAddCustomerCanvas();
+        }
+
+        private void ReserveTicket_NumberOfSeats_TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int num = 0;
+            int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text,out num);
+            num = Math.Max(num, 0);
+            ReserveTicket_Price_TextBox.Text = ((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num).ToString();
+        }
+
+        private void ReserveTicket_Reserve_Button_Click(object sender, RoutedEventArgs e)
+        {
+            TripType tripType = null;
+            if (ReserveTicket_TripType_ComboxBox.Text == "Family")
+                tripType = new Family();
+            else if (ReserveTicket_TripType_ComboxBox.Text == "Couple")
+                tripType = new Couple();
+            else if (ReserveTicket_TripType_ComboxBox.Text == "General")
+                tripType = new General();
+            else if (ReserveTicket_TripType_ComboxBox.Text == "Lonely")
+                tripType = new Lonely();
+            else if (ReserveTicket_TripType_ComboxBox.Text == "Friends")
+                tripType = new Friends();
+
+            string ticketType = (string)ReserveTicket_TicketType_ComboxBox.SelectedItem;
+
+            int NumberOfSeats = 0;
+            if(!(int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out NumberOfSeats) || NumberOfSeats <= 0))
+            {
+                MessageBox.Show("Invalid Number of seats!!");
+                return;
+            }
+            if(ActiveTrip.NumberOfSeats[ticketType] < NumberOfSeats)
+            {
+                MessageBox.Show("No enough seats available in this ticket tpye");
+                return;
+            }
+            if(!tripType.InRange(NumberOfSeats))
+            {
+                MessageBox.Show("Range of " + ReserveTicket_TripType_ComboxBox.Text + " is " + tripType.minNumberOfSeats + " - " + tripType.maxNumberOfSeats);
+                return;
+            }
+            Ticket obj = ActiveCustomer.ReserveTicket(ActiveTrip, tripType, ticketType, NumberOfSeats);
+            DataBase.InsertTransactions(obj.SerialNumber, ActiveCustomer.Id, ActiveTrip.TripId, ticketType, ReserveTicket_TripType_ComboxBox.Text, obj.Price, NumberOfSeats);
+            MessageBox.Show("Ticket added");
+            ShowListOfTrips(DataBase.Trips);
+        }
+        private void ShowListOfTickets(List<Ticket> Tickets)
+        {
+            UpdateCurrentCanvas(Transactions_Canvas, "Transactions", Transactions_ScrollViewer);
+            for(int i = 0; i < Tickets.Count; i++)
+            {
+                new TicketDisplayCard(i, CurrentCanvas, this, DataBase.Customers[0], Tickets[i].TicketTrip, Tickets[i]);
+            }
         }
     }
 }

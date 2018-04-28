@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace Travelley.FrontEnd
 {
-    class TicketsTypesCard
+    public class TicketsTypesCard
     {
         Label TypeLabel;
         Label NumberLabel;

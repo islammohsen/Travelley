@@ -8,7 +8,7 @@ using Travelley.Back_End;
 
 namespace Travelley
 {
-  public abstract class Person
+    public abstract class Person
     {
         private string id;
         private string name;
