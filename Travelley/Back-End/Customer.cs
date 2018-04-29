@@ -16,11 +16,12 @@ namespace Travelley
     
     public class Customer : Person
     {
-        private List<Ticket> Tickets;
+        private List<Ticket> tickets;
         private HashSet<Trip> Mark;
         private bool discount;
-        public int NumberOfTrips { get => NumberOfTrips; }
-        public bool Discount { get => Discount; }
+        public int NumberOfTrips { get; }
+        public bool Discount { get => discount; }
+        public List<Ticket> Tickets { get => tickets; set => tickets = value; }
 
         public Customer(string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber)
         {

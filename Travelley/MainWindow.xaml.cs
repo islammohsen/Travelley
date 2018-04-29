@@ -45,11 +45,12 @@ namespace Travelley
 
             InitializeComponent();
 
+
             DataBase.Intialize();
 
             CurrentScrollViewer = Customers_ScrollViewer;
             CurrentCanvas = Main_Canvas;
-            
+
             int today = DateTime.Today.Day;
             if (DataBase.Trips.Count != 0)
                 TripOfTheDay = DataBase.Trips[today % DataBase.Trips.Count]; //generate trip based on today's date
@@ -62,12 +63,18 @@ namespace Travelley
             {
                 TripOfTheDay_IMG.Source = TripOfTheDay.TripImage.GetImage().Source;
                 TripOfTheDay_Label.Content = TripOfTheDay.Departure + " - " + TripOfTheDay.Destination;
-                ActiveTrip = TripOfTheDay;
             }
 
-            if (TourGuideOfTheMonth == null) ;
-            //Todo: add message
-            //There is no tour guides or max existing haas 0 salary in the past month
+            if (TourGuideOfTheMonth != null)
+            {
+                Best_TourGuide_IMG.Source = TourGuideOfTheMonth.UserImage.GetImage().Source;
+                Best_TourGuide_Label.Content = TourGuideOfTheMonth.Name;
+            }
+            else
+            {
+                Best_TourGuide_IMG.Source = (new CustomImage("default-user-image.png")).GetImage().Source;
+                Best_TourGuide_Label.Content = "Improve yourself";
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -98,14 +105,26 @@ namespace Travelley
 
         private void Transactions_Button_Click(object sender, RoutedEventArgs e)
         {
-            ShowListOfTickets(DataBase.Trips[0].Tickets);
+
+            ShowListOfTickets(GetAllTickets());
         }
+
+        private List<Ticket> GetAllTickets()
+        {
+            List<Ticket> Tickets = new List<Ticket>();
+            foreach (Trip CurrentTrip in DataBase.Trips)
+            {
+                foreach (Ticket CurrentTicket in CurrentTrip.Tickets)
+                {
+                    Tickets.Add(CurrentTicket);
+                }
+            }
+            return Tickets;
+        }
+
         private void Trips_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentCanvas == Trips_Canvas)
-                return;
             ShowListOfTrips(DataBase.Trips);
-
         }
 
         private void Button_Mouse_Enter(object sender, MouseEventArgs e)
@@ -163,6 +182,7 @@ namespace Travelley
             TourGuideFullData_Language.Content = t.Language;
             TourGuideFullData_IMG.Source = t.UserImage.GetImage().Source;
             TourGuideFullData_PhoneNumber.Content = t.PhoneNumber;
+            TourGuideFullData_Salary.Content = t.GetSalary(DateTime.Today.Month, DateTime.Today.Year).ToString();
 
         }
 
@@ -352,6 +372,7 @@ namespace Travelley
         }
         private void TripOfTheDay_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            ActiveTrip = TripOfTheDay;
             ShowTripFullData(TripOfTheDay);
         }
         private void ShowAddTourGuideCanvas()
@@ -363,7 +384,21 @@ namespace Travelley
 
         private void ShowListOfTrips(List<Trip> list)
         {
-            UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer);
+            UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer, true);
+
+            Button AddTrip_Button = new Button();
+            AddTrip_Button.Content = "Add Trip";
+            AddTrip_Button.Foreground = new SolidColorBrush(Colors.White);
+            AddTrip_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            AddTrip_Button.Width = 238;
+            AddTrip_Button.Click += Add_Button_Click;
+            Canvas.SetLeft(AddTrip_Button, 771);
+            Canvas.SetTop(AddTrip_Button, 10);
+            AddTrip_Button.Height = 77;
+            AddTrip_Button.FontSize = 36;
+            AddTrip_Button.FontWeight = FontWeights.Bold;
+            CurrentCanvas.Children.Add(AddTrip_Button);
+
             for (int i = 0; i < list.Count; i++)
             {
                 TripDisplayCard t = new TripDisplayCard(list[i], i, ref CurrentCanvas, this);
@@ -416,9 +451,9 @@ namespace Travelley
             NewCustomer.UserImage = new CustomImage(SelectedPath);
 
             DataBase.InsertCustomer(NewCustomer);
-            MessageBox.Show("Added Customer sucessfully");
+            ActiveCustomer = NewCustomer;
 
-            ShowListOfCustomers(DataBase.Customers);
+            ReserveTicket();
         }
 
         private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
@@ -442,6 +477,9 @@ namespace Travelley
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
+            AddTrip_StTimePicker.SelectedDate = DateTime.Today;
+            AddTrip_EnTimePicker.SelectedDate = DateTime.Today;
+            AddTrip_Canvas_UpdateTourGuide_ComboBox();
             ShowAddTripCanvas();
         }
 
@@ -471,6 +509,7 @@ namespace Travelley
 
         private void SaveBut_Click(object sender, RoutedEventArgs e)
         {
+            //todo more error validations
             bool errorfound = false;
             if (AddTrip_TripIDTextbox.Text.Trim() == "")
             {
@@ -517,20 +556,19 @@ namespace Travelley
                 AddTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
                 errorfound = true;
             }
-            if (AddTrip_EnTimePicker.Text == "")
+            if(AddTrip_TourCombo.Text == "")
             {
-                AddTrip_TripEnTime_ErrorLabel.Content = "You must choose end time!";
-                errorfound = true;
-            }
-            if (AddTrip_StTimePicker.Text == "")
-            {
-                AddTrip_TripStTime_ErrorLabel.Content = "You must choose start time!";
-                errorfound = true;
+                MessageBox.Show("You must choose a tourguide");
             }
             if (errorfound == true)
             {
                 return;
             }
+            Trip T = new Trip(AddTrip_TripIDTextbox.Text, (TourGuide)AddTrip_TourCombo.SelectedItem, AddTrip_TripDeptTextbox.Text,
+                AddTrip_TripDestTextbox.Text, double.Parse(AddTrip_TripDiscTextbox.Text), AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value);
+            T.TripImage = new CustomImage(SelectedPath);
+            DataBase.InsertTrip(T);
+            ShowListOfTrips(DataBase.Trips);
             //TODO Insert Trip in data base
             //TODO Clear all textboxes after saving
         }
@@ -610,8 +648,8 @@ namespace Travelley
         private void AddTourGuide_Add_Button_Click(object sender, RoutedEventArgs e)
         {
             bool tourErrorFound = false;
-            
-           
+
+
             if (AddTourGuideFullData_Id.Text == "")
             {
                 AddTourGuide_Error_ID.Content = "This field can't be empty!";
@@ -619,7 +657,7 @@ namespace Travelley
             }
             else
                 AddTourGuide_Error_ID.Content = "";
-            if(!DataBase.CheckUniqueTourGuideId(AddTourGuideFullData_Id.Text))
+            if (!DataBase.CheckUniqueTourGuideId(AddTourGuideFullData_Id.Text))
             {
                 AddTourGuide_Error_ID.Content = "Id not unique";
                 tourErrorFound = true;
@@ -672,7 +710,7 @@ namespace Travelley
                 return;
 
             TourGuide temp = new TourGuide(AddTourGuideFullData_Id.Text, AddTourGuideFullData_Name.Text, AddTourGuideFullData_Nationality.Text
-                 ,AddTourGuideFullData_language.Text ,AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text, AddTourGuideFullData_PhoneNumber.Text);
+                 , AddTourGuideFullData_language.Text, AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text, AddTourGuideFullData_PhoneNumber.Text);
             temp.UserImage = new CustomImage(SelectedPath);
             DataBase.InsertTourGuide(temp);
             AddTourGuide_Error__Natinaity.Content = "";
@@ -704,7 +742,7 @@ namespace Travelley
 
         private void ShowTicketsTypes(Trip CurrentTrip)
         {
-            UpdateCurrentCanvas(TicketsTypes_Canvas, "Tickets Types", TicketsTypes_ScrollViewr);
+            UpdateCurrentCanvas(TicketsTypes_Canvas, "Tickets Types", TicketsTypes_ScrollViewr, true);
 
             int index = 0;
             foreach (KeyValuePair<string, int> x in CurrentTrip.NumberOfSeats)
@@ -812,26 +850,44 @@ namespace Travelley
 
         private void ShowListOfCustomers(List<Customer> Customers)
         {
-            UpdateCurrentCanvas(Customers_Canvas, "Customers", Customers_ScrollViewer);
+            UpdateCurrentCanvas(Customers_Canvas, "Customers", Customers_ScrollViewer, true);
             for (int i = 0; i < Customers.Count; i++)
                 new CustomerDisplayCard(i, CurrentCanvas, Customers[i], this);
         }
         private void ShowListOfTourGuides(List<TourGuide> TourGuides)
         {
-            UpdateCurrentCanvas(TourGuides_Canvas, "Tour Guides", TourGuides_ScrollViewer);
+            UpdateCurrentCanvas(TourGuides_Canvas, "Tour Guides", TourGuides_ScrollViewer, true);
+
+            Button TourGuides_AddTourGuide_Button = new Button();
+            TourGuides_AddTourGuide_Button.Content = "Add TourGuide";
+            TourGuides_AddTourGuide_Button.Foreground = new SolidColorBrush(Colors.White);
+            TourGuides_AddTourGuide_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            Canvas.SetLeft(TourGuides_AddTourGuide_Button, 713);
+            Canvas.SetTop(TourGuides_AddTourGuide_Button, 12);
+            TourGuides_AddTourGuide_Button.Height = 77;
+            TourGuides_AddTourGuide_Button.FontSize = 36;
+            TourGuides_AddTourGuide_Button.FontWeight = FontWeights.Bold;
+            TourGuides_AddTourGuide_Button.Width = 300;
+            TourGuides_AddTourGuide_Button.Click += TourGuides_AddTourGuide_Button_Click;
+            CurrentCanvas.Children.Add(TourGuides_AddTourGuide_Button);
+
+
             for (int i = 0; i < TourGuides.Count; i++)
                 new TourGuideDisplayCard(i, CurrentCanvas, TourGuides[i], this);
         }
 
-        public void UpdateCurrentCanvas(Canvas NewCanvas, string Header, ScrollViewer NewScrollViewer = null)
+        public void UpdateCurrentCanvas(Canvas NewCanvas, string Header, ScrollViewer NewScrollViewer = null, bool dynamic = false)
         {
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentScrollViewer.Visibility = Visibility.Hidden;
             CurrentCanvas = NewCanvas;
             CurrentCanvas.Visibility = Visibility.Visible;
+            if (dynamic)
+                CurrentCanvas.Children.Clear();
             if (NewScrollViewer != null)
             {
                 CurrentScrollViewer = NewScrollViewer;
+                CurrentScrollViewer.ScrollToHome();
                 CurrentScrollViewer.Visibility = Visibility.Visible;
             }
             CurrentPanelName_Label.Content = Header;
@@ -874,7 +930,7 @@ namespace Travelley
             ReserveTicket_Trip_Label.Content = ActiveTrip.Departure + " - " + ActiveTrip.Destination;
             ReserveTicket_TripImage_Image.Source = ActiveTrip.TripImage.GetImage().Source;
             ReserveTicket_TicketType_ComboxBox.Items.Clear();
-            foreach(KeyValuePair<string, int> c in ActiveTrip.NumberOfSeats)
+            foreach (KeyValuePair<string, int> c in ActiveTrip.NumberOfSeats)
             {
                 ReserveTicket_TicketType_ComboxBox.Items.Add(c.Key);
             }
@@ -913,7 +969,7 @@ namespace Travelley
         private void ReserveTicket_NumberOfSeats_TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int num = 0;
-            int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text,out num);
+            int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out num);
             num = Math.Max(num, 0);
             ReserveTicket_Price_TextBox.Text = ((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num).ToString();
         }
@@ -935,17 +991,17 @@ namespace Travelley
             string ticketType = (string)ReserveTicket_TicketType_ComboxBox.SelectedItem;
 
             int NumberOfSeats = 0;
-            if(!(int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out NumberOfSeats) || NumberOfSeats <= 0))
+            if (!(int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out NumberOfSeats) || NumberOfSeats <= 0))
             {
                 MessageBox.Show("Invalid Number of seats!!");
                 return;
             }
-            if(ActiveTrip.NumberOfSeats[ticketType] < NumberOfSeats)
+            if (ActiveTrip.NumberOfSeats[ticketType] < NumberOfSeats)
             {
                 MessageBox.Show("No enough seats available in this ticket tpye");
                 return;
             }
-            if(!tripType.InRange(NumberOfSeats))
+            if (!tripType.InRange(NumberOfSeats))
             {
                 MessageBox.Show("Range of " + ReserveTicket_TripType_ComboxBox.Text + " is " + tripType.minNumberOfSeats + " - " + tripType.maxNumberOfSeats);
                 return;
@@ -958,10 +1014,53 @@ namespace Travelley
         private void ShowListOfTickets(List<Ticket> Tickets)
         {
             UpdateCurrentCanvas(Transactions_Canvas, "Transactions", Transactions_ScrollViewer);
-            for(int i = 0; i < Tickets.Count; i++)
+            for (int i = 0; i < Tickets.Count; i++)
             {
-                new TicketDisplayCard(i, CurrentCanvas, this, DataBase.Customers[0], Tickets[i].TicketTrip, Tickets[i]);
+                Customer CurrentCustomer = null;
+                foreach (Customer cus in DataBase.Customers)
+                {
+                    if (cus.Tickets.Contains(Tickets[i]))
+                    {
+                        CurrentCustomer = cus;
+                        break;
+                    }
+                }
+                new TicketDisplayCard(i, CurrentCanvas, this, CurrentCustomer, Tickets[i].TicketTrip, Tickets[i]);
             }
+        }
+
+        private void Best_TourGuide_IMG_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (TourGuideOfTheMonth != null)
+                ShowTourGuideFullData(TourGuideOfTheMonth);
+        }
+
+        private void AddTrip_StTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AddTrip_Canvas_UpdateTourGuide_ComboBox();
+        }
+
+        private void AddTrip_EnTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AddTrip_Canvas_UpdateTourGuide_ComboBox();
+        }
+
+        private void AddTrip_Canvas_UpdateTourGuide_ComboBox()
+        {
+            if (AddTrip_StTimePicker.SelectedDate == null || AddTrip_EnTimePicker.SelectedDate == null)
+                return;
+            AddTrip_TourCombo.Items.Clear();
+            DateTime start = AddTrip_StTimePicker.SelectedDate.Value.Date;
+            DateTime end = AddTrip_EnTimePicker.SelectedDate.Value.Date;
+            if (start > end)
+                return;
+            foreach (TourGuide T in DataBase.TourGuides)
+            {
+                if (T.CheckAvailability(start, end))
+                    AddTrip_TourCombo.Items.Add(T);
+            }
+            if (AddTrip_TourCombo.Items.Count > 0)
+                AddTrip_TourCombo.SelectedItem = AddTrip_TourCombo.Items[0];
         }
     }
 }

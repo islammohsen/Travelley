@@ -32,12 +32,12 @@ namespace Travelley
             Trips.Add(obj);
         }
 
-        double GetSalary(int month, int year)
+        public double GetSalary(int month, int year)
         {
             int currentMonth = DateTime.Now.Month;
             int currentYear = DateTime.Now.Year;
             double salary = 0;
-            if (currentMonth <= month && currentYear <= year)
+            if (currentMonth < month && currentYear < year)
                 return -1;
 
             foreach (Trip T in trips)
@@ -50,6 +50,7 @@ namespace Travelley
             }
             return salary;
         }
+
         public static TourGuide GetBestTourGuide(int Month)
         {
             int year = DateTime.Today.Year;
@@ -65,15 +66,22 @@ namespace Travelley
                 if (t.GetSalary(Month, year) > ret.GetSalary(Month, year))
                     ret = t;
             }
-            if (ret.GetSalary(Month, year) == 0)
-                return null;
             return ret;
         }
-		/*public bool CheckAvailability(DateTime start, DateTime end)
+
+		public bool CheckAvailability(DateTime start, DateTime end)
 		{
+            foreach(Trip T in trips)
+            {
+                if ((start >= T.Start && start <= T.End) || (end >= T.Start && end <= T.End) || (T.Start >= start && T.Start <= end) || (T.End >= start && T.End <= end))
+                    return false;
+            }
+            return true;
+		}
 
-		}*/
-
-
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

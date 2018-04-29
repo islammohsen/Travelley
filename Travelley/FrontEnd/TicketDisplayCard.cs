@@ -47,17 +47,6 @@ namespace Travelley.FrontEnd
             BackGround.StrokeThickness = 3;
             CurrentCanvas.Children.Add(BackGround);
 
-            SerialNumber = new Label();
-            SerialNumber.Content = "SerialNumber: " + CurrentTicket.SerialNumber;
-            SerialNumber.FontSize = 25;
-            SerialNumber.FontWeight = FontWeights.Bold;
-            SerialNumber.HorizontalAlignment = HorizontalAlignment.Left;
-            SerialNumber.VerticalAlignment = VerticalAlignment.Center;
-            Canvas.SetLeft(SerialNumber, 120);
-            Canvas.SetTop(SerialNumber, BaseLoc + 10);
-            CurrentCanvas.Children.Add(SerialNumber);
-
-
             CustomerName = new Label();
             CustomerName.Content = "Customer Name: " + CurrentCustomer.Name;
             CustomerName.FontSize = 25;
@@ -67,7 +56,7 @@ namespace Travelley.FrontEnd
             CustomerName.MouseDoubleClick += CustomerName_DoubleClick;
             CustomerName.Cursor = Cursors.Hand;
             Canvas.SetLeft(CustomerName, 120);
-            Canvas.SetTop(CustomerName, BaseLoc + 50);
+            Canvas.SetTop(CustomerName, BaseLoc + 10);
             CurrentCanvas.Children.Add(CustomerName);
 
             TripName = new Label();
@@ -79,7 +68,7 @@ namespace Travelley.FrontEnd
             TripName.MouseDoubleClick += TripName_DoubleClick;
             TripName.Cursor = Cursors.Hand;
             Canvas.SetLeft(TripName, 120);
-            Canvas.SetTop(TripName, BaseLoc + 90);
+            Canvas.SetTop(TripName, BaseLoc + 50);
             CurrentCanvas.Children.Add(TripName);
 
             TypeOfTicket = new Label();
@@ -89,7 +78,7 @@ namespace Travelley.FrontEnd
             TypeOfTicket.HorizontalAlignment = HorizontalAlignment.Left;
             TypeOfTicket.VerticalAlignment = VerticalAlignment.Center;
             Canvas.SetLeft(TypeOfTicket, 120);
-            Canvas.SetTop(TypeOfTicket, BaseLoc + 130);
+            Canvas.SetTop(TypeOfTicket, BaseLoc + 90);
             CurrentCanvas.Children.Add(TypeOfTicket);
 
             TypeOfTrip = new Label();
@@ -99,7 +88,7 @@ namespace Travelley.FrontEnd
             TypeOfTrip.HorizontalAlignment = HorizontalAlignment.Left;
             TypeOfTrip.VerticalAlignment = VerticalAlignment.Center;
             Canvas.SetLeft(TypeOfTrip, 120);
-            Canvas.SetTop(TypeOfTrip, BaseLoc + 170);
+            Canvas.SetTop(TypeOfTrip, BaseLoc + 130);
             CurrentCanvas.Children.Add(TypeOfTrip);
 
             NumberOfSeats = new Label();
@@ -109,7 +98,7 @@ namespace Travelley.FrontEnd
             NumberOfSeats.HorizontalAlignment = HorizontalAlignment.Left;
             NumberOfSeats.VerticalAlignment = VerticalAlignment.Center;
             Canvas.SetLeft(NumberOfSeats, 120);
-            Canvas.SetTop(NumberOfSeats, BaseLoc + 210);
+            Canvas.SetTop(NumberOfSeats, BaseLoc + 170);
             CurrentCanvas.Children.Add(NumberOfSeats);
 
             Price = new Label();
@@ -119,8 +108,18 @@ namespace Travelley.FrontEnd
             Price.HorizontalAlignment = HorizontalAlignment.Left;
             Price.VerticalAlignment = VerticalAlignment.Center;
             Canvas.SetLeft(Price, 120);
-            Canvas.SetTop(Price, BaseLoc + 250);
+            Canvas.SetTop(Price, BaseLoc + 210);
             CurrentCanvas.Children.Add(Price);
+
+            SerialNumber = new Label();
+            SerialNumber.Content = "SerialNumber: " + CurrentTicket.SerialNumber;
+            SerialNumber.FontSize = 25;
+            SerialNumber.FontWeight = FontWeights.Bold;
+            SerialNumber.HorizontalAlignment = HorizontalAlignment.Left;
+            SerialNumber.VerticalAlignment = VerticalAlignment.Center;
+            Canvas.SetLeft(SerialNumber, 120);
+            Canvas.SetTop(SerialNumber, BaseLoc + 250);
+            CurrentCanvas.Children.Add(SerialNumber);
 
             CurrentCanvas.Height = BaseLoc + 330;
         }

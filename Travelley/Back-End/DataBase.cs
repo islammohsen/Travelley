@@ -144,6 +144,7 @@ namespace Travelley
                 Trip Obj = new Trip(TripId, CurrentTourGuide, Depature, Destination, Discount, Start, End);
                 Obj.TripImage = new CustomImage(TripImage);
                 Trips.Add(Obj);
+                CurrentTourGuide.Trips.Add(Obj);
             }
             Reader.Close();
             return;
@@ -206,10 +207,12 @@ namespace Travelley
                     tripType = new Family();
                 else if (TypeOfTrip == "Couple")
                     tripType = new Couple();
-                else if (TypeOfTrip == "Genral")
+                else if (TypeOfTrip == "General")
                     tripType = new General();
                 else if (TypeOfTrip == "Lonely")
                     tripType = new Lonely();
+                else if (TypeOfTrip == "Friends")
+                    tripType = new Friends();
 
 
                 Ticket CurrentTicket = new Ticket(SerialNumber, CurrentTrip, TypeOfTicket, tripType, Price, NumberOfSeats);
