@@ -32,8 +32,7 @@ namespace Travelley.FrontEnd
         {
             this.CurrentTrip = CurrentTrip;
 
-            double BaseLoc = (index * 175) + 20;
-
+            double BaseLoc = (index * 175) + 120;
             //creating BackGroung
             BackGround = new Rectangle();
             BackGround.Width = 700;

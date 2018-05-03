@@ -102,6 +102,7 @@
             <Label x:Name="TripFullData_Discount" Content="" Canvas.Left="216" Canvas.Top="538" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_TripId" Content="" Canvas.Left="180" Canvas.Top="417" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Button x:Name="TripFullData_ReserveTrip_Button" Content="Reserve Trip" Canvas.Left="340" Canvas.Top="607" Width="225" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_ReserveTrip_Button_Click" />
+            <Button x:Name="TripFullData_TicketTypes_Button" Content="Ticket Types" Canvas.Left="81" Canvas.Top="607" Width="225" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_TicketTypes_Button_Click" />
         </Canvas>
         <Canvas x:Name="AddTrip_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Label x:Name="DepatLabel" Content="Trip Depature" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="219" FontWeight="Bold" FontSize="24"/>
@@ -247,6 +248,41 @@
         <ScrollViewer x:Name="TicketsTypes_ScrollViewr" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="TicketsTypes_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True" IsVisibleChanged="TicketsTypes_Canvas_IsVisibleChanged_1" Visibility="Hidden"/>
         </ScrollViewer>
+        <Canvas x:Name="AddTicketType_Canvas" Height="565" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1035" Canvas.Top="116" Canvas.Left="308" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+            <StackPanel>
+                <Grid Margin="0 30 0 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Type" FontSize="25" Grid.Column="0"/>
+                    <TextBox x:Name="AddTicketType_Type_TextBox" FontSize="25" Grid.Column="1" Width="200" Margin="20 0 0 0" TextAlignment="Center"/>
+                </Grid>
+                <Grid Margin="0 30 0 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Number of seats" FontSize="25" Grid.Column="0"/>
+                    <TextBox x:Name="AddTicketType_NumberOfSeats_TextBox" FontSize="25" Grid.Column="1" Width="100" Margin="20 0 0 0" TextAlignment="Center"/>
+                </Grid>
+                <Grid Margin="0 30 0 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Price" FontSize="25" Grid.Column="0"/>
+                    <TextBox x:Name="AddTicketType_Price_TextBox" FontSize="25" Grid.Column="1" Width="100" Margin="60 0 0 0" TextAlignment="Center"/>
+                </Grid>
+            </StackPanel>
+            <Button x:Name="AddTicketType_Canvas_Add_Button" Content="Add Ticket" Canvas.Left="750" Canvas.Top="450" Width="243" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="AddTicketType_Canvas_Add_Button_Click"/>
+        </Canvas>
         <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         <ScrollViewer x:Name="TourGuides_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="TourGuides_Canvas"  Height="162" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>

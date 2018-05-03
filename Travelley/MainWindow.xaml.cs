@@ -745,12 +745,30 @@ namespace Travelley
         {
             UpdateCurrentCanvas(TicketsTypes_Canvas, "Tickets Types", TicketsTypes_ScrollViewr, true);
 
+            Button TicketsTypes_Add_Button = new Button();
+            TicketsTypes_Add_Button.Content = "Add Ticket";
+            TicketsTypes_Add_Button.Foreground = new SolidColorBrush(Colors.White);
+            TicketsTypes_Add_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            Canvas.SetLeft(TicketsTypes_Add_Button, 713);
+            Canvas.SetTop(TicketsTypes_Add_Button, 12);
+            TicketsTypes_Add_Button.Height = 77;
+            TicketsTypes_Add_Button.FontSize = 36;
+            TicketsTypes_Add_Button.FontWeight = FontWeights.Bold;
+            TicketsTypes_Add_Button.Width = 300;
+            TicketsTypes_Add_Button.Click += TicketsTypes_Add_Button_Click;
+            CurrentCanvas.Children.Add(TicketsTypes_Add_Button);
+
             int index = 0;
             foreach (KeyValuePair<string, int> x in CurrentTrip.NumberOfSeats)
             {
                 TicketsTypesCard T2 = new TicketsTypesCard(index, TicketsTypes_Canvas, CurrentTrip, x.Key, x.Value, CurrentTrip.PriceOfSeat[x.Key]);
                 index++;
             }
+        }
+
+        private void TicketsTypes_Add_Button_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateCurrentCanvas(AddTicketType_Canvas, "Add Ticket", null, false);
         }
 
         private void TicketsTypes_Canvas_IsVisibleChanged_1(object sender, DependencyPropertyChangedEventArgs e)
@@ -1118,6 +1136,40 @@ namespace Travelley
         {
             DataBase.DeleteTrip(ActiveTrip);
             ShowListOfTrips(DataBase.Trips);
+        }
+
+        private void TripFullData_TicketTypes_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowTicketsTypes(ActiveTrip);
+        }
+
+        private void AddTicketType_Canvas_Add_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(AddTicketType_Type_TextBox.Text == "")
+            {
+                MessageBox.Show("Please enter a ticket type");
+                return;
+            }
+            int num = 0;
+            if(!int.TryParse(AddTicketType_NumberOfSeats_TextBox.Text, out num))
+            {
+                MessageBox.Show("Please enter a valid number of seats");
+                return;
+            }
+            double price = 0;
+            if(!double.TryParse(AddTicketType_Price_TextBox.Text, out price))
+            {
+                MessageBox.Show("Please enter a valid price");
+                return;
+            }
+            string TicketType = AddTicketType_Type_TextBox.Text;
+            if (ActiveTrip.NumberOfSeats.ContainsKey(TicketType))
+            {
+                MessageBox.Show("Ticket Type already exists");
+                return;
+            }
+            DataBase.InsertTripTickets(ActiveTrip.TripId, TicketType, num, price);
+            ShowTicketsTypes(ActiveTrip);
         }
     }
 }

@@ -350,6 +350,9 @@ namespace Travelley
         {
             Command.CommandText = $"INSERT INTO TripsTickets values( '{TripId}', '{Type}', {NumbrOfSeats}, {Price} )";
             Command.ExecuteNonQuery();
+            Trip T = SelectTrip(TripId);
+            T.NumberOfSeats.Add(Type, NumbrOfSeats);
+            T.PriceOfSeat.Add(Type, Price);
             return;
         }
 
