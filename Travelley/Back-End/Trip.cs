@@ -25,6 +25,7 @@ namespace Travelley
         private Dictionary<string, int> numberOfSeats;
         private Dictionary<string, double> priceOfSeat;
         private List<Ticket> tickets;
+        private bool isClosed;
 
         public DateTime Start { get => start; set => start = value; }
         public DateTime End { get => end; set => end = value; }
@@ -36,6 +37,8 @@ namespace Travelley
         internal List<Ticket> Tickets { get => tickets; set => tickets = value; }
         public Dictionary<string, int> NumberOfSeats { get => numberOfSeats; set => numberOfSeats = value; }
         public Dictionary<string, double> PriceOfSeat { get => priceOfSeat; set => priceOfSeat = value; }
+        public bool IsClosed { get => isClosed; set => isClosed = value; }
+
         public CustomImage TripImage;
 
         public void AddSeats(string Type, int Number, double Price)
@@ -56,6 +59,10 @@ namespace Travelley
             Tickets = new List<Ticket>();
             NumberOfSeats = new Dictionary<string, int>();
             PriceOfSeat = new Dictionary<string, double>();
+            if (Start <= DateTime.Today)
+                IsClosed = true;
+            else
+                IsClosed = false;
         }
 
         public void AddTicket(Ticket obj)

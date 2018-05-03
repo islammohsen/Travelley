@@ -874,6 +874,11 @@ namespace Travelley
 
         private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
         {
+            if(ActiveTrip.IsClosed)
+            {
+                MessageBox.Show("Can't edit a closed trip");
+                return;
+            }
             ShowEditTrip_Canvas(ActiveTrip);
         }
 

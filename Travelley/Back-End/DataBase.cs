@@ -268,9 +268,9 @@ namespace Travelley
         {
             //update database
             //update Trip table
-            Command.CommandText = $"UPDATE Trips set TripId = '{TripId}', TourGuideId = '{TourGuideId}', " +
-                $" Depature = '{Depature}', Destination = '{Destination}', Discount = {Discount}, Start = '{Start.ToString()}'," +
-                $" End = '{End.ToString()}', Image = @image  where TripId = '{CurrentTrip.TripId}'";
+           Command.CommandText = $"UPDATE Trips set TripId = '{TripId}', TourGuideId = '{TourGuideId}', Depature = '{Depature}', " +
+                $"Destination = '{Destination}', Discount = {Discount} , Start = '{Start.ToString()}' , " +
+                $"End = '{End.ToString()}' , Image = @image where TripId = '{CurrentTrip.TripId}'";
             Command.Parameters.AddWithValue("@image", TripImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
