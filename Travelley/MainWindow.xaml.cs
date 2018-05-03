@@ -950,20 +950,27 @@ namespace Travelley
         private void ShowGetCustomerById()
         {
             UpdateCurrentCanvas(GetCustomerById_Canvas, "Get Customer By Id");
+            GetCustomerById_CustomerId_TextBox.Text = "";
         }
         private void ReserveTicket()
         {
             UpdateCurrentCanvas(ReserveTicket_Canvas, "Reserve Ticket");
+
             ReserveTicket_CustomerName_Label.Content = ActiveCustomer.ToString();
             ReserveTicket_Trip_Label.Content = ActiveTrip.Departure + " - " + ActiveTrip.Destination;
             ReserveTicket_TripImage_Image.Source = ActiveTrip.TripImage.GetImage().Source;
             ReserveTicket_TicketType_ComboxBox.Items.Clear();
+            ReserveTicket_NumberOfSeats_TextBox.Text = "";
             foreach (KeyValuePair<string, int> c in ActiveTrip.NumberOfSeats)
             {
                 ReserveTicket_TicketType_ComboxBox.Items.Add(c.Key);
             }
             if (ReserveTicket_TicketType_ComboxBox.Items.Count > 0)
                 ReserveTicket_TicketType_ComboxBox.SelectedItem = ReserveTicket_TicketType_ComboxBox.Items[0];
+            if(ActiveCustomer.Discount == true)
+            {
+                MessageBox.Show("Customer have 10% discount");
+            }
         }
         private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
         {
