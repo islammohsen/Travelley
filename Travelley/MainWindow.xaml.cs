@@ -152,6 +152,7 @@ namespace Travelley
             TripFullData_EndDate.Content = t.End.ToShortDateString();
             TripFullData_TourGuideName.Content = t.Tour.Name;
             TripFullData_TripId.Content = t.TripId;
+            TripFullData_Avaialbleseats_Label.Content = "Available seats: " + ActiveTrip.GetNumberOfAvailableSeats();
         }
 
         public void ShowCustomerFullData(Customer c)
@@ -899,6 +900,12 @@ namespace Travelley
             TourGuides_AddTourGuide_Button.Click += TourGuides_AddTourGuide_Button_Click;
             CurrentCanvas.Children.Add(TourGuides_AddTourGuide_Button);
 
+            Label AvailableTourGuides_Label = new Label();
+            AvailableTourGuides_Label.FontSize = 25;
+            AvailableTourGuides_Label.Content = "Available: " + DataBase.GetNumberOfAvailableTourGuides().ToString();
+            Canvas.SetLeft(AvailableTourGuides_Label, 111);
+            Canvas.SetTop(AvailableTourGuides_Label, 12);
+            CurrentCanvas.Children.Add(AvailableTourGuides_Label);
 
             for (int i = 0; i < TourGuides.Count; i++)
                 new TourGuideDisplayCard(i, CurrentCanvas, TourGuides[i], this);
@@ -980,6 +987,14 @@ namespace Travelley
         private void ShowAddCustomerCanvas()
         {
             UpdateCurrentCanvas(AddCustomer_Canvas, "Add Customer");
+            AddCustomer_Name_TextBox.Text = "";
+            AddCustomer_Email_TextBox.Text = "";
+            AddCustomer_Language_TextBox.Text = "";
+            AddCustomer_National_Id_TextBox.Text = "";
+            AddCustomer_Phone_TextBox.Text = "";
+            AddCustomer_Gender_ComboBox.SelectedItem = "Male";
+            AddCustomer_Nationality_TextBox.Text = "";
+            AddCustomer_Language_TextBox.Text = "";
         }
 
         private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)

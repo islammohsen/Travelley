@@ -74,5 +74,14 @@ namespace Travelley
             return T;
         }
 
+        public int GetNumberOfAvailableSeats()
+        {
+            int ret = 0;
+            foreach(KeyValuePair<string, int> C in NumberOfSeats)
+            {
+                ret += C.Value;
+            }
+            return ret;
+        }
     }
 }

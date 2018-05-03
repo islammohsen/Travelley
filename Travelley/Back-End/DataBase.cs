@@ -343,6 +343,7 @@ namespace Travelley
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
             Trips.Add(CurrentTrip);
+            CurrentTrip.Tour.Trips.Add(CurrentTrip);
             return;
         }
 
@@ -400,6 +401,7 @@ namespace Travelley
             Command.ExecuteNonQuery();
 
             Trips.Remove(CurrentTrip);
+            CurrentTrip.Tour.Trips.Remove(CurrentTrip);
         }
 
         public static void DeleteTicket(Ticket t)
@@ -490,6 +492,17 @@ namespace Travelley
                     return false;
             }
             return true;
+        }
+
+        public static int GetNumberOfAvailableTourGuides()
+        {
+            int ret = 0;
+            foreach(TourGuide T in TourGuides)
+            {
+                if (T.CheckAvailability(DateTime.Today, DateTime.Today))
+                    ret++;
+            }
+            return ret;
         }
     }
 }
