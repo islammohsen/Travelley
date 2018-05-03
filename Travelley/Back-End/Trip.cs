@@ -70,6 +70,7 @@ namespace Travelley
 
             double TicketPrice = PriceOfSeat[TicketType] * NumberOfOrderedSeats * (1.0 - discount);
             Ticket T = new Ticket(serial, this, TicketType, tripType, TicketPrice, NumberOfOrderedSeats);
+            tickets.Add(T);
             return T;
         }
 

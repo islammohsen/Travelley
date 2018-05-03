@@ -40,9 +40,11 @@ namespace Travelley
         public void AddTicket(Ticket obj)
         {
             Tickets.Add(obj);
-            Mark.Add(obj.TicketTrip);
+            Mark.Add(obj.CurrentTrip);
             if (Mark.Count >= 2)
                 discount = true;
+            else
+                discount = false;
             return;
 
         }
@@ -51,7 +53,26 @@ namespace Travelley
         {
             Ticket obj = CurrentTrip.ReserveTicket(tripType, TicketType, NumberOfOrderedSeats);
             Tickets.Add(obj);
+            Mark.Add(CurrentTrip);
+            if (Mark.Count >= 2)
+                discount = true;
+            else
+                discount = false;
             return obj;
+        }
+
+        public void UpdateTripMarking()
+        {
+            Mark.Clear();
+            foreach(Ticket T in Tickets)
+            {
+                Mark.Add(T.CurrentTrip);
+            }
+            if (Mark.Count >= 2)
+                discount = true;
+            else
+                discount = false;
+            return;
         }
 
         public List<Ticket> GetTickets()

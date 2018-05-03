@@ -269,8 +269,8 @@ namespace Travelley
             //update database
             //update Trip table
             Command.CommandText = $"UPDATE Trips set TripId = '{TripId}', TourGuideId = '{TourGuideId}', " +
-                $" Depature = '{Depature}', Destination = '{Destination}', Discont = {Discount}, Start = '{Start}'," +
-                $" End = '{End}', Image = @Image  where TripId = '{CurrentTrip.TripId}'";
+                $" Depature = '{Depature}', Destination = '{Destination}', Discount = {Discount}, Start = '{Start.ToString()}'," +
+                $" End = '{End.ToString()}', Image = @image  where TripId = '{CurrentTrip.TripId}'";
             Command.Parameters.AddWithValue("@image", TripImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
@@ -361,6 +361,60 @@ namespace Travelley
             Trip t = SelectTrip(TripId);
             UpdateTripsTickets(t, TypeOfTicket, TypeOfTicket, t.NumberOfSeats[TypeOfTicket] - NumberOfSeats, t.PriceOfSeat[TypeOfTicket]);
             return;
+        }
+
+        public static void DeleteCustomer(Customer CurrnetCustomer)
+        {
+            while (CurrnetCustomer.Tickets.Count != 0)
+            {
+                DeleteTicket(CurrnetCustomer.Tickets[0]);
+            }
+            Command.CommandText = $"Delete From Customer where Id = '{CurrnetCustomer.Id}'";
+            Command.ExecuteNonQuery();
+
+            Customers.Remove(CurrnetCustomer);
+        }
+
+        public static void DeleteTourGuide()
+        {
+            //todo
+        }
+
+        public static void DeleteTrip(Trip CurrentTrip)
+        {
+            //Delete TripsTickets of the Current Trip
+            Command.CommandText = $"Delete From TripsTickets where TripId = '{CurrentTrip.TripId}'";
+            Command.ExecuteNonQuery();
+
+            //Delete the tickets of the current trip
+            while(CurrentTrip.Tickets.Count != 0)
+            {
+                DeleteTicket(CurrentTrip.Tickets[0]);
+            }
+
+            //delete the trip
+            Command.CommandText = $"Delete From Trips where TripId = '{CurrentTrip.TripId}'";
+            Command.ExecuteNonQuery();
+
+            Trips.Remove(CurrentTrip);
+        }
+
+        public static void DeleteTicket(Ticket t)
+        {
+            Command.CommandText = $"Select * From Transactions where serialnumber = '{t.SerialNumber}'";
+            Reader = Command.ExecuteReader();
+            Reader.Read();
+            Trip T = SelectTrip((string)Reader["TripId"]);
+            Customer Cus = SelectCustomer((string)Reader["CustomerId"]);
+            string TicketType = (string)Reader["TypeOfTicket"];
+            int NumberOfSeats = (int)Reader["NumberOfSeats"];
+            T.Tickets.Remove(t);
+            Cus.Tickets.Remove(t);
+            Cus.UpdateTripMarking();
+            Reader.Close();
+            UpdateTripsTickets(T, TicketType, TicketType, T.NumberOfSeats[TicketType] + NumberOfSeats, T.PriceOfSeat[TicketType]);
+            Command.CommandText = $"Delete From Transactions where serialnumber = '{t.SerialNumber}'";
+            Command.ExecuteNonQuery();
         }
 
         //select with id

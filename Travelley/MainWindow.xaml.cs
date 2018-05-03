@@ -103,13 +103,12 @@ namespace Travelley
             ShowListOfTourGuides(DataBase.TourGuides);
         }
 
-        private void Transactions_Button_Click(object sender, RoutedEventArgs e)
+        public void Transactions_Button_Click(object sender, RoutedEventArgs e)
         {
-
             ShowListOfTickets(GetAllTickets());
         }
 
-        private List<Ticket> GetAllTickets()
+        public List<Ticket> GetAllTickets()
         {
             List<Ticket> Tickets = new List<Ticket>();
             foreach (Trip CurrentTrip in DataBase.Trips)
@@ -413,9 +412,6 @@ namespace Travelley
 
         }
 
-
-
-
         private void AddCustomer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
         {
             bool NationalId = String.IsNullOrEmpty(AddCustomer_National_Id_TextBox.Text);
@@ -485,15 +481,19 @@ namespace Travelley
 
         private void ShowEditTrip_Canvas(Trip t)
         {
+            ActiveTrip = t;
+
             UpdateCurrentCanvas(EditTrip_Canvas, "Edit Trip Data");
 
             EditTrip_TripIDTextbox.Text = TripFullData_TripId.Content.ToString();
             EditTrip_TripDeptTextbox.Text = TripFullData_DepartureAndDestination.Content.ToString().Split('-')[0].Trim();
             EditTrip_TripDestTextbox.Text = TripFullData_DepartureAndDestination.Content.ToString().Split('-')[1].Trim();
-            EditTrip_TripDiscTextbox.Text = TripFullData_Discount.Content.ToString();
+            EditTrip_TripDiscTextbox.Text = ActiveTrip.Discount.ToString();
             EditTrip_EnTimePicker.Text = TripFullData_EndDate.Content.ToString();
             EditTrip_StTimePicker.Text = TripFullData_StartDate.Content.ToString();
-            EditTrip_TourCombo.Text = TripFullData_TourGuideName.Content.ToString();
+
+            //todo fih moshkla lw ana m4 3aiz a8ir l tourguide
+           // EditTrip_TourCombo.Text = TripFullData_TourGuideName.Content.ToString();
             EditTrip_Discount_ErrorLabel.Content = "";
             EditTrip_TourGuide_ErrorLabel.Content = "";
             EditTrip_TripDep_ErrorLabel.Content = "";
@@ -556,9 +556,10 @@ namespace Travelley
                 AddTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
                 errorfound = true;
             }
-            if(AddTrip_TourCombo.Text == "")
+            if(AddTrip_TourCombo.SelectedItem == null)
             {
                 MessageBox.Show("You must choose a tourguide");
+                errorfound = true;
             }
             if (errorfound == true)
             {
@@ -769,13 +770,14 @@ namespace Travelley
             EditTrip_TripPhoto_ErrorLabel.Content = "";
             EditTrip_TripStTime_ErrorLabel.Content = "";
 
+            //todo more eror validations
             bool errorfound = false;
             if (EditTrip_TripIDTextbox.Text.Trim() == "")
             {
                 EditTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
                 errorfound = true;
             }
-            if (DataBase.CheckUniqueTripId(EditTrip_TripIDTextbox.Text) == false)
+            if (DataBase.CheckUniqueTripId(EditTrip_TripIDTextbox.Text) == false && EditTrip_TripIDTextbox.Text != ActiveTrip.TripId)
             {
                 EditTrip_TripID_ErrorLabel.Content = "This ID is already used";
                 errorfound = true;
@@ -825,10 +827,20 @@ namespace Travelley
                 EditTrip_TripStTime_ErrorLabel.Content = "You must choose start time!";
                 errorfound = true;
             }
+            if(EditTrip_TourCombo.SelectedItem == null)
+            {
+                MessageBox.Show("you must choose a tourguide");
+                errorfound = true;
+            }
             if (errorfound == true)
             {
                 return;
             }
+            
+            DataBase.UpdateTrip(ActiveTrip, EditTrip_TripIDTextbox.Text, ((TourGuide)EditTrip_TourCombo.SelectedItem).Id, EditTrip_TripDeptTextbox.Text, 
+                EditTrip_TripDestTextbox.Text, double.Parse(EditTrip_TripDiscTextbox.Text), EditTrip_StTimePicker.SelectedDate.Value.Date, EditTrip_EnTimePicker.SelectedDate.Value.Date,
+                new CustomImage(SelectedPath));
+
             EditTrip_Discount_ErrorLabel.Content = "";
             EditTrip_TourGuide_ErrorLabel.Content = "";
             EditTrip_TripDep_ErrorLabel.Content = "";
@@ -837,10 +849,8 @@ namespace Travelley
             EditTrip_TripID_ErrorLabel.Content = "";
             EditTrip_TripPhoto_ErrorLabel.Content = "";
             EditTrip_TripStTime_ErrorLabel.Content = "";
-            //string type = "Family";
-            //  DataBase.UpdateTrip(ActiveTrip, EditTrip_TripIDTextbox.Text, EditTrip_TourCombo.Text, type, EditTrip_TripDeptTextbox.Text, EditTrip_TripDestTextbox.Text, double.Parse(EditTrip_TripDiscTextbox.Text),DateTime.Parse( EditTrip_StTimePicker.Text),DateTime.Parse( EditTrip_EnTimePicker.Text), new CustomImage(SelectedPath));
-            //Todo Fe moseba hna fel type
-            //Todo check datetime
+
+            ShowListOfTrips(DataBase.Trips);
         }
 
         private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
@@ -968,10 +978,12 @@ namespace Travelley
 
         private void ReserveTicket_NumberOfSeats_TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
+                return;
             int num = 0;
             int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out num);
             num = Math.Max(num, 0);
-            ReserveTicket_Price_TextBox.Text = ((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num).ToString();
+            ReserveTicket_Price_TextBox.Text = ((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * (float)(100 - ActiveTrip.Discount - (ActiveCustomer.Discount ? 10: 0)) / 100).ToString();
         }
 
         private void ReserveTicket_Reserve_Button_Click(object sender, RoutedEventArgs e)
@@ -988,6 +1000,11 @@ namespace Travelley
             else if (ReserveTicket_TripType_ComboxBox.Text == "Friends")
                 tripType = new Friends();
 
+            if(ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
+            {
+                MessageBox.Show("select a ticket type");
+                return;
+            }
             string ticketType = (string)ReserveTicket_TicketType_ComboxBox.SelectedItem;
 
             int NumberOfSeats = 0;
@@ -1011,7 +1028,7 @@ namespace Travelley
             MessageBox.Show("Ticket added");
             ShowListOfTrips(DataBase.Trips);
         }
-        private void ShowListOfTickets(List<Ticket> Tickets)
+        public void ShowListOfTickets(List<Ticket> Tickets)
         {
             UpdateCurrentCanvas(Transactions_Canvas, "Transactions", Transactions_ScrollViewer);
             for (int i = 0; i < Tickets.Count; i++)
@@ -1025,7 +1042,7 @@ namespace Travelley
                         break;
                     }
                 }
-                new TicketDisplayCard(i, CurrentCanvas, this, CurrentCustomer, Tickets[i].TicketTrip, Tickets[i]);
+                new TicketDisplayCard(i, CurrentCanvas, this, CurrentCustomer, Tickets[i].CurrentTrip, Tickets[i]);
             }
         }
 
@@ -1061,6 +1078,46 @@ namespace Travelley
             }
             if (AddTrip_TourCombo.Items.Count > 0)
                 AddTrip_TourCombo.SelectedItem = AddTrip_TourCombo.Items[0];
+        }
+
+        private void EditTrip_StTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            EditTrip_Canvas_UpdateTourGuide_ComboBox();
+        }
+
+        private void EditTrip_EnTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            EditTrip_Canvas_UpdateTourGuide_ComboBox();
+        }
+
+        private void EditTrip_Canvas_UpdateTourGuide_ComboBox()
+        {
+            if (EditTrip_StTimePicker.SelectedDate == null || EditTrip_EnTimePicker.SelectedDate == null)
+                return;
+            EditTrip_TourCombo.Items.Clear();
+            DateTime start = EditTrip_StTimePicker.SelectedDate.Value.Date;
+            DateTime end = EditTrip_EnTimePicker.SelectedDate.Value.Date;
+            if (start > end)
+                return;
+            foreach (TourGuide T in DataBase.TourGuides)
+            {
+                if (T.CheckAvailability(start, end))
+                    EditTrip_TourCombo.Items.Add(T);
+            }
+            if (EditTrip_TourCombo.Items.Count > 0)
+                EditTrip_TourCombo.SelectedItem = EditTrip_TourCombo.Items[0];
+        }
+
+        private void CustomerFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            DataBase.DeleteCustomer(ActiveCustomer);
+            ShowListOfCustomers(DataBase.Customers);
+        }
+
+        private void TripFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            DataBase.DeleteTrip(ActiveTrip);
+            ShowListOfTrips(DataBase.Trips);
         }
     }
 }

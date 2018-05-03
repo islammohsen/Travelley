@@ -21,6 +21,7 @@ namespace Travelley.FrontEnd
         Label TypeOfTrip;
         Label NumberOfSeats;
         Label Price;
+        Button Delete_Button;
 
         Customer CurrentCustomer;
         Trip CurrentTrip;
@@ -121,6 +122,19 @@ namespace Travelley.FrontEnd
             Canvas.SetTop(SerialNumber, BaseLoc + 250);
             CurrentCanvas.Children.Add(SerialNumber);
 
+            Delete_Button = new Button();
+            Delete_Button.Content = "Delete";
+            Canvas.SetLeft(Delete_Button, 750);
+            Canvas.SetTop(Delete_Button, BaseLoc + 20);
+            Delete_Button.Width = 152;
+            Delete_Button.Height = 48;
+            Delete_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            Delete_Button.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            Delete_Button.FontSize = 20;
+            Delete_Button.Click += Delete_Button_Click;
+            Delete_Button.Cursor = Cursors.Hand;
+            CurrentCanvas.Children.Add(Delete_Button);
+
             CurrentCanvas.Height = BaseLoc + 330;
         }
 
@@ -132,6 +146,12 @@ namespace Travelley.FrontEnd
         private void TripName_DoubleClick(object sender, RoutedEventArgs e)
         {
             CurrentWindow.ShowTripFullData(CurrentTrip);
+        }
+
+        private void Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            DataBase.DeleteTicket(CurrentTicket);
+            CurrentWindow.ShowListOfTickets(CurrentWindow.GetAllTickets());
         }
     }
 }
