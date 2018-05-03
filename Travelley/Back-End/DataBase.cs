@@ -415,6 +415,8 @@ namespace Travelley
             Cus.Tickets.Remove(t);
             Cus.UpdateTripMarking();
             Reader.Close();
+            if (Cus.Tickets.Count == 0)
+                DeleteCustomer(Cus);
             UpdateTripsTickets(T, TicketType, TicketType, T.NumberOfSeats[TicketType] + NumberOfSeats, T.PriceOfSeat[TicketType]);
             Command.CommandText = $"Delete From Transactions where serialnumber = '{t.SerialNumber}'";
             Command.ExecuteNonQuery();
