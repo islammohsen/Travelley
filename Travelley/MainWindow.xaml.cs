@@ -35,6 +35,8 @@ namespace Travelley
 
         string SelectedPath = "";
 
+        #region window
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -82,11 +84,33 @@ namespace Travelley
             DataBase.ShutDown();
         }
 
+        private void Button_Mouse_Enter(object sender, MouseEventArgs e)
+        {
+            Button b = sender as Button;
+            b.Background = new SolidColorBrush(Color.FromRgb(21, 31, 40));
+            b.Foreground = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+        }
+
+        private void Button_Mouse_Leave(object sender, MouseEventArgs e)
+        {
+            Button b = sender as Button;
+            b.Background = new SolidColorBrush(Color.FromRgb(41, 53, 65));
+            b.Foreground = Brushes.White;
+        }
+
+        #endregion window
+
+        #region Main_Canvas
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             UpdateCurrentCanvas(Main_Canvas, "Home Page");
         }
 
+        private void Trips_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowListOfTrips(DataBase.Trips);
+        }
 
         private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -108,36 +132,76 @@ namespace Travelley
             ShowListOfTickets(GetAllTickets());
         }
 
-        public List<Ticket> GetAllTickets()
+        private void TripOfTheDay_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            List<Ticket> Tickets = new List<Ticket>();
-            foreach (Trip CurrentTrip in DataBase.Trips)
+            ActiveTrip = TripOfTheDay;
+            ShowTripFullData(TripOfTheDay);
+        }
+
+        private void Best_TourGuide_IMG_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (TourGuideOfTheMonth != null)
+                ShowTourGuideFullData(TourGuideOfTheMonth);
+        }
+
+        public void UpdateCurrentCanvas(Canvas NewCanvas, string Header, ScrollViewer NewScrollViewer = null, bool dynamic = false)
+        {
+            CurrentCanvas.Visibility = Visibility.Hidden;
+            CurrentScrollViewer.Visibility = Visibility.Hidden;
+            CurrentCanvas = NewCanvas;
+            CurrentCanvas.Visibility = Visibility.Visible;
+            if (dynamic)
+                CurrentCanvas.Children.Clear();
+            if (NewScrollViewer != null)
             {
-                foreach (Ticket CurrentTicket in CurrentTrip.Tickets)
-                {
-                    Tickets.Add(CurrentTicket);
-                }
+                CurrentScrollViewer = NewScrollViewer;
+                CurrentScrollViewer.ScrollToHome();
+                CurrentScrollViewer.Visibility = Visibility.Visible;
             }
-            return Tickets;
+            CurrentPanelName_Label.Content = Header;
         }
 
-        private void Trips_Button_Click(object sender, RoutedEventArgs e)
+        #endregion Main_Canvas
+
+        #region Trips
+
+        private void ShowListOfTrips(List<Trip> list)
         {
-            ShowListOfTrips(DataBase.Trips);
+            UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer, true);
+
+            Button AddTrip_Button = new Button();
+            AddTrip_Button.Content = "Add Trip";
+            AddTrip_Button.Foreground = new SolidColorBrush(Colors.White);
+            AddTrip_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            AddTrip_Button.Width = 238;
+            AddTrip_Button.Click += Add_Button_Click;
+            Canvas.SetLeft(AddTrip_Button, 771);
+            Canvas.SetTop(AddTrip_Button, 10);
+            AddTrip_Button.Height = 77;
+            AddTrip_Button.FontSize = 36;
+            AddTrip_Button.FontWeight = FontWeights.Bold;
+            CurrentCanvas.Children.Add(AddTrip_Button);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                TripDisplayCard t = new TripDisplayCard(list[i], i, ref CurrentCanvas, this);
+            }
+
+            return;
         }
 
-        private void Button_Mouse_Enter(object sender, MouseEventArgs e)
+        //todo edit function name
+        private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            Button b = sender as Button;
-            b.Background = new SolidColorBrush(Color.FromRgb(21, 31, 40));
-            b.Foreground = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            AddTrip_StTimePicker.SelectedDate = DateTime.Today;
+            AddTrip_EnTimePicker.SelectedDate = DateTime.Today;
+            AddTrip_Canvas_UpdateTourGuide_ComboBox();
+            ShowAddTripCanvas();
         }
 
-        private void Button_Mouse_Leave(object sender, MouseEventArgs e)
+        private void ShowAddTripCanvas()
         {
-            Button b = sender as Button;
-            b.Background = new SolidColorBrush(Color.FromRgb(41, 53, 65));
-            b.Foreground = Brushes.White;
+            UpdateCurrentCanvas(AddTrip_Canvas, "Add Trip");
         }
 
         public void ShowTripFullData(Trip t)
@@ -155,6 +219,459 @@ namespace Travelley
             TripFullData_Avaialbleseats_Label.Content = "Available seats: " + ActiveTrip.GetNumberOfAvailableSeats();
         }
 
+        private void ShowTicketsTypes(Trip CurrentTrip)
+        {
+            UpdateCurrentCanvas(TicketsTypes_Canvas, "Tickets Types", TicketsTypes_ScrollViewr, true);
+
+            Button TicketsTypes_Add_Button = new Button();
+            TicketsTypes_Add_Button.Content = "Add Ticket";
+            TicketsTypes_Add_Button.Foreground = new SolidColorBrush(Colors.White);
+            TicketsTypes_Add_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            Canvas.SetLeft(TicketsTypes_Add_Button, 713);
+            Canvas.SetTop(TicketsTypes_Add_Button, 12);
+            TicketsTypes_Add_Button.Height = 77;
+            TicketsTypes_Add_Button.FontSize = 36;
+            TicketsTypes_Add_Button.FontWeight = FontWeights.Bold;
+            TicketsTypes_Add_Button.Width = 300;
+            TicketsTypes_Add_Button.Click += TicketsTypes_Add_Button_Click;
+            CurrentCanvas.Children.Add(TicketsTypes_Add_Button);
+
+            int index = 0;
+            foreach (KeyValuePair<string, int> x in CurrentTrip.NumberOfSeats)
+            {
+                TicketsTypesCard T2 = new TicketsTypesCard(index, TicketsTypes_Canvas, CurrentTrip, x.Key, x.Value, CurrentTrip.PriceOfSeat[x.Key]);
+                index++;
+            }
+        }
+
+        private void ShowEditTrip_Canvas(Trip t)
+        {
+            ActiveTrip = t;
+
+            UpdateCurrentCanvas(EditTrip_Canvas, "Edit Trip Data");
+
+            EditTrip_TripIDTextbox.Text = TripFullData_TripId.Content.ToString();
+            EditTrip_TripDeptTextbox.Text = TripFullData_DepartureAndDestination.Content.ToString().Split('-')[0].Trim();
+            EditTrip_TripDestTextbox.Text = TripFullData_DepartureAndDestination.Content.ToString().Split('-')[1].Trim();
+            EditTrip_TripDiscTextbox.Text = ActiveTrip.Discount.ToString();
+            EditTrip_EnTimePicker.Text = TripFullData_EndDate.Content.ToString();
+            EditTrip_StTimePicker.Text = TripFullData_StartDate.Content.ToString();
+
+            //todo fih moshkla lw ana m4 3aiz a8ir l tourguide
+            // EditTrip_TourCombo.Text = TripFullData_TourGuideName.Content.ToString();
+            EditTrip_Discount_ErrorLabel.Content = "";
+            EditTrip_TourGuide_ErrorLabel.Content = "";
+            EditTrip_TripDep_ErrorLabel.Content = "";
+            EditTrip_TripDes_ErrorLabel.Content = "";
+            EditTrip_TripEnTime_ErrorLabel.Content = "";
+            EditTrip_TripID_ErrorLabel.Content = "";
+            EditTrip_TripPhoto_ErrorLabel.Content = "";
+            EditTrip_TripStTime_ErrorLabel.Content = "";
+
+        }
+
+        //todo edit function name
+        private void SaveBut_Click(object sender, RoutedEventArgs e)
+        {
+            //todo more error validations
+            bool errorfound = false;
+            if (AddTrip_TripIDTextbox.Text.Trim() == "")
+            {
+                AddTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (DataBase.CheckUniqueTripId(AddTrip_TripIDTextbox.Text) == false)
+            {
+                AddTrip_TripID_ErrorLabel.Content = "This ID is already used";
+                errorfound = true;
+            }
+            if (AddTrip_TripDeptTextbox.Text.Trim() == "")
+            {
+                AddTrip_TripDep_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (AddTrip_TripDestTextbox.Text.Trim() == "")
+            {
+                AddTrip_TripDes_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (AddTrip_TripDiscTextbox.Text.Trim() == "")
+            {
+                AddTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (AddTrip_StTimePicker.SelectedDate < DateTime.Today)
+            {
+                AddTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
+                errorfound = true;
+            }
+            if (AddTrip_EnTimePicker.SelectedDate < DateTime.Today)
+            {
+                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
+                errorfound = true;
+            }
+            if (AddTrip_EnTimePicker.SelectedDate < AddTrip_StTimePicker.SelectedDate)
+            {
+                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
+                errorfound = true;
+            }
+            if (SelectedPath == "")
+            {
+                AddTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
+                errorfound = true;
+            }
+            if (AddTrip_TourCombo.SelectedItem == null)
+            {
+                MessageBox.Show("You must choose a tourguide");
+                errorfound = true;
+            }
+            if (errorfound == true)
+            {
+                return;
+            }
+            Trip T = new Trip(AddTrip_TripIDTextbox.Text, (TourGuide)AddTrip_TourCombo.SelectedItem, AddTrip_TripDeptTextbox.Text,
+                AddTrip_TripDestTextbox.Text, double.Parse(AddTrip_TripDiscTextbox.Text), AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value);
+            T.TripImage = new CustomImage(SelectedPath);
+            DataBase.InsertTrip(T);
+            ShowListOfTrips(DataBase.Trips);
+            //TODO Insert Trip in data base
+            //TODO Clear all textboxes after saving
+        }
+
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
+            dlg.Title = "Select Trip Photo";
+            dlg.ShowDialog();
+            SelectedPath = dlg.FileName.ToString();
+        }
+
+        private void TicketsTypes_Add_Button_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateCurrentCanvas(AddTicketType_Canvas, "Add Ticket", null, false);
+        }
+
+        private void EditTrip_SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditTrip_Discount_ErrorLabel.Content = "";
+            EditTrip_TourGuide_ErrorLabel.Content = "";
+            EditTrip_TripDep_ErrorLabel.Content = "";
+            EditTrip_TripDes_ErrorLabel.Content = "";
+            EditTrip_TripEnTime_ErrorLabel.Content = "";
+            EditTrip_TripID_ErrorLabel.Content = "";
+            EditTrip_TripPhoto_ErrorLabel.Content = "";
+            EditTrip_TripStTime_ErrorLabel.Content = "";
+
+            //todo more eror validations
+            bool errorfound = false;
+            if (EditTrip_TripIDTextbox.Text.Trim() == "")
+            {
+                EditTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (DataBase.CheckUniqueTripId(EditTrip_TripIDTextbox.Text) == false && EditTrip_TripIDTextbox.Text != ActiveTrip.TripId)
+            {
+                EditTrip_TripID_ErrorLabel.Content = "This ID is already used";
+                errorfound = true;
+            }
+            if (EditTrip_TripDeptTextbox.Text.Trim() == "")
+            {
+                EditTrip_TripDep_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (EditTrip_TripDestTextbox.Text.Trim() == "")
+            {
+                EditTrip_TripDes_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (EditTrip_TripDiscTextbox.Text.Trim() == "")
+            {
+                EditTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
+                errorfound = true;
+            }
+            if (EditTrip_StTimePicker.SelectedDate < DateTime.Today)
+            {
+                EditTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
+                errorfound = true;
+            }
+            if (EditTrip_EnTimePicker.SelectedDate < DateTime.Today)
+            {
+                EditTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
+                errorfound = true;
+            }
+            if (EditTrip_EnTimePicker.SelectedDate < EditTrip_StTimePicker.SelectedDate)
+            {
+                EditTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
+                errorfound = true;
+            }
+            if (SelectedPath == "")
+            {
+                EditTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
+                errorfound = true;
+            }
+            if (EditTrip_EnTimePicker.Text == "")
+            {
+                EditTrip_TripEnTime_ErrorLabel.Content = "You must choose end time!";
+                errorfound = true;
+            }
+            if (EditTrip_StTimePicker.Text == "")
+            {
+                EditTrip_TripStTime_ErrorLabel.Content = "You must choose start time!";
+                errorfound = true;
+            }
+            if (EditTrip_TourCombo.SelectedItem == null)
+            {
+                MessageBox.Show("you must choose a tourguide");
+                errorfound = true;
+            }
+            if (errorfound == true)
+            {
+                return;
+            }
+
+            DataBase.UpdateTrip(ActiveTrip, EditTrip_TripIDTextbox.Text, ((TourGuide)EditTrip_TourCombo.SelectedItem).Id, EditTrip_TripDeptTextbox.Text,
+                EditTrip_TripDestTextbox.Text, double.Parse(EditTrip_TripDiscTextbox.Text), EditTrip_StTimePicker.SelectedDate.Value.Date, EditTrip_EnTimePicker.SelectedDate.Value.Date,
+                new CustomImage(SelectedPath));
+
+            EditTrip_Discount_ErrorLabel.Content = "";
+            EditTrip_TourGuide_ErrorLabel.Content = "";
+            EditTrip_TripDep_ErrorLabel.Content = "";
+            EditTrip_TripDes_ErrorLabel.Content = "";
+            EditTrip_TripEnTime_ErrorLabel.Content = "";
+            EditTrip_TripID_ErrorLabel.Content = "";
+            EditTrip_TripPhoto_ErrorLabel.Content = "";
+            EditTrip_TripStTime_ErrorLabel.Content = "";
+
+            ShowListOfTrips(DataBase.Trips);
+        }
+
+        private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTrip.IsClosed)
+            {
+                MessageBox.Show("Can't edit a closed trip");
+                return;
+            }
+            ShowEditTrip_Canvas(ActiveTrip);
+        }
+
+        private void TripFullData_ReserveTrip_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(ActiveTrip.IsClosed)
+            {
+                MessageBox.Show("Canot reserve a closed trip");
+                return;
+            }
+            ShowNewOrExistingCustomerCanvas();
+        }
+
+        private void AddTrip_StTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AddTrip_Canvas_UpdateTourGuide_ComboBox();
+        }
+
+        private void AddTrip_EnTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AddTrip_Canvas_UpdateTourGuide_ComboBox();
+        }
+
+        private void AddTrip_Canvas_UpdateTourGuide_ComboBox()
+        {
+            if (AddTrip_StTimePicker.SelectedDate == null || AddTrip_EnTimePicker.SelectedDate == null)
+                return;
+            AddTrip_TourCombo.Items.Clear();
+            DateTime start = AddTrip_StTimePicker.SelectedDate.Value.Date;
+            DateTime end = AddTrip_EnTimePicker.SelectedDate.Value.Date;
+            if (start > end)
+                return;
+            foreach (TourGuide T in DataBase.TourGuides)
+            {
+                if (T.CheckAvailability(start, end))
+                    AddTrip_TourCombo.Items.Add(T);
+            }
+            if (AddTrip_TourCombo.Items.Count > 0)
+                AddTrip_TourCombo.SelectedItem = AddTrip_TourCombo.Items[0];
+        }
+
+        private void EditTrip_StTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            EditTrip_Canvas_UpdateTourGuide_ComboBox();
+        }
+
+        private void EditTrip_EnTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            EditTrip_Canvas_UpdateTourGuide_ComboBox();
+        }
+
+        private void EditTrip_Canvas_UpdateTourGuide_ComboBox()
+        {
+            if (EditTrip_StTimePicker.SelectedDate == null || EditTrip_EnTimePicker.SelectedDate == null)
+                return;
+            EditTrip_TourCombo.Items.Clear();
+            DateTime start = EditTrip_StTimePicker.SelectedDate.Value.Date;
+            DateTime end = EditTrip_EnTimePicker.SelectedDate.Value.Date;
+            if (start > end)
+                return;
+            foreach (TourGuide T in DataBase.TourGuides)
+            {
+                if (T.CheckAvailability(start, end))
+                    EditTrip_TourCombo.Items.Add(T);
+            }
+            if (EditTrip_TourCombo.Items.Count > 0)
+                EditTrip_TourCombo.SelectedItem = EditTrip_TourCombo.Items[0];
+        }
+
+        private void TripFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            DataBase.DeleteTrip(ActiveTrip);
+            ShowListOfTrips(DataBase.Trips);
+        }
+
+        private void TripFullData_TicketTypes_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowTicketsTypes(ActiveTrip);
+        }
+
+        private void AddTicketType_Canvas_Add_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(AddTicketType_Type_TextBox.Text == "")
+            {
+                MessageBox.Show("Please enter a ticket type");
+                return;
+            }
+            int num = 0;
+            if(!int.TryParse(AddTicketType_NumberOfSeats_TextBox.Text, out num))
+            {
+                MessageBox.Show("Please enter a valid number of seats");
+                return;
+            }
+            double price = 0;
+            if(!double.TryParse(AddTicketType_Price_TextBox.Text, out price))
+            {
+                MessageBox.Show("Please enter a valid price");
+                return;
+            }
+            string TicketType = AddTicketType_Type_TextBox.Text;
+            if (ActiveTrip.NumberOfSeats.ContainsKey(TicketType))
+            {
+                MessageBox.Show("Ticket Type already exists");
+                return;
+            }
+            DataBase.InsertTripTickets(ActiveTrip.TripId, TicketType, num, price);
+            AddTicketType_Type_TextBox.Text = "";
+            AddTicketType_NumberOfSeats_TextBox.Text = "";
+            AddTicketType_Price_TextBox.Text = "";
+            ShowTicketsTypes(ActiveTrip);
+        }
+
+        private void ReserveTicket_Reserve_Button_Click(object sender, RoutedEventArgs e)
+        {
+            TripType tripType = null;
+            if (ReserveTicket_TripType_ComboxBox.Text == "Family")
+                tripType = new Family();
+            else if (ReserveTicket_TripType_ComboxBox.Text == "Couple")
+                tripType = new Couple();
+            else if (ReserveTicket_TripType_ComboxBox.Text == "General")
+                tripType = new General();
+            else if (ReserveTicket_TripType_ComboxBox.Text == "Lonely")
+                tripType = new Lonely();
+            else if (ReserveTicket_TripType_ComboxBox.Text == "Friends")
+                tripType = new Friends();
+
+            if(ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
+            {
+                MessageBox.Show("select a ticket type");
+                return;
+            }
+            string ticketType = (string)ReserveTicket_TicketType_ComboxBox.SelectedItem;
+
+            int NumberOfSeats = 0;
+            if (!(int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out NumberOfSeats) || NumberOfSeats <= 0))
+            {
+                MessageBox.Show("Invalid Number of seats!!");
+                return;
+            }
+            if (ActiveTrip.NumberOfSeats[ticketType] < NumberOfSeats)
+            {
+                MessageBox.Show("No enough seats available in this ticket tpye");
+                return;
+            }
+            if (!tripType.InRange(NumberOfSeats))
+            {
+                MessageBox.Show("Range of " + ReserveTicket_TripType_ComboxBox.Text + " is " + tripType.minNumberOfSeats + " - " + tripType.maxNumberOfSeats);
+                return;
+            }
+            Ticket obj = ActiveCustomer.ReserveTicket(ActiveTrip, tripType, ticketType, NumberOfSeats);
+            DataBase.InsertTransactions(obj.SerialNumber, ActiveCustomer.Id, ActiveTrip.TripId, ticketType, ReserveTicket_TripType_ComboxBox.Text, obj.Price, NumberOfSeats);
+            MessageBox.Show("Ticket added");
+            ShowListOfTrips(DataBase.Trips);
+        }
+
+        private void ReserveTicket_NumberOfSeats_TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
+                return;
+            int num = 0;
+            int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out num);
+            num = Math.Max(num, 0);
+            double discount = 1;
+            discount -= ActiveTrip.Discount / 100;
+            if (ActiveCustomer.Discount)
+                discount -= 0.1;
+            ReserveTicket_Price_TextBox.Text = ((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * discount).ToString();
+        }
+
+        private void ReserveTicket_TicketType_ComboxBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string number = ReserveTicket_NumberOfSeats_TextBox.Text;
+            ReserveTicket_NumberOfSeats_TextBox.Text = "";
+            ReserveTicket_NumberOfSeats_TextBox.Text = number;
+        }
+
+        private void ReserveTicket_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(ReserveTicket_Canvas.Visibility == Visibility.Hidden && ActiveCustomer.Tickets.Count == 0)
+            {
+                DataBase.DeleteCustomer(ActiveCustomer);
+                ActiveCustomer = null;
+                return;
+            }
+        }
+
+        private void ReserveTicket()
+        {
+            UpdateCurrentCanvas(ReserveTicket_Canvas, "Reserve Ticket");
+
+            ReserveTicket_CustomerName_Label.Content = ActiveCustomer.ToString();
+            ReserveTicket_Trip_Label.Content = ActiveTrip.Departure + " - " + ActiveTrip.Destination;
+            ReserveTicket_TripImage_Image.Source = ActiveTrip.TripImage.GetImage().Source;
+            ReserveTicket_TicketType_ComboxBox.Items.Clear();
+            ReserveTicket_NumberOfSeats_TextBox.Text = "";
+            ReserveTicket_Price_TextBox.Text = "0";
+            foreach (KeyValuePair<string, int> c in ActiveTrip.NumberOfSeats)
+            {
+                ReserveTicket_TicketType_ComboxBox.Items.Add(c.Key);
+            }
+            if (ReserveTicket_TicketType_ComboxBox.Items.Count > 0)
+                ReserveTicket_TicketType_ComboxBox.SelectedItem = ReserveTicket_TicketType_ComboxBox.Items[0];
+            if(ActiveCustomer.Discount == true)
+            {
+                MessageBox.Show("Customer have 10% discount");
+            }
+        }
+
+        #endregion Trips
+
+        #region customers
+
+        private void ShowListOfCustomers(List<Customer> Customers)
+        {
+            UpdateCurrentCanvas(Customers_Canvas, "Customers", Customers_ScrollViewer, true);
+            for (int i = 0; i < Customers.Count; i++)
+                new CustomerDisplayCard(i, CurrentCanvas, Customers[i], this);
+        }
+
         public void ShowCustomerFullData(Customer c)
         {
             ActiveCustomer = c;
@@ -169,21 +686,59 @@ namespace Travelley
             CustomerFullData_IMG.Source = c.UserImage.GetImage().Source;
             CustomerFullData_PhoneNumber.Content = c.PhoneNumber;
         }
-        public void ShowTourGuideFullData(TourGuide t)
+
+        private void AddCustomer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
         {
-            ActiveTourGuide = t;
-            UpdateCurrentCanvas(TourGuideFullData_Canvas, "Tour Guide Full Data");
+            bool NationalId = String.IsNullOrEmpty(AddCustomer_National_Id_TextBox.Text);
+            bool name = String.IsNullOrEmpty(AddCustomer_Name_TextBox.Text);
+            bool phone = String.IsNullOrEmpty(AddCustomer_Phone_TextBox.Text);
+            bool email = String.IsNullOrEmpty(AddCustomer_Email_TextBox.Text);
+            bool nationality = String.IsNullOrEmpty(AddCustomer_Nationality_TextBox.Text);
+            bool gender = String.IsNullOrEmpty(AddCustomer_Gender_ComboBox.Text);
+            bool language = String.IsNullOrEmpty(AddCustomer_Language_TextBox.Text);
+            bool image = String.IsNullOrEmpty(SelectedPath);
+            if (NationalId || name || phone || email || nationality || gender || image)
+            {
+                AddCustomer_Error_Label.Content = "Please Fill All Fields!";
+                return;
+            }
 
-            TourGuideFullData_Name.Content = t.Name;
-            TourGuideFullData_Nationality.Content = t.Nationality;
-            TourGuideFullData_Id.Content = t.Id;
-            TourGuideFullData_Email.Content = t.Email;
-            TourGuideFullData_Gender.Content = t.Gender;
-            TourGuideFullData_Language.Content = t.Language;
-            TourGuideFullData_IMG.Source = t.UserImage.GetImage().Source;
-            TourGuideFullData_PhoneNumber.Content = t.PhoneNumber;
-            TourGuideFullData_Salary.Content = t.GetSalary(DateTime.Today.Month, DateTime.Today.Year).ToString();
+            if (DataBase.CheckUniqueCustomerId(AddCustomer_National_Id_TextBox.Text.ToString()) == false)
+            {
+                AddCustomer_Error_Label.Content = "Customer Already Registered!";
+                return;
+            }
 
+
+            Customer NewCustomer = new Customer(
+                AddCustomer_National_Id_TextBox.Text,
+                AddCustomer_Name_TextBox.Text,
+                AddCustomer_Nationality_TextBox.Text,
+                AddCustomer_Language_TextBox.Text,
+                AddCustomer_Gender_ComboBox.Text,
+                AddCustomer_Email_TextBox.Text,
+                AddCustomer_Phone_TextBox.Text
+                );
+            NewCustomer.UserImage = new CustomImage(SelectedPath);
+
+            DataBase.InsertCustomer(NewCustomer);
+            ActiveCustomer = NewCustomer;
+
+            ReserveTicket();
+        }
+
+        private void CustomerFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateCurrentCanvas(EditCustomerFullDetails_Canvas, "Edit Customer Data");
+
+            EditCustomerFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            EditCustomerFullData_Name.Text = CustomerFullData_Name.Content.ToString();
+
+            EditCustomerFullData_Nationality.Text = CustomerFullData_Nationality.Content.ToString();
+            EditCustomerFullData_Email.Text = CustomerFullData_Email.Content.ToString();
+            Gender_ComboBox.Text = CustomerFullData_Gender.Content.ToString();
+            EditCustomerFullData_Language.Text = CustomerFullData_Language.Content.ToString();
+            EditCustomerFullData_PhoneNumber.Text = CustomerFullData_PhoneNumber.Content.ToString();
         }
 
         private void EditCustomerDetails(Customer c)
@@ -268,9 +823,130 @@ namespace Travelley
 
             MessageBox.Show("Customer Updated");
             ShowListOfCustomers(DataBase.Customers);
-            //Todo Add customer in the database
-            // DataBase.UpdateCustomer(c, c.Id, name, nationality, language, gender, email, phone_number, c.UserImage);
         }
+
+        private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
+        {
+            EditCustomerDetails(ActiveCustomer);
+        }
+
+        private void ShowNewOrExistingCustomerCanvas()
+        {
+            UpdateCurrentCanvas(NewOrExistingCustomer_Canvas, "Set Customer Status");
+        }
+
+        private void GetCustomerById_Done_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Customer SelectedCustomer = DataBase.SelectCustomer(GetCustomerById_CustomerId_TextBox.Text.ToString());
+            if (SelectedCustomer == null)
+            {
+                MessageBox.Show("Customer id invalid, Please Enter valid one");
+                return;
+            }
+            ActiveCustomer = SelectedCustomer;
+            ReserveTicket();
+            //TODO show Reserve Ticket Panel   
+        }
+
+        private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO View Add Customer Canvas
+            ShowAddCustomerCanvas();
+        }
+
+        private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowGetCustomerById();
+        }
+
+        private void ShowGetCustomerById()
+        {
+            UpdateCurrentCanvas(GetCustomerById_Canvas, "Get Customer By Id");
+            GetCustomerById_CustomerId_TextBox.Text = "";
+        }
+
+        private void ShowAddCustomerCanvas()
+        {
+            UpdateCurrentCanvas(AddCustomer_Canvas, "Add Customer");
+            AddCustomer_Name_TextBox.Text = "";
+            AddCustomer_Email_TextBox.Text = "";
+            AddCustomer_Language_TextBox.Text = "";
+            AddCustomer_National_Id_TextBox.Text = "";
+            AddCustomer_Phone_TextBox.Text = "";
+            AddCustomer_Gender_ComboBox.SelectedItem = "Male";
+            AddCustomer_Nationality_TextBox.Text = "";
+            AddCustomer_Language_TextBox.Text = "";
+        }
+
+        private void AddCustomer_Browse_Button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
+            dlg.Title = "Select Customer Photo";
+            dlg.ShowDialog();
+            SelectedPath = dlg.FileName.ToString();
+        }
+
+        private void Customer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAddCustomerCanvas();
+        }
+
+        private void CustomerFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            DataBase.DeleteCustomer(ActiveCustomer);
+            ShowListOfCustomers(DataBase.Customers);
+        }
+        #endregion customers
+
+
+        #region TourGuides
+
+        private void ShowListOfTourGuides(List<TourGuide> TourGuides)
+        {
+            UpdateCurrentCanvas(TourGuides_Canvas, "Tour Guides", TourGuides_ScrollViewer, true);
+
+            Button TourGuides_AddTourGuide_Button = new Button();
+            TourGuides_AddTourGuide_Button.Content = "Add TourGuide";
+            TourGuides_AddTourGuide_Button.Foreground = new SolidColorBrush(Colors.White);
+            TourGuides_AddTourGuide_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            Canvas.SetLeft(TourGuides_AddTourGuide_Button, 713);
+            Canvas.SetTop(TourGuides_AddTourGuide_Button, 12);
+            TourGuides_AddTourGuide_Button.Height = 77;
+            TourGuides_AddTourGuide_Button.FontSize = 36;
+            TourGuides_AddTourGuide_Button.FontWeight = FontWeights.Bold;
+            TourGuides_AddTourGuide_Button.Width = 300;
+            TourGuides_AddTourGuide_Button.Click += TourGuides_AddTourGuide_Button_Click;
+            CurrentCanvas.Children.Add(TourGuides_AddTourGuide_Button);
+
+            Label AvailableTourGuides_Label = new Label();
+            AvailableTourGuides_Label.FontSize = 25;
+            AvailableTourGuides_Label.Content = "Available: " + DataBase.GetNumberOfAvailableTourGuides().ToString();
+            Canvas.SetLeft(AvailableTourGuides_Label, 111);
+            Canvas.SetTop(AvailableTourGuides_Label, 12);
+            CurrentCanvas.Children.Add(AvailableTourGuides_Label);
+
+            for (int i = 0; i < TourGuides.Count; i++)
+                new TourGuideDisplayCard(i, CurrentCanvas, TourGuides[i], this);
+        }
+
+        public void ShowTourGuideFullData(TourGuide t)
+        {
+            ActiveTourGuide = t;
+            UpdateCurrentCanvas(TourGuideFullData_Canvas, "Tour Guide Full Data");
+
+            TourGuideFullData_Name.Content = t.Name;
+            TourGuideFullData_Nationality.Content = t.Nationality;
+            TourGuideFullData_Id.Content = t.Id;
+            TourGuideFullData_Email.Content = t.Email;
+            TourGuideFullData_Gender.Content = t.Gender;
+            TourGuideFullData_Language.Content = t.Language;
+            TourGuideFullData_IMG.Source = t.UserImage.GetImage().Source;
+            TourGuideFullData_PhoneNumber.Content = t.PhoneNumber;
+            TourGuideFullData_Salary.Content = t.GetSalary(DateTime.Today.Month, DateTime.Today.Year).ToString();
+
+        }
+
         private void EditTourGuideData(TourGuide t)
         {
             string name = t.Name, nationality = t.Nationality, phone_number = t.PhoneNumber, language = t.Language, gender = t.Gender, email = t.Email;
@@ -370,246 +1046,12 @@ namespace Travelley
             MessageBox.Show("TourGuide updated");
             ShowListOfTourGuides(DataBase.TourGuides);
         }
-        private void TripOfTheDay_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ActiveTrip = TripOfTheDay;
-            ShowTripFullData(TripOfTheDay);
-        }
+
         private void ShowAddTourGuideCanvas()
         {
             UpdateCurrentCanvas(AddNewTourGuide_Canvas, "Add New TourGuide");
         }
 
-
-
-        private void ShowListOfTrips(List<Trip> list)
-        {
-            UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer, true);
-
-            Button AddTrip_Button = new Button();
-            AddTrip_Button.Content = "Add Trip";
-            AddTrip_Button.Foreground = new SolidColorBrush(Colors.White);
-            AddTrip_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
-            AddTrip_Button.Width = 238;
-            AddTrip_Button.Click += Add_Button_Click;
-            Canvas.SetLeft(AddTrip_Button, 771);
-            Canvas.SetTop(AddTrip_Button, 10);
-            AddTrip_Button.Height = 77;
-            AddTrip_Button.FontSize = 36;
-            AddTrip_Button.FontWeight = FontWeights.Bold;
-            CurrentCanvas.Children.Add(AddTrip_Button);
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                TripDisplayCard t = new TripDisplayCard(list[i], i, ref CurrentCanvas, this);
-            }
-
-            return;
-        }
-
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void AddCustomer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
-        {
-            bool NationalId = String.IsNullOrEmpty(AddCustomer_National_Id_TextBox.Text);
-            bool name = String.IsNullOrEmpty(AddCustomer_Name_TextBox.Text);
-            bool phone = String.IsNullOrEmpty(AddCustomer_Phone_TextBox.Text);
-            bool email = String.IsNullOrEmpty(AddCustomer_Email_TextBox.Text);
-            bool nationality = String.IsNullOrEmpty(AddCustomer_Nationality_TextBox.Text);
-            bool gender = String.IsNullOrEmpty(AddCustomer_Gender_ComboBox.Text);
-            bool language = String.IsNullOrEmpty(AddCustomer_Language_TextBox.Text);
-            bool image = String.IsNullOrEmpty(SelectedPath);
-            if (NationalId || name || phone || email || nationality || gender || image)
-            {
-                AddCustomer_Error_Label.Content = "Please Fill All Fields!";
-                return;
-            }
-
-            if (DataBase.CheckUniqueCustomerId(AddCustomer_National_Id_TextBox.Text.ToString()) == false)
-            {
-                AddCustomer_Error_Label.Content = "Customer Already Registered!";
-                return;
-            }
-
-
-            Customer NewCustomer = new Customer(
-                AddCustomer_National_Id_TextBox.Text,
-                AddCustomer_Name_TextBox.Text,
-                AddCustomer_Nationality_TextBox.Text,
-                AddCustomer_Language_TextBox.Text,
-                AddCustomer_Gender_ComboBox.Text,
-                AddCustomer_Email_TextBox.Text,
-                AddCustomer_Phone_TextBox.Text
-                );
-            NewCustomer.UserImage = new CustomImage(SelectedPath);
-
-            DataBase.InsertCustomer(NewCustomer);
-            ActiveCustomer = NewCustomer;
-
-            ReserveTicket();
-        }
-
-        private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
-        {
-            EditCustomerDetails(ActiveCustomer);
-        }
-
-        private void CustomerFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateCurrentCanvas(EditCustomerFullDetails_Canvas, "Edit Customer Data");
-
-            EditCustomerFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-            EditCustomerFullData_Name.Text = CustomerFullData_Name.Content.ToString();
-
-            EditCustomerFullData_Nationality.Text = CustomerFullData_Nationality.Content.ToString();
-            EditCustomerFullData_Email.Text = CustomerFullData_Email.Content.ToString();
-            Gender_ComboBox.Text = CustomerFullData_Gender.Content.ToString();
-            EditCustomerFullData_Language.Text = CustomerFullData_Language.Content.ToString();
-            EditCustomerFullData_PhoneNumber.Text = CustomerFullData_PhoneNumber.Content.ToString();
-        }
-
-        private void Add_Button_Click(object sender, RoutedEventArgs e)
-        {
-            AddTrip_StTimePicker.SelectedDate = DateTime.Today;
-            AddTrip_EnTimePicker.SelectedDate = DateTime.Today;
-            AddTrip_Canvas_UpdateTourGuide_ComboBox();
-            ShowAddTripCanvas();
-        }
-
-        private void ShowEditTrip_Canvas(Trip t)
-        {
-            ActiveTrip = t;
-
-            UpdateCurrentCanvas(EditTrip_Canvas, "Edit Trip Data");
-
-            EditTrip_TripIDTextbox.Text = TripFullData_TripId.Content.ToString();
-            EditTrip_TripDeptTextbox.Text = TripFullData_DepartureAndDestination.Content.ToString().Split('-')[0].Trim();
-            EditTrip_TripDestTextbox.Text = TripFullData_DepartureAndDestination.Content.ToString().Split('-')[1].Trim();
-            EditTrip_TripDiscTextbox.Text = ActiveTrip.Discount.ToString();
-            EditTrip_EnTimePicker.Text = TripFullData_EndDate.Content.ToString();
-            EditTrip_StTimePicker.Text = TripFullData_StartDate.Content.ToString();
-
-            //todo fih moshkla lw ana m4 3aiz a8ir l tourguide
-           // EditTrip_TourCombo.Text = TripFullData_TourGuideName.Content.ToString();
-            EditTrip_Discount_ErrorLabel.Content = "";
-            EditTrip_TourGuide_ErrorLabel.Content = "";
-            EditTrip_TripDep_ErrorLabel.Content = "";
-            EditTrip_TripDes_ErrorLabel.Content = "";
-            EditTrip_TripEnTime_ErrorLabel.Content = "";
-            EditTrip_TripID_ErrorLabel.Content = "";
-            EditTrip_TripPhoto_ErrorLabel.Content = "";
-            EditTrip_TripStTime_ErrorLabel.Content = "";
-
-
-
-        }
-
-        private void SaveBut_Click(object sender, RoutedEventArgs e)
-        {
-            //todo more error validations
-            bool errorfound = false;
-            if (AddTrip_TripIDTextbox.Text.Trim() == "")
-            {
-                AddTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
-                errorfound = true;
-            }
-            if (DataBase.CheckUniqueTripId(AddTrip_TripIDTextbox.Text) == false)
-            {
-                AddTrip_TripID_ErrorLabel.Content = "This ID is already used";
-                errorfound = true;
-            }
-            if (AddTrip_TripDeptTextbox.Text.Trim() == "")
-            {
-                AddTrip_TripDep_ErrorLabel.Content = "This field can't be empty!";
-                errorfound = true;
-            }
-            if (AddTrip_TripDestTextbox.Text.Trim() == "")
-            {
-                AddTrip_TripDes_ErrorLabel.Content = "This field can't be empty!";
-                errorfound = true;
-            }
-            if (AddTrip_TripDiscTextbox.Text.Trim() == "")
-            {
-                AddTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
-                errorfound = true;
-            }
-            if (AddTrip_StTimePicker.SelectedDate < DateTime.Today)
-            {
-                AddTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
-                errorfound = true;
-            }
-            if (AddTrip_EnTimePicker.SelectedDate < DateTime.Today)
-            {
-                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
-                errorfound = true;
-            }
-            if (AddTrip_EnTimePicker.SelectedDate < AddTrip_StTimePicker.SelectedDate)
-            {
-                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
-                errorfound = true;
-            }
-            if (SelectedPath == "")
-            {
-                AddTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
-                errorfound = true;
-            }
-            if(AddTrip_TourCombo.SelectedItem == null)
-            {
-                MessageBox.Show("You must choose a tourguide");
-                errorfound = true;
-            }
-            if (errorfound == true)
-            {
-                return;
-            }
-            Trip T = new Trip(AddTrip_TripIDTextbox.Text, (TourGuide)AddTrip_TourCombo.SelectedItem, AddTrip_TripDeptTextbox.Text,
-                AddTrip_TripDestTextbox.Text, double.Parse(AddTrip_TripDiscTextbox.Text), AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value);
-            T.TripImage = new CustomImage(SelectedPath);
-            DataBase.InsertTrip(T);
-            ShowListOfTrips(DataBase.Trips);
-            //TODO Insert Trip in data base
-            //TODO Clear all textboxes after saving
-        }
-
-        private void BrowseButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
-            dlg.Title = "Select Trip Photo";
-            dlg.ShowDialog();
-            SelectedPath = dlg.FileName.ToString();
-        }
-
-        private void ShowAddTripCanvas()
-        {
-            UpdateCurrentCanvas(AddTrip_Canvas, "Add Trip");
-        }
-
-        public void TourGuideFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateCurrentCanvas(EditTourGuideData_Canvas, "Edit TourGuide Data");
-
-            EditTourGuideFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-            EditTourGuideFullData_Name.Text = TourGuideFullData_Name.Content.ToString();
-            EditTourGuide_Name_ErrorLabel.Content = "";
-            EditTourGuide_Email_ErrorLabel.Content = "";
-            EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
-            EditTourGuide_Language_ErrorLabel.Content = "";
-            EditTourGuide_Gender_ErrorLabel.Content = "";
-            EditTourGuide_Nationality_ErrorLabel.Content = "";
-
-            EditTourGuideFullData_Nationality.Text = TourGuideFullData_Nationality.Content.ToString();
-            EditTourGuideFullData_Email.Text = TourGuideFullData_Email.Content.ToString();
-            TourGuideGender_ComboBox.Text = TourGuideFullData_Gender.Content.ToString();
-            EditTourGuideFullData_Language.Text = TourGuideFullData_Language.Content.ToString();
-            EditTourGuideFullData_PhoneNumber.Text = TourGuideFullData_PhoneNumber.Content.ToString();
-
-
-        }
         private void AddTourGuide(TourGuide t)
         {
             string name = t.Name, nationality = t.Nationality, phone_number = t.PhoneNumber,
@@ -630,21 +1072,6 @@ namespace Travelley
 
 
 
-        }
-
-        private void EditTourGuideData_Save_Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            EditTourGuideData(ActiveTourGuide);
-        }
-
-        private void Browse_Button_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "JPG Files (*.jpg)|*.jpg|All files (*.*)|*.*";
-            dlg.Title = "Select TourGuide Image";
-            dlg.ShowDialog();
-            dlg.FileName.ToString();
         }
 
         private void AddTourGuide_Add_Button_Click(object sender, RoutedEventArgs e)
@@ -737,205 +1164,45 @@ namespace Travelley
 
         }
 
+        public void TourGuideFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateCurrentCanvas(EditTourGuideData_Canvas, "Edit TourGuide Data");
+
+            EditTourGuideFullData_Name.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            EditTourGuideFullData_Name.Text = TourGuideFullData_Name.Content.ToString();
+            EditTourGuide_Name_ErrorLabel.Content = "";
+            EditTourGuide_Email_ErrorLabel.Content = "";
+            EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
+            EditTourGuide_Language_ErrorLabel.Content = "";
+            EditTourGuide_Gender_ErrorLabel.Content = "";
+            EditTourGuide_Nationality_ErrorLabel.Content = "";
+
+            EditTourGuideFullData_Nationality.Text = TourGuideFullData_Nationality.Content.ToString();
+            EditTourGuideFullData_Email.Text = TourGuideFullData_Email.Content.ToString();
+            TourGuideGender_ComboBox.Text = TourGuideFullData_Gender.Content.ToString();
+            EditTourGuideFullData_Language.Text = TourGuideFullData_Language.Content.ToString();
+            EditTourGuideFullData_PhoneNumber.Text = TourGuideFullData_PhoneNumber.Content.ToString();
+        }
+
+        private void EditTourGuideData_Save_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            EditTourGuideData(ActiveTourGuide);
+        }
+
+        private void Browse_Button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "JPG Files (*.jpg)|*.jpg|All files (*.*)|*.*";
+            dlg.Title = "Select TourGuide Image";
+            dlg.ShowDialog();
+            dlg.FileName.ToString();
+        }
+
+        //todo function name
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             ShowAddTourGuideCanvas();
-        }
-
-        private void ShowTicketsTypes(Trip CurrentTrip)
-        {
-            UpdateCurrentCanvas(TicketsTypes_Canvas, "Tickets Types", TicketsTypes_ScrollViewr, true);
-
-            Button TicketsTypes_Add_Button = new Button();
-            TicketsTypes_Add_Button.Content = "Add Ticket";
-            TicketsTypes_Add_Button.Foreground = new SolidColorBrush(Colors.White);
-            TicketsTypes_Add_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
-            Canvas.SetLeft(TicketsTypes_Add_Button, 713);
-            Canvas.SetTop(TicketsTypes_Add_Button, 12);
-            TicketsTypes_Add_Button.Height = 77;
-            TicketsTypes_Add_Button.FontSize = 36;
-            TicketsTypes_Add_Button.FontWeight = FontWeights.Bold;
-            TicketsTypes_Add_Button.Width = 300;
-            TicketsTypes_Add_Button.Click += TicketsTypes_Add_Button_Click;
-            CurrentCanvas.Children.Add(TicketsTypes_Add_Button);
-
-            int index = 0;
-            foreach (KeyValuePair<string, int> x in CurrentTrip.NumberOfSeats)
-            {
-                TicketsTypesCard T2 = new TicketsTypesCard(index, TicketsTypes_Canvas, CurrentTrip, x.Key, x.Value, CurrentTrip.PriceOfSeat[x.Key]);
-                index++;
-            }
-        }
-
-        private void TicketsTypes_Add_Button_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateCurrentCanvas(AddTicketType_Canvas, "Add Ticket", null, false);
-        }
-
-        private void TicketsTypes_Canvas_IsVisibleChanged_1(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (TicketsTypes_Canvas.Visibility == Visibility.Hidden)
-                TicketsTypes_Canvas.Visibility = Visibility.Hidden;
-        }
-
-        private void EditTrip_SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            EditTrip_Discount_ErrorLabel.Content = "";
-            EditTrip_TourGuide_ErrorLabel.Content = "";
-            EditTrip_TripDep_ErrorLabel.Content = "";
-            EditTrip_TripDes_ErrorLabel.Content = "";
-            EditTrip_TripEnTime_ErrorLabel.Content = "";
-            EditTrip_TripID_ErrorLabel.Content = "";
-            EditTrip_TripPhoto_ErrorLabel.Content = "";
-            EditTrip_TripStTime_ErrorLabel.Content = "";
-
-            //todo more eror validations
-            bool errorfound = false;
-            if (EditTrip_TripIDTextbox.Text.Trim() == "")
-            {
-                EditTrip_TripID_ErrorLabel.Content = "This field can't be empty!";
-                errorfound = true;
-            }
-            if (DataBase.CheckUniqueTripId(EditTrip_TripIDTextbox.Text) == false && EditTrip_TripIDTextbox.Text != ActiveTrip.TripId)
-            {
-                EditTrip_TripID_ErrorLabel.Content = "This ID is already used";
-                errorfound = true;
-            }
-            if (EditTrip_TripDeptTextbox.Text.Trim() == "")
-            {
-                EditTrip_TripDep_ErrorLabel.Content = "This field can't be empty!";
-                errorfound = true;
-            }
-            if (EditTrip_TripDestTextbox.Text.Trim() == "")
-            {
-                EditTrip_TripDes_ErrorLabel.Content = "This field can't be empty!";
-                errorfound = true;
-            }
-            if (EditTrip_TripDiscTextbox.Text.Trim() == "")
-            {
-                EditTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
-                errorfound = true;
-            }
-            if (EditTrip_StTimePicker.SelectedDate < DateTime.Today)
-            {
-                EditTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
-                errorfound = true;
-            }
-            if (EditTrip_EnTimePicker.SelectedDate < DateTime.Today)
-            {
-                EditTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
-                errorfound = true;
-            }
-            if (EditTrip_EnTimePicker.SelectedDate < EditTrip_StTimePicker.SelectedDate)
-            {
-                EditTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
-                errorfound = true;
-            }
-            if (SelectedPath == "")
-            {
-                EditTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
-                errorfound = true;
-            }
-            if (EditTrip_EnTimePicker.Text == "")
-            {
-                EditTrip_TripEnTime_ErrorLabel.Content = "You must choose end time!";
-                errorfound = true;
-            }
-            if (EditTrip_StTimePicker.Text == "")
-            {
-                EditTrip_TripStTime_ErrorLabel.Content = "You must choose start time!";
-                errorfound = true;
-            }
-            if(EditTrip_TourCombo.SelectedItem == null)
-            {
-                MessageBox.Show("you must choose a tourguide");
-                errorfound = true;
-            }
-            if (errorfound == true)
-            {
-                return;
-            }
-            
-            DataBase.UpdateTrip(ActiveTrip, EditTrip_TripIDTextbox.Text, ((TourGuide)EditTrip_TourCombo.SelectedItem).Id, EditTrip_TripDeptTextbox.Text, 
-                EditTrip_TripDestTextbox.Text, double.Parse(EditTrip_TripDiscTextbox.Text), EditTrip_StTimePicker.SelectedDate.Value.Date, EditTrip_EnTimePicker.SelectedDate.Value.Date,
-                new CustomImage(SelectedPath));
-
-            EditTrip_Discount_ErrorLabel.Content = "";
-            EditTrip_TourGuide_ErrorLabel.Content = "";
-            EditTrip_TripDep_ErrorLabel.Content = "";
-            EditTrip_TripDes_ErrorLabel.Content = "";
-            EditTrip_TripEnTime_ErrorLabel.Content = "";
-            EditTrip_TripID_ErrorLabel.Content = "";
-            EditTrip_TripPhoto_ErrorLabel.Content = "";
-            EditTrip_TripStTime_ErrorLabel.Content = "";
-
-            ShowListOfTrips(DataBase.Trips);
-        }
-
-        private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if(ActiveTrip.IsClosed)
-            {
-                MessageBox.Show("Can't edit a closed trip");
-                return;
-            }
-            ShowEditTrip_Canvas(ActiveTrip);
-        }
-
-        private void ShowListOfCustomers(List<Customer> Customers)
-        {
-            UpdateCurrentCanvas(Customers_Canvas, "Customers", Customers_ScrollViewer, true);
-            for (int i = 0; i < Customers.Count; i++)
-                new CustomerDisplayCard(i, CurrentCanvas, Customers[i], this);
-        }
-        private void ShowListOfTourGuides(List<TourGuide> TourGuides)
-        {
-            UpdateCurrentCanvas(TourGuides_Canvas, "Tour Guides", TourGuides_ScrollViewer, true);
-
-            Button TourGuides_AddTourGuide_Button = new Button();
-            TourGuides_AddTourGuide_Button.Content = "Add TourGuide";
-            TourGuides_AddTourGuide_Button.Foreground = new SolidColorBrush(Colors.White);
-            TourGuides_AddTourGuide_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
-            Canvas.SetLeft(TourGuides_AddTourGuide_Button, 713);
-            Canvas.SetTop(TourGuides_AddTourGuide_Button, 12);
-            TourGuides_AddTourGuide_Button.Height = 77;
-            TourGuides_AddTourGuide_Button.FontSize = 36;
-            TourGuides_AddTourGuide_Button.FontWeight = FontWeights.Bold;
-            TourGuides_AddTourGuide_Button.Width = 300;
-            TourGuides_AddTourGuide_Button.Click += TourGuides_AddTourGuide_Button_Click;
-            CurrentCanvas.Children.Add(TourGuides_AddTourGuide_Button);
-
-            Label AvailableTourGuides_Label = new Label();
-            AvailableTourGuides_Label.FontSize = 25;
-            AvailableTourGuides_Label.Content = "Available: " + DataBase.GetNumberOfAvailableTourGuides().ToString();
-            Canvas.SetLeft(AvailableTourGuides_Label, 111);
-            Canvas.SetTop(AvailableTourGuides_Label, 12);
-            CurrentCanvas.Children.Add(AvailableTourGuides_Label);
-
-            for (int i = 0; i < TourGuides.Count; i++)
-                new TourGuideDisplayCard(i, CurrentCanvas, TourGuides[i], this);
-        }
-
-        public void UpdateCurrentCanvas(Canvas NewCanvas, string Header, ScrollViewer NewScrollViewer = null, bool dynamic = false)
-        {
-            CurrentCanvas.Visibility = Visibility.Hidden;
-            CurrentScrollViewer.Visibility = Visibility.Hidden;
-            CurrentCanvas = NewCanvas;
-            CurrentCanvas.Visibility = Visibility.Visible;
-            if (dynamic)
-                CurrentCanvas.Children.Clear();
-            if (NewScrollViewer != null)
-            {
-                CurrentScrollViewer = NewScrollViewer;
-                CurrentScrollViewer.ScrollToHome();
-                CurrentScrollViewer.Visibility = Visibility.Visible;
-            }
-            CurrentPanelName_Label.Content = Header;
-        }
-
-        private void ShowNewOrExistingCustomerCanvas()
-        {
-            UpdateCurrentCanvas(NewOrExistingCustomer_Canvas, "Set Customer Status");
         }
 
         private void TourGuides_AddTourGuide_Button_Click(object sender, RoutedEventArgs e)
@@ -943,140 +1210,21 @@ namespace Travelley
             ShowAddTourGuideCanvas();
         }
 
-        private void TripFullData_ReserveTrip_Button_Click(object sender, RoutedEventArgs e)
+        #endregion TourGuides
+
+        #region Transactions
+
+        public List<Ticket> GetAllTickets()
         {
-            ShowNewOrExistingCustomerCanvas();
-        }
-        private void GetCustomerById_Done_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Customer SelectedCustomer = DataBase.SelectCustomer(GetCustomerById_CustomerId_TextBox.Text.ToString());
-            if (SelectedCustomer == null)
+            List<Ticket> Tickets = new List<Ticket>();
+            foreach (Trip CurrentTrip in DataBase.Trips)
             {
-                MessageBox.Show("Customer id invalid, Please Enter valid one");
-                return;
+                foreach (Ticket CurrentTicket in CurrentTrip.Tickets)
+                {
+                    Tickets.Add(CurrentTicket);
+                }
             }
-            ActiveCustomer = SelectedCustomer;
-            ReserveTicket();
-            //TODO show Reserve Ticket Panel   
-        }
-        private void ShowGetCustomerById()
-        {
-            UpdateCurrentCanvas(GetCustomerById_Canvas, "Get Customer By Id");
-            GetCustomerById_CustomerId_TextBox.Text = "";
-        }
-        private void ReserveTicket()
-        {
-            UpdateCurrentCanvas(ReserveTicket_Canvas, "Reserve Ticket");
-
-            ReserveTicket_CustomerName_Label.Content = ActiveCustomer.ToString();
-            ReserveTicket_Trip_Label.Content = ActiveTrip.Departure + " - " + ActiveTrip.Destination;
-            ReserveTicket_TripImage_Image.Source = ActiveTrip.TripImage.GetImage().Source;
-            ReserveTicket_TicketType_ComboxBox.Items.Clear();
-            ReserveTicket_NumberOfSeats_TextBox.Text = "";
-            ReserveTicket_Price_TextBox.Text = "0";
-            foreach (KeyValuePair<string, int> c in ActiveTrip.NumberOfSeats)
-            {
-                ReserveTicket_TicketType_ComboxBox.Items.Add(c.Key);
-            }
-            if (ReserveTicket_TicketType_ComboxBox.Items.Count > 0)
-                ReserveTicket_TicketType_ComboxBox.SelectedItem = ReserveTicket_TicketType_ComboxBox.Items[0];
-            if(ActiveCustomer.Discount == true)
-            {
-                MessageBox.Show("Customer have 10% discount");
-            }
-        }
-        private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
-        {
-            ShowGetCustomerById();
-        }
-        private void ShowAddCustomerCanvas()
-        {
-            UpdateCurrentCanvas(AddCustomer_Canvas, "Add Customer");
-            AddCustomer_Name_TextBox.Text = "";
-            AddCustomer_Email_TextBox.Text = "";
-            AddCustomer_Language_TextBox.Text = "";
-            AddCustomer_National_Id_TextBox.Text = "";
-            AddCustomer_Phone_TextBox.Text = "";
-            AddCustomer_Gender_ComboBox.SelectedItem = "Male";
-            AddCustomer_Nationality_TextBox.Text = "";
-            AddCustomer_Language_TextBox.Text = "";
-        }
-
-        private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO View Add Customer Canvas
-            ShowAddCustomerCanvas();
-        }
-
-        private void AddCustomer_Browse_Button_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
-            dlg.Title = "Select Customer Photo";
-            dlg.ShowDialog();
-            SelectedPath = dlg.FileName.ToString();
-        }
-
-        private void Customer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
-        {
-            ShowAddCustomerCanvas();
-        }
-
-        private void ReserveTicket_NumberOfSeats_TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
-                return;
-            int num = 0;
-            int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out num);
-            num = Math.Max(num, 0);
-            double discount = 1;
-            discount -= ActiveTrip.Discount / 100;
-            if (ActiveCustomer.Discount)
-                discount -= 0.1;
-            ReserveTicket_Price_TextBox.Text = ((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * discount).ToString();
-        }
-
-        private void ReserveTicket_Reserve_Button_Click(object sender, RoutedEventArgs e)
-        {
-            TripType tripType = null;
-            if (ReserveTicket_TripType_ComboxBox.Text == "Family")
-                tripType = new Family();
-            else if (ReserveTicket_TripType_ComboxBox.Text == "Couple")
-                tripType = new Couple();
-            else if (ReserveTicket_TripType_ComboxBox.Text == "General")
-                tripType = new General();
-            else if (ReserveTicket_TripType_ComboxBox.Text == "Lonely")
-                tripType = new Lonely();
-            else if (ReserveTicket_TripType_ComboxBox.Text == "Friends")
-                tripType = new Friends();
-
-            if(ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
-            {
-                MessageBox.Show("select a ticket type");
-                return;
-            }
-            string ticketType = (string)ReserveTicket_TicketType_ComboxBox.SelectedItem;
-
-            int NumberOfSeats = 0;
-            if (!(int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out NumberOfSeats) || NumberOfSeats <= 0))
-            {
-                MessageBox.Show("Invalid Number of seats!!");
-                return;
-            }
-            if (ActiveTrip.NumberOfSeats[ticketType] < NumberOfSeats)
-            {
-                MessageBox.Show("No enough seats available in this ticket tpye");
-                return;
-            }
-            if (!tripType.InRange(NumberOfSeats))
-            {
-                MessageBox.Show("Range of " + ReserveTicket_TripType_ComboxBox.Text + " is " + tripType.minNumberOfSeats + " - " + tripType.maxNumberOfSeats);
-                return;
-            }
-            Ticket obj = ActiveCustomer.ReserveTicket(ActiveTrip, tripType, ticketType, NumberOfSeats);
-            DataBase.InsertTransactions(obj.SerialNumber, ActiveCustomer.Id, ActiveTrip.TripId, ticketType, ReserveTicket_TripType_ComboxBox.Text, obj.Price, NumberOfSeats);
-            MessageBox.Show("Ticket added");
-            ShowListOfTrips(DataBase.Trips);
+            return Tickets;
         }
         public void ShowListOfTickets(List<Ticket> Tickets)
         {
@@ -1096,133 +1244,8 @@ namespace Travelley
             }
         }
 
-        private void Best_TourGuide_IMG_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (TourGuideOfTheMonth != null)
-                ShowTourGuideFullData(TourGuideOfTheMonth);
-        }
-
-        private void AddTrip_StTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            AddTrip_Canvas_UpdateTourGuide_ComboBox();
-        }
-
-        private void AddTrip_EnTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            AddTrip_Canvas_UpdateTourGuide_ComboBox();
-        }
-
-        private void AddTrip_Canvas_UpdateTourGuide_ComboBox()
-        {
-            if (AddTrip_StTimePicker.SelectedDate == null || AddTrip_EnTimePicker.SelectedDate == null)
-                return;
-            AddTrip_TourCombo.Items.Clear();
-            DateTime start = AddTrip_StTimePicker.SelectedDate.Value.Date;
-            DateTime end = AddTrip_EnTimePicker.SelectedDate.Value.Date;
-            if (start > end)
-                return;
-            foreach (TourGuide T in DataBase.TourGuides)
-            {
-                if (T.CheckAvailability(start, end))
-                    AddTrip_TourCombo.Items.Add(T);
-            }
-            if (AddTrip_TourCombo.Items.Count > 0)
-                AddTrip_TourCombo.SelectedItem = AddTrip_TourCombo.Items[0];
-        }
-
-        private void EditTrip_StTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            EditTrip_Canvas_UpdateTourGuide_ComboBox();
-        }
-
-        private void EditTrip_EnTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            EditTrip_Canvas_UpdateTourGuide_ComboBox();
-        }
-
-        private void EditTrip_Canvas_UpdateTourGuide_ComboBox()
-        {
-            if (EditTrip_StTimePicker.SelectedDate == null || EditTrip_EnTimePicker.SelectedDate == null)
-                return;
-            EditTrip_TourCombo.Items.Clear();
-            DateTime start = EditTrip_StTimePicker.SelectedDate.Value.Date;
-            DateTime end = EditTrip_EnTimePicker.SelectedDate.Value.Date;
-            if (start > end)
-                return;
-            foreach (TourGuide T in DataBase.TourGuides)
-            {
-                if (T.CheckAvailability(start, end))
-                    EditTrip_TourCombo.Items.Add(T);
-            }
-            if (EditTrip_TourCombo.Items.Count > 0)
-                EditTrip_TourCombo.SelectedItem = EditTrip_TourCombo.Items[0];
-        }
-
-        private void CustomerFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
-        {
-            DataBase.DeleteCustomer(ActiveCustomer);
-            ShowListOfCustomers(DataBase.Customers);
-        }
-
-        private void TripFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
-        {
-            DataBase.DeleteTrip(ActiveTrip);
-            ShowListOfTrips(DataBase.Trips);
-        }
-
-        private void TripFullData_TicketTypes_Button_Click(object sender, RoutedEventArgs e)
-        {
-            ShowTicketsTypes(ActiveTrip);
-        }
-
-        private void AddTicketType_Canvas_Add_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if(AddTicketType_Type_TextBox.Text == "")
-            {
-                MessageBox.Show("Please enter a ticket type");
-                return;
-            }
-            int num = 0;
-            if(!int.TryParse(AddTicketType_NumberOfSeats_TextBox.Text, out num))
-            {
-                MessageBox.Show("Please enter a valid number of seats");
-                return;
-            }
-            double price = 0;
-            if(!double.TryParse(AddTicketType_Price_TextBox.Text, out price))
-            {
-                MessageBox.Show("Please enter a valid price");
-                return;
-            }
-            string TicketType = AddTicketType_Type_TextBox.Text;
-            if (ActiveTrip.NumberOfSeats.ContainsKey(TicketType))
-            {
-                MessageBox.Show("Ticket Type already exists");
-                return;
-            }
-            DataBase.InsertTripTickets(ActiveTrip.TripId, TicketType, num, price);
-            AddTicketType_Type_TextBox.Text = "";
-            AddTicketType_NumberOfSeats_TextBox.Text = "";
-            AddTicketType_Price_TextBox.Text = "";
-            ShowTicketsTypes(ActiveTrip);
-        }
-
-        private void ReserveTicket_TicketType_ComboxBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string number = ReserveTicket_NumberOfSeats_TextBox.Text;
-            ReserveTicket_NumberOfSeats_TextBox.Text = "";
-            ReserveTicket_NumberOfSeats_TextBox.Text = number;
-        }
-
-        private void ReserveTicket_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if(ReserveTicket_Canvas.Visibility == Visibility.Hidden && ActiveCustomer.Tickets.Count == 0)
-            {
-                DataBase.DeleteCustomer(ActiveCustomer);
-                ActiveCustomer = null;
-                return;
-            }
-        }
+        #endregion Transactions
+        
     }
 }
 

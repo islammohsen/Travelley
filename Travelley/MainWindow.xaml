@@ -247,7 +247,7 @@
             <Button x:Name="ReserveTicket_Reserve_Button" Content="Reserve" Foreground="White" FontSize="25" Canvas.Left="803" Canvas.Top="483" Width="205" Height="48" Background="#e87e31" RenderTransformOrigin="0.645,0.06" Click="ReserveTicket_Reserve_Button_Click"/>
         </Canvas>
         <ScrollViewer x:Name="TicketsTypes_ScrollViewr" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
-            <Canvas x:Name="TicketsTypes_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True" IsVisibleChanged="TicketsTypes_Canvas_IsVisibleChanged_1" Visibility="Hidden"/>
+            <Canvas x:Name="TicketsTypes_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True" Visibility="Hidden"/>
         </ScrollViewer>
         <Canvas x:Name="AddTicketType_Canvas" Height="565" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1035" Canvas.Top="116" Canvas.Left="308" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <StackPanel>
@@ -421,7 +421,7 @@
             <Label Content="Phone" FontWeight="Bold" FontFamily="Roboto" Canvas.Left="47" Canvas.Top="375" FontSize="36" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Height="84" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
             <Label Content="Nationality" FontWeight="Bold" FontFamily="Roboto" Canvas.Left="547" Canvas.Top="173" FontSize="36"/>
             <Label Content="Language" FontWeight="Bold" FontFamily="Roboto" Canvas.Left="547" Canvas.Top="281" FontSize="36"/>
-            <ComboBox x:Name="AddCustomer_Gender_ComboBox" FontWeight="Bold" FontFamily="Roboto" Canvas.Left="748" Text="Male" Canvas.Top="66" Width="226" Height="40" SelectionChanged="ComboBox_SelectionChanged" FontSize="25">
+            <ComboBox x:Name="AddCustomer_Gender_ComboBox" FontWeight="Bold" FontFamily="Roboto" Canvas.Left="748" Text="Male" Canvas.Top="66" Width="226" Height="40"  FontSize="25">
                 <ComboBoxItem FontSize="18" IsSelected="True" Content="Male"/>
                 <ComboBoxItem FontSize="18" Content="Female"/>
             </ComboBox>
