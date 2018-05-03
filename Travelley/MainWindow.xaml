@@ -169,7 +169,7 @@
             <Button x:Name="NewOrExistingCustomer_Existing_Button" Content="Existing Customer" Canvas.Left="55" Canvas.Top="219" Width="406" Height="108" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="NewOrExistingCustomer_Existing_Button_Click" />
             <Button x:Name="NewOrExistingCustomer_New_Button" Content="New Customer" Canvas.Left="535" Canvas.Top="219" Width="406" Height="108" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="NewOrExistingCustomer_New_Button_Click" />
         </Canvas>
-        <Canvas x:Name="ReserveTicket_Canvas" Height="565" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1035" Canvas.Top="116" Canvas.Left="308" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+        <Canvas x:Name="ReserveTicket_Canvas" Height="565" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1035" Canvas.Top="116" Canvas.Left="308" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" IsVisibleChanged="ReserveTicket_Canvas_IsVisibleChanged">
             <StackPanel>
 
                 <Grid Margin="0 30 0 0">

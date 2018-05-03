@@ -1193,6 +1193,16 @@ namespace Travelley
             ReserveTicket_NumberOfSeats_TextBox.Text = "";
             ReserveTicket_NumberOfSeats_TextBox.Text = number;
         }
+
+        private void ReserveTicket_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(ReserveTicket_Canvas.Visibility == Visibility.Hidden && ActiveCustomer.Tickets.Count == 0)
+            {
+                DataBase.DeleteCustomer(ActiveCustomer);
+                ActiveCustomer = null;
+                return;
+            }
+        }
     }
 }
 
