@@ -54,6 +54,14 @@ namespace Travelley
         {
             if (IsIntialized)
             {
+                int index = 0;
+                while(index != Customers.Count)
+                {
+                    int size = Customers.Count;
+                    DeleteCustomer(Customers[index]);
+                    if (size == Customers.Count)
+                        index++;
+                }
                 Connection.Close();
                 IsIntialized = false;
             }
