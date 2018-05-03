@@ -51,7 +51,10 @@ namespace Travelley
 
         public Ticket ReserveTicket(Trip CurrentTrip, TripType tripType, string TicketType, int NumberOfOrderedSeats)
         {
-            Ticket obj = CurrentTrip.ReserveTicket(tripType, TicketType, NumberOfOrderedSeats);
+            int CustomerDiscount = 0;
+            if (discount)
+                CustomerDiscount = 10;
+            Ticket obj = CurrentTrip.ReserveTicket(tripType, TicketType, NumberOfOrderedSeats, CustomerDiscount);
             Tickets.Add(obj);
             Mark.Add(CurrentTrip);
             if (Mark.Count >= 2)

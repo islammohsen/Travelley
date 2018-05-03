@@ -961,6 +961,7 @@ namespace Travelley
             ReserveTicket_TripImage_Image.Source = ActiveTrip.TripImage.GetImage().Source;
             ReserveTicket_TicketType_ComboxBox.Items.Clear();
             ReserveTicket_NumberOfSeats_TextBox.Text = "";
+            ReserveTicket_Price_TextBox.Text = "0";
             foreach (KeyValuePair<string, int> c in ActiveTrip.NumberOfSeats)
             {
                 ReserveTicket_TicketType_ComboxBox.Items.Add(c.Key);

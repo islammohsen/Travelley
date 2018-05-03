@@ -64,11 +64,11 @@ namespace Travelley
             return;
         }
 
-        public Ticket ReserveTicket(TripType tripType,  string TicketType, int NumberOfOrderedSeats)
+        public Ticket ReserveTicket(TripType tripType,  string TicketType, int NumberOfOrderedSeats, int CustomerDiscount)
         {
             string serial = Guid.NewGuid().ToString();
 
-            double TicketPrice = PriceOfSeat[TicketType] * NumberOfOrderedSeats * (1.0 - discount);
+            double TicketPrice = PriceOfSeat[TicketType] * NumberOfOrderedSeats * (100 - discount - CustomerDiscount) / 100;
             Ticket T = new Ticket(serial, this, TicketType, tripType, TicketPrice, NumberOfOrderedSeats);
             tickets.Add(T);
             return T;
