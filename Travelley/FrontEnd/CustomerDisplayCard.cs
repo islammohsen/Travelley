@@ -40,7 +40,7 @@ namespace Travelley.FrontEnd
             CurrentCanvas.Children.Add(BackGround);
 
             this.CustomerImage = CurrentCustomer.UserImage.GetImage();
-            this.CustomerImage.MaxHeight = 200;
+            this.CustomerImage.MaxHeight = 180;
             this.CustomerImage.MaxWidth = 300;
             Canvas.SetLeft(this.CustomerImage, 140);
             Canvas.SetTop(this.CustomerImage, BaseLoc + 20);

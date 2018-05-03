@@ -228,7 +228,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Margin ="10 0 10 0" Grid.Column="0"  Content="Ticket Type" FontSize="25"/>
-                    <ComboBox Grid.Column="1" FontSize="25" x:Name="ReserveTicket_TicketType_ComboxBox"/>
+                    <ComboBox Grid.Column="1" FontSize="25" x:Name="ReserveTicket_TicketType_ComboxBox" SelectionChanged="ReserveTicket_TicketType_ComboxBox_SelectionChanged"/>
                 </Grid>
 
                 <Grid Margin="0 120 0 0">
@@ -477,7 +477,7 @@
         </Canvas>
 
         <ScrollViewer x:Name="Transactions_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
-            <Canvas x:Name="Transactions_Canvas" Height="567" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1039" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Visible"/>
+            <Canvas x:Name="Transactions_Canvas" Height="567" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1039" Canvas.Top="114" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         </ScrollViewer>
         <Rectangle Fill="#293541" Height="565" Canvas.Top="114" Width="305" Canvas.Left="-3"/>
         <Button x:Name="Trip_Button" HorizontalContentAlignment="Left"  Foreground="White" Background="#293541" Content=" Trips" Canvas.Top="114" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Click="Trips_Button_Click" Canvas.Left="-4" RenderTransformOrigin="-1.435,0.143" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>

@@ -1001,7 +1001,11 @@ namespace Travelley
             int num = 0;
             int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out num);
             num = Math.Max(num, 0);
-            ReserveTicket_Price_TextBox.Text = ((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * (float)(100 - ActiveTrip.Discount - (ActiveCustomer.Discount ? 10: 0)) / 100).ToString();
+            double discount = 1;
+            discount -= ActiveTrip.Discount / 100;
+            if (ActiveCustomer.Discount)
+                discount -= 0.1;
+            ReserveTicket_Price_TextBox.Text = ((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * discount).ToString();
         }
 
         private void ReserveTicket_Reserve_Button_Click(object sender, RoutedEventArgs e)
@@ -1048,7 +1052,7 @@ namespace Travelley
         }
         public void ShowListOfTickets(List<Ticket> Tickets)
         {
-            UpdateCurrentCanvas(Transactions_Canvas, "Transactions", Transactions_ScrollViewer);
+            UpdateCurrentCanvas(Transactions_Canvas, "Transactions", Transactions_ScrollViewer, true);
             for (int i = 0; i < Tickets.Count; i++)
             {
                 Customer CurrentCustomer = null;
@@ -1169,7 +1173,17 @@ namespace Travelley
                 return;
             }
             DataBase.InsertTripTickets(ActiveTrip.TripId, TicketType, num, price);
+            AddTicketType_Type_TextBox.Text = "";
+            AddTicketType_NumberOfSeats_TextBox.Text = "";
+            AddTicketType_Price_TextBox.Text = "";
             ShowTicketsTypes(ActiveTrip);
+        }
+
+        private void ReserveTicket_TicketType_ComboxBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string number = ReserveTicket_NumberOfSeats_TextBox.Text;
+            ReserveTicket_NumberOfSeats_TextBox.Text = "";
+            ReserveTicket_NumberOfSeats_TextBox.Text = number;
         }
     }
 }
