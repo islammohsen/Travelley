@@ -122,7 +122,7 @@ namespace Travelley
             Trips = new List<Trip>();
 
             //created a command
-            Command.CommandText = "SELECT * FROM Trips";
+            Command.CommandText = "SELECT * FROM Trip";
 
             //excuted the command
             Reader = Command.ExecuteReader();
@@ -135,8 +135,8 @@ namespace Travelley
                 String Depature = (string)Reader["Depature"];
                 String Destination = (string)Reader["Destination"];
                 Double Discount = (Double)Reader["Discount"];
-                DateTime Start = (DateTime)Reader["Start"];
-                DateTime End = (DateTime)Reader["End"];
+                DateTime Start = (DateTime)Reader["TripStartDate"];
+                DateTime End = (DateTime)Reader["TripEndDate"];
                 Byte[] TripImage = (Byte[])Reader["Image"];
                 TourGuide CurrentTourGuide = SelectTourGuide(TourGuideId);
                 if (CurrentTourGuide == null)
@@ -268,9 +268,9 @@ namespace Travelley
         {
             //update database
             //update Trip table
-           Command.CommandText = $"UPDATE Trips set TripId = '{TripId}', TourGuideId = '{TourGuideId}', Depature = '{Depature}', " +
-                $"Destination = '{Destination}', Discount = {Discount} , Start = '{Start.ToString()}' , " +
-                $"End = '{End.ToString()}' , Image = @image where TripId = '{CurrentTrip.TripId}'";
+           Command.CommandText = $"UPDATE Trip set TripId = '{TripId}', TourGuideId = '{TourGuideId}', Depature = '{Depature}', " +
+                $"Destination = '{Destination}', Discount = {Discount} , TripEndDate = '{End.ToString()}' , " +
+                $" TripStartDate = '{Start.ToString()}' , Image = @image where TripId = '{CurrentTrip.TripId}'";
             Command.Parameters.AddWithValue("@image", TripImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
@@ -348,7 +348,7 @@ namespace Travelley
 
         public static void InsertTrip(Trip CurrentTrip)
         {
-            Command.CommandText = $"INSERT INTO Trips values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Departure}', " +
+            Command.CommandText = $"INSERT INTO Trip values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Departure}', " +
                 $"'{CurrentTrip.Destination}', {CurrentTrip.Discount}, '{CurrentTrip.Start.ToString()}', '{CurrentTrip.End.ToString()}'," +
                 $"@image)";
             Command.Parameters.AddWithValue("@image", CurrentTrip.TripImage.GetByteImage());
@@ -393,7 +393,8 @@ namespace Travelley
 
         public static void DeleteTourGuide(TourGuide CurrentTourGuide)
         {
-            Command.CommandText = $"Delete From TourGuide whete Id = '{CurrentTourGuide.Id}'";
+            Command.CommandText = $"Delete From TourGuide where Id = '{CurrentTourGuide.Id}'";
+            Command.ExecuteNonQuery();
             TourGuides.Remove(CurrentTourGuide);
         }
 
@@ -410,7 +411,7 @@ namespace Travelley
             }
 
             //delete the trip
-            Command.CommandText = $"Delete From Trips where TripId = '{CurrentTrip.TripId}'";
+            Command.CommandText = $"Delete From Trip where TripId = '{CurrentTrip.TripId}'";
             Command.ExecuteNonQuery();
 
             Trips.Remove(CurrentTrip);
