@@ -217,6 +217,17 @@ namespace Travelley
             TripFullData_TourGuideName.Content = t.Tour.Name;
             TripFullData_TripId.Content = t.TripId;
             TripFullData_Avaialbleseats_Label.Content = "Available seats: " + ActiveTrip.GetNumberOfAvailableSeats();
+            
+            if (ActiveTrip.IsClosed)
+            {
+                TripFullData_TripStatusClose_Label.Visibility = Visibility.Visible;
+                TripFullData_TripStatusOpen_Label.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                TripFullData_TripStatusOpen_Label.Visibility = Visibility.Visible;
+                TripFullData_TripStatusClose_Label.Visibility = Visibility.Hidden;
+            }
         }
 
         private void ShowTicketsTypes(Trip CurrentTrip)
@@ -661,6 +672,11 @@ namespace Travelley
             }
         }
 
+        private void TripFullData_TourGuideName_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ShowTourGuideFullData(ActiveTrip.Tour);
+        }
+
         #endregion Trips
 
         #region customers
@@ -897,8 +913,13 @@ namespace Travelley
             DataBase.DeleteCustomer(ActiveCustomer);
             ShowListOfCustomers(DataBase.Customers);
         }
-        #endregion customers
 
+        private void CustomerFullData_ShowTickets_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowListOfTickets(ActiveCustomer.Tickets);
+        }
+
+        #endregion customers
 
         #region TourGuides
 
@@ -1210,6 +1231,11 @@ namespace Travelley
             ShowAddTourGuideCanvas();
         }
 
+        private void TourGuideFullData_ShowTrips_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowListOfTrips(ActiveTourGuide.Trips);
+        }
+
         #endregion TourGuides
 
         #region Transactions
@@ -1244,7 +1270,10 @@ namespace Travelley
             }
         }
 
+
+
         #endregion Transactions
+
         
     }
 }

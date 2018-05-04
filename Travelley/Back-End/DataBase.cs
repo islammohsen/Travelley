@@ -303,11 +303,23 @@ namespace Travelley
         public static void UpdateTripsTickets(Trip CurrentTrip, string PrevType, string NewType, int NumberOfSeats, double Price)
         {
             Command.CommandText = $"UPDATE TripsTickets set Type = '{NewType}', NumberOfSeats = {NumberOfSeats}, Price = {Price} where TripId = '{CurrentTrip.TripId}' And Type = '{PrevType}'";
+            Command.ExecuteNonQuery();
+            Command.CommandText = $"UPDATE Transactions set TypeOfTicket = '{NewType}' where TripId = '{CurrentTrip.TripId}' And TypeOfTicket = '{PrevType}'";
+            Command.ExecuteNonQuery();
+            UpdateTickets(CurrentTrip, PrevType, NewType);
             CurrentTrip.NumberOfSeats.Remove(PrevType);
             CurrentTrip.PriceOfSeat.Remove(PrevType);
             CurrentTrip.NumberOfSeats.Add(NewType, NumberOfSeats);
             CurrentTrip.PriceOfSeat.Add(NewType, Price);
-            Command.ExecuteNonQuery();
+        }
+
+        private static void UpdateTickets(Trip CurrentTrip, string PrevType, string NewType)
+        {
+            foreach(Ticket T in CurrentTrip.Tickets)
+            {
+                if (T.TicketType == PrevType)
+                    T.TicketType = NewType;
+            }
         }
 
         public static void InsertCustomer(Customer CurrentCustomer)

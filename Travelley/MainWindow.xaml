@@ -94,7 +94,7 @@
             <Label x:Name="TripFullData_DummyLabel1_Copy1" Content="to" Canvas.Left="584" Canvas.Top="238" Height="56" Width="44" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_EndDate" Content="" Canvas.Left="636" Canvas.Top="240" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="TripFullData_DummyLabel1_Copy2" Content="Tour guide:" Canvas.Left="52" Canvas.Top="476" Height="56" Width="192" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-            <Label x:Name="TripFullData_TourGuideName" Content="" Canvas.Left="249" Canvas.Top="478" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
+            <Label x:Name="TripFullData_TourGuideName" Content="" Canvas.Left="249" Canvas.Top="478" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" MouseDoubleClick="TripFullData_TourGuideName_MouseDoubleClick" Cursor="Hand"/>
             <Label x:Name="TripFullData_DummyLabel1_Copy3" Content="Discount:" Canvas.Left="52" Canvas.Top="537" Height="56" Width="174" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Button x:Name="TripFullData_Edit_Button" Content="Edit Trip" Canvas.Left="589" Canvas.Top="607" Width="201" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_Edit_Button_Click"/>
             <Button x:Name="TripFullData_Delete_Button" Content="Delete Trip" Canvas.Left="817" Canvas.Top="607" Width="202" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_Delete_Button_Click"/>
@@ -104,6 +104,18 @@
             <Button x:Name="TripFullData_ReserveTrip_Button" Content="Reserve Trip" Canvas.Left="340" Canvas.Top="607" Width="225" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_ReserveTrip_Button_Click" />
             <Button x:Name="TripFullData_TicketTypes_Button" Content="Ticket Types" Canvas.Left="81" Canvas.Top="607" Width="225" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_TicketTypes_Button_Click" />
             <Label x:Name="TripFullData_Avaialbleseats_Label" Content="Available seats:" FontSize="36" Canvas.Left="531" Canvas.Top="415" FontFamily="Roboto" FontWeight="Bold"/>
+            <Label x:Name="TripFullData_TripStatusOpen_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden">
+                <TextBlock>
+                    <Run Text="status: " Foreground="Black"/>
+                    <Run Text="open" Foreground="Green"/>
+                </TextBlock>
+            </Label>
+            <Label x:Name="TripFullData_TripStatusClose_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden">
+                <TextBlock>
+                    <Run Text="status: " Foreground="Black"/>
+                    <Run Text="closed" Foreground="Red"/>
+                </TextBlock>
+            </Label>
         </Canvas>
         <Canvas x:Name="AddTrip_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Label x:Name="DepatLabel" Content="Trip Depature" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="219" FontWeight="Bold" FontSize="24"/>
@@ -308,6 +320,7 @@
 
             <Button x:Name="TourGuideFullData_Edit_Button" Content="Edit TourGuide" Canvas.Left="469" Canvas.Top="607" Width="243" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TourGuideFullData_Edit_Button_Click"/>
             <Button x:Name="TourGuideFullData_Delete_Button" Content="Delete TourGuide" Canvas.Left="737" Canvas.Top="607" Width="282" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
+            <Button x:Name="TourGuideFullData_ShowTrips_Button" Content="Trips" Canvas.Left="737" Canvas.Top="140" Width="282" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TourGuideFullData_ShowTrips_Button_Click"/>
         </Canvas>
         <Canvas x:Name="AddNewTourGuide_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="3" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Label x:Name="LabelAddTourGuideFullData_Id" Content="ID: "  Canvas.Left="10" Canvas.Top="342" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black" Height="51" Width="66"/>
@@ -397,6 +410,7 @@
         <Canvas x:Name="CustomerFullDetails_Canvas"  Height="674" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
             <Button x:Name="CustomerFullData_Edit_Button" Content="Edit Customer" Canvas.Left="468" Canvas.Top="607" Width="256" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="CustomerFullData_Edit_Button_Click"/>
             <Button x:Name="CustomerFullData_Delete_Button" Content="Delete Customer" Canvas.Left="751" Canvas.Top="607" Width="277" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="CustomerFullData_Delete_Button_Click"/>
+            <Button x:Name="CustomerFullData_ShowTickets_Button" Content="Tickets" Canvas.Left="751" Canvas.Top="140" Width="277" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="CustomerFullData_ShowTickets_Button_Click"/>
 
             <Image x:Name="CustomerFullData_IMG"  Height="210" Canvas.Left="10" Canvas.Top="166" Width="221" Stretch="Fill" Cursor="None"/>
             <Label x:Name="CustomerFullData_Name"  Content=""  Canvas.Left="256" Canvas.Top="162" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="#FFE87E31" RenderTransformOrigin="0.517,0.598"/>
