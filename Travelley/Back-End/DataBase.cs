@@ -391,9 +391,10 @@ namespace Travelley
             Customers.Remove(CurrnetCustomer);
         }
 
-        public static void DeleteTourGuide()
+        public static void DeleteTourGuide(TourGuide CurrentTourGuide)
         {
-            //todo
+            Command.CommandText = $"Delete From TourGuide whete Id = '{CurrentTourGuide.Id}'";
+            TourGuides.Remove(CurrentTourGuide);
         }
 
         public static void DeleteTrip(Trip CurrentTrip)

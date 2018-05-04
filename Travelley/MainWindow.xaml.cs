@@ -1272,10 +1272,21 @@ namespace Travelley
                 new TicketDisplayCard(i, CurrentCanvas, this, CurrentCustomer, Tickets[i].CurrentTrip, Tickets[i]);
             }
         }
-        
+
+
         #endregion Transactions
 
-        
+        private void TourGuideFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(ActiveTourGuide.Trips.Count > 0)
+            {
+                MessageBox.Show("Canot delete a tourguide who hava a trip");
+                return;
+            }
+            DataBase.DeleteTourGuide(ActiveTourGuide);
+            ActiveTourGuide = null;
+            ShowListOfTourGuides(DataBase.TourGuides);
+        }
     }
 }
 

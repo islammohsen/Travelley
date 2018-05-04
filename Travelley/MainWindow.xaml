@@ -320,7 +320,7 @@
             <Label x:Name="LabelTourGuideFullData_Salary" Content="Salary: " Canvas.Left="469" Canvas.Top="402" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
 
             <Button x:Name="TourGuideFullData_Edit_Button" Content="Edit TourGuide" Canvas.Left="469" Canvas.Top="607" Width="243" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TourGuideFullData_Edit_Button_Click"/>
-            <Button x:Name="TourGuideFullData_Delete_Button" Content="Delete TourGuide" Canvas.Left="737" Canvas.Top="607" Width="282" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White"/>
+            <Button x:Name="TourGuideFullData_Delete_Button" Content="Delete TourGuide" Canvas.Left="737" Canvas.Top="607" Width="282" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TourGuideFullData_Delete_Button_Click"/>
             <Button x:Name="TourGuideFullData_ShowTrips_Button" Content="Trips" Canvas.Left="737" Canvas.Top="140" Width="282" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TourGuideFullData_ShowTrips_Button_Click"/>
         </Canvas>
         <Canvas x:Name="AddNewTourGuide_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="3" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
