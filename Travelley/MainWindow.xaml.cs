@@ -151,7 +151,9 @@ namespace Travelley
             CurrentCanvas = NewCanvas;
             CurrentCanvas.Visibility = Visibility.Visible;
             if (dynamic)
-                CurrentCanvas.Children.Clear();
+            {
+                CurrentCanvas.Children.Clear(); CurrentCanvas.Height = 100;
+            }
             if (NewScrollViewer != null)
             {
                 CurrentScrollViewer = NewScrollViewer;
@@ -675,6 +677,11 @@ namespace Travelley
         private void TripFullData_TourGuideName_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ShowTourGuideFullData(ActiveTrip.Tour);
+        }
+
+        private void TripFullData_ShowTickets_Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowListOfTickets(ActiveTrip.Tickets);
         }
 
         #endregion Trips
@@ -1252,6 +1259,7 @@ namespace Travelley
             }
             return Tickets;
         }
+
         public void ShowListOfTickets(List<Ticket> Tickets)
         {
             UpdateCurrentCanvas(Transactions_Canvas, "Transactions", Transactions_ScrollViewer, true);
@@ -1269,9 +1277,7 @@ namespace Travelley
                 new TicketDisplayCard(i, CurrentCanvas, this, CurrentCustomer, Tickets[i].CurrentTrip, Tickets[i]);
             }
         }
-
-
-
+        
         #endregion Transactions
 
         
