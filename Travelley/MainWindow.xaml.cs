@@ -117,11 +117,6 @@ namespace Travelley
             ShowListOfCustomers(DataBase.Customers);
         }
 
-        private void Ticket_Button_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateCurrentCanvas(Tickets_Canvas, "Tickets");
-        }
-
         private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowListOfTourGuides(DataBase.TourGuides);
