@@ -491,6 +491,8 @@ namespace Travelley
                 MessageBox.Show("Can't edit a closed trip");
                 return;
             }
+            ActiveTourGuide = ActiveTrip.Tour;
+            ActiveTourGuide.Trips.Remove(ActiveTrip);
             ShowEditTrip_Canvas(ActiveTrip);
         }
 
@@ -707,6 +709,14 @@ namespace Travelley
         private void TripFullData_ShowTickets_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowListOfTickets(ActiveTrip.Tickets);
+        }
+
+        private void EditTrip_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (CurrentCanvas.Visibility == Visibility.Hidden && ActiveTrip.Tour == ActiveTourGuide && !ActiveTourGuide.Trips.Contains(ActiveTrip))
+            {
+                ActiveTourGuide.Trips.Add(ActiveTrip);
+            }
         }
 
         #endregion Trips
@@ -1318,9 +1328,10 @@ namespace Travelley
 
 
 
+
         #endregion Transactions
 
-        
+       
     }
 }
 

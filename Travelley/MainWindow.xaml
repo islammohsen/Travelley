@@ -146,7 +146,7 @@
             <Label x:Name="AddTrip_Discount_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="350" Canvas.Top="524.2" FontSize="20" Foreground="Red"/>
             <Label x:Name="AddTrip_TripPhoto_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="300" Canvas.Top="601.8" FontSize="20" Foreground="Red"/>
         </Canvas>
-        <Canvas x:Name="EditTrip_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
+        <Canvas x:Name="EditTrip_Canvas" Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden" IsVisibleChanged="EditTrip_Canvas_IsVisibleChanged">
             <Label x:Name="EditDepatLabel" Content="Trip Depature" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="219" FontWeight="Bold" FontSize="24"/>
             <Label x:Name="EditDestLabel" Content="Trip Destination" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="279" FontSize="24" FontWeight="Bold"/>
             <Label x:Name="EditIDLabel" Content="Trip ID" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="159" FontWeight="Bold" FontSize="24"/>
