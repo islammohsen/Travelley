@@ -33,7 +33,7 @@ namespace Travelley
         public Trip ActiveTrip;
         public Customer ActiveCustomer;
         public static Currency CurrentCurrency;
-
+        public static List<Ticket> LastTransactions;
         string SelectedPath = "";
 
         #region window
@@ -168,7 +168,24 @@ namespace Travelley
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CurrentCurrency = Currency_ComboBox.SelectedItem as Currency;
-            UpdateCurrentCanvas(Main_Canvas, "Main");
+            if(CurrentCanvas == TourGuideFullData_Canvas)
+            {
+                ShowTourGuideFullData(ActiveTourGuide);
+            }
+            if(CurrentCanvas == TicketsTypes_Canvas)
+            {
+                ShowTicketsTypes(ActiveTrip);
+            }
+            if(CurrentCanvas == ReserveTicket_Canvas)
+            {
+                int num = int.Parse(ReserveTicket_NumberOfSeats_TextBox.Text);
+                ReserveTicket_NumberOfSeats_TextBox.Text = "";
+                ReserveTicket_NumberOfSeats_TextBox.Text = num.ToString();
+            }
+            if(CurrentCanvas == Transactions_Canvas)
+            {
+                ShowListOfTickets(LastTransactions);
+            }
         }
 
         #endregion Main_Canvas
@@ -1283,6 +1300,7 @@ namespace Travelley
         public void ShowListOfTickets(List<Ticket> Tickets)
         {
             UpdateCurrentCanvas(Transactions_Canvas, "Transactions", Transactions_ScrollViewer, true);
+            LastTransactions = Tickets;
             for (int i = 0; i < Tickets.Count; i++)
             {
                 Customer CurrentCustomer = null;
