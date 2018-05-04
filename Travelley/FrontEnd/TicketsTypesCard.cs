@@ -104,7 +104,7 @@ namespace Travelley.FrontEnd
             this.Price = new TextBox();
             this.Price.BorderThickness = new Thickness(0);
             this.Price.IsReadOnly = true;
-            this.Price.Text = Price.ToString();
+            this.Price.Text = MainWindow.CurrentCurrency.GetValue(Price).ToString();
             this.Price.FontSize = 25;
             this.Price.FontWeight = FontWeights.Bold;
             this.Price.HorizontalAlignment = HorizontalAlignment.Left;
@@ -181,7 +181,7 @@ namespace Travelley.FrontEnd
 
             if (Prev == this.TicketType.Text || CurrentTrip.NumberOfSeats.ContainsKey(this.TicketType.Text) == false)
             {
-                DataBase.UpdateTripsTickets(CurrentTrip, Prev, this.TicketType.Text, int.Parse(this.NumberOfSeats.Text), double.Parse(this.Price.Text));
+                DataBase.UpdateTripsTickets(CurrentTrip, Prev, this.TicketType.Text, int.Parse(this.NumberOfSeats.Text), MainWindow.CurrentCurrency.ToEGP(double.Parse(Price.Text)));
             }
             else
             {

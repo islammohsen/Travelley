@@ -32,6 +32,7 @@ namespace Travelley
         TourGuide ActiveTourGuide;
         public Trip ActiveTrip;
         public Customer ActiveCustomer;
+        public static Currency CurrentCurrency;
 
         string SelectedPath = "";
 
@@ -42,16 +43,22 @@ namespace Travelley
 
 
         }
+
         public MainWindow()
         {
 
             InitializeComponent();
 
-
             DataBase.Intialize();
 
             CurrentScrollViewer = Customers_ScrollViewer;
             CurrentCanvas = Main_Canvas;
+
+            Currency_ComboBox.Items.Add(new EGP());
+            Currency_ComboBox.Items.Add(new Dollar());
+            Currency_ComboBox.Items.Add(new EURO());
+            Currency_ComboBox.Items.Add(new RiyalSaudi());
+            Currency_ComboBox.SelectedItem = Currency_ComboBox.Items[0]; 
 
             int today = DateTime.Today.Day;
             if (DataBase.Trips.Count != 0)
@@ -156,6 +163,12 @@ namespace Travelley
                 CurrentScrollViewer.Visibility = Visibility.Visible;
             }
             CurrentPanelName_Label.Content = Header;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CurrentCurrency = Currency_ComboBox.SelectedItem as Currency;
+            UpdateCurrentCanvas(Main_Canvas, "Main");
         }
 
         #endregion Main_Canvas
@@ -627,7 +640,7 @@ namespace Travelley
             discount -= ActiveTrip.Discount / 100;
             if (ActiveCustomer.Discount)
                 discount -= 0.1;
-            ReserveTicket_Price_TextBox.Text = ((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * discount).ToString();
+            ReserveTicket_Price_TextBox.Text = CurrentCurrency.GetValue(((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * discount)).ToString();
         }
 
         private void ReserveTicket_TicketType_ComboxBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -966,7 +979,7 @@ namespace Travelley
             TourGuideFullData_Language.Content = t.Language;
             TourGuideFullData_IMG.Source = t.UserImage.GetImage().Source;
             TourGuideFullData_PhoneNumber.Content = t.PhoneNumber;
-            TourGuideFullData_Salary.Content = t.GetSalary(DateTime.Today.Month, DateTime.Today.Year).ToString();
+            TourGuideFullData_Salary.Content = CurrentCurrency.GetValue(t.GetSalary(DateTime.Today.Month, DateTime.Today.Year)).ToString();
 
         }
 
@@ -1238,6 +1251,18 @@ namespace Travelley
             ShowListOfTrips(ActiveTourGuide.Trips);
         }
 
+        private void TourGuideFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTourGuide.Trips.Count > 0)
+            {
+                MessageBox.Show("Canot delete a tourguide who hava a trip");
+                return;
+            }
+            DataBase.DeleteTourGuide(ActiveTourGuide);
+            ActiveTourGuide = null;
+            ShowListOfTourGuides(DataBase.TourGuides);
+        }
+
         #endregion TourGuides
 
         #region Transactions
@@ -1274,19 +1299,10 @@ namespace Travelley
         }
 
 
+
         #endregion Transactions
 
-        private void TourGuideFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if(ActiveTourGuide.Trips.Count > 0)
-            {
-                MessageBox.Show("Canot delete a tourguide who hava a trip");
-                return;
-            }
-            DataBase.DeleteTourGuide(ActiveTourGuide);
-            ActiveTourGuide = null;
-            ShowListOfTourGuides(DataBase.TourGuides);
-        }
+        
     }
 }
 

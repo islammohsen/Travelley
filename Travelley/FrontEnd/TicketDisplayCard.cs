@@ -103,11 +103,12 @@ namespace Travelley.FrontEnd
             CurrentCanvas.Children.Add(NumberOfSeats);
 
             Price = new Label();
-            Price.Content = "Price: " + CurrentTicket.Price;
+            Price.Content = "Price: " + MainWindow.CurrentCurrency.GetValue(CurrentTicket.Price);
             Price.FontSize = 25;
             Price.FontWeight = FontWeights.Bold;
             Price.HorizontalAlignment = HorizontalAlignment.Left;
             Price.VerticalAlignment = VerticalAlignment.Center;
+            
             Canvas.SetLeft(Price, 120);
             Canvas.SetTop(Price, BaseLoc + 210);
             CurrentCanvas.Children.Add(Price);
