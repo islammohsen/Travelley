@@ -135,7 +135,7 @@
             <TextBox x:Name="AddTrip_TripDiscTextbox" Height="41" TextWrapping="Wrap" Text="" Width="95" Canvas.Left="150" Canvas.Top="520" RenderTransformOrigin="1.232,0.374" FontSize="24"/>
             <Button x:Name="AddTrip_BrowseButton" Content="Browse"  Canvas.Left="150" Canvas.Top="580" Width="103" Height="49" FontSize="24" FontWeight="Bold" Click="BrowseButton_Click"/>
             <Button x:Name="AddTrip_SaveButton" Content="Save" Foreground="White" Background="#e87e31" Canvas.Left="870" Canvas.Top="575" Width="149" Height="85" FontSize="36" FontWeight="Bold" Click="SaveBut_Click"/>
-            <Label x:Name="PercenLabel" RenderTransformOrigin="10.046,7.518" Height="43" Width="58" Canvas.Left="250" Canvas.Top="520" FontWeight="Bold" FontSize="24"/>
+            <Label x:Name="PercenLabel" RenderTransformOrigin="10.046,7.518" Height="43" Width="58" Canvas.Left="250" Canvas.Top="520" FontWeight="Bold" FontSize="24" Content="%"/>
             <Label x:Name="PhotoLabel" Content="Trip Photo" RenderTransformOrigin="10.046,7.518" Height="60" Width="200" Canvas.Left="10" Canvas.Top="581" FontWeight="Bold" FontSize="24"/>
             <Label x:Name="AddTrip_TripID_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="408" Canvas.Top="148" FontSize="20" Foreground="Red"/>
             <Label x:Name="AddTrip_TripDep_ErrorLabel" Content="" RenderTransformOrigin="10.046,7.518" Height="54" Width="274" Canvas.Left="500" Canvas.Top="207.4" FontSize="20" Foreground="Red"/>
