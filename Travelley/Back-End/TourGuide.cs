@@ -66,6 +66,8 @@ namespace Travelley
                 if (t.GetSalary(Month, year) > ret.GetSalary(Month, year))
                     ret = t;
             }
+            if (ret.GetSalary(Month, year) == 0) //Not Considered a best touguide with salary = 0 !!
+                return null;
             return ret;
         }
 
