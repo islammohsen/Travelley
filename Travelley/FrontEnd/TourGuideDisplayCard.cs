@@ -16,6 +16,7 @@ namespace Travelley.FrontEnd
         Rectangle BackGround;
         Label TourGuideName;
         Label TourGuideEmail;
+        Label TourGuideSalary;
         Image TourGuideImage;
         Button View_More;
         TourGuide CurrentTourGuide;
@@ -65,6 +66,17 @@ namespace Travelley.FrontEnd
             Canvas.SetLeft(this.TourGuideEmail, 450);
             Canvas.SetTop(this.TourGuideEmail, BaseLoc + 50);
             CurrentCanvas.Children.Add(this.TourGuideEmail);
+
+
+            this.TourGuideSalary = new Label();
+            this.TourGuideSalary.Content = "Salary: " +MainWindow.CurrentCurrency.GetValue( CurrentTourGuide.GetSalary(DateTime.Today.Month,DateTime.Today.Year));
+            this.TourGuideSalary.FontSize = 25;
+            this.TourGuideSalary.FontWeight = FontWeights.Bold;
+            this.TourGuideSalary.HorizontalAlignment = HorizontalAlignment.Left;
+            this.TourGuideSalary.VerticalAlignment = VerticalAlignment.Center;
+            Canvas.SetLeft(this.TourGuideSalary, 450);
+            Canvas.SetTop(this.TourGuideSalary, BaseLoc + 80);
+            CurrentCanvas.Children.Add(this.TourGuideSalary);
 
             this.View_More = new Button();
             this.View_More.Content = "View More";

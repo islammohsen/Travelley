@@ -34,6 +34,7 @@ namespace Travelley
         public Customer ActiveCustomer;
         public static Currency CurrentCurrency;
         public static List<Ticket> LastTransactions;
+        public static List<TourGuide> LastTourGuides;
         string SelectedPath = "";
 
         #region window
@@ -165,6 +166,10 @@ namespace Travelley
             if (CurrentCanvas == Transactions_Canvas)
             {
                 ShowListOfTickets(LastTransactions);
+            }
+            if(CurrentCanvas == TourGuides_Canvas)
+            {
+                ShowListOfTourGuides(LastTourGuides);
             }
         }
 
@@ -304,6 +309,7 @@ namespace Travelley
 
         private void ShowTicketsTypes(Trip CurrentTrip)
         {
+            ActiveTrip = CurrentTrip;
             UpdateCurrentCanvas(TicketsTypes_Canvas, "Tickets Types", TicketsTypes_ScrollViewr, true);
 
             Button TicketsTypes_Add_Button = new Button();
@@ -416,7 +422,7 @@ namespace Travelley
                 AddTrip_TripDestTextbox.Text, double.Parse(AddTrip_TripDiscTextbox.Text), AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value);
             T.TripImage = new CustomImage(SelectedPath);
             DataBase.InsertTrip(T);
-            ShowListOfTrips(DataBase.Trips);
+            ShowTicketsTypes(T);
             //TODO Insert Trip in data base
             //TODO Clear all textboxes after saving
         }
@@ -1013,6 +1019,7 @@ namespace Travelley
 
         private void ShowListOfTourGuides(List<TourGuide> TourGuides)
         {
+            LastTourGuides = TourGuides;
             UpdateCurrentCanvas(TourGuides_Canvas, "Tour Guides", TourGuides_ScrollViewer, true);
 
             Button TourGuides_AddTourGuide_Button = new Button();
