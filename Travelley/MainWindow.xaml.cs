@@ -58,7 +58,7 @@ namespace Travelley
             Currency_ComboBox.Items.Add(new Dollar());
             Currency_ComboBox.Items.Add(new EURO());
             Currency_ComboBox.Items.Add(new RiyalSaudi());
-            Currency_ComboBox.SelectedItem = Currency_ComboBox.Items[0]; 
+            Currency_ComboBox.SelectedItem = Currency_ComboBox.Items[0];
 
         }
 
@@ -126,19 +126,21 @@ namespace Travelley
 
         public void UpdateCurrentCanvas(Canvas NewCanvas, string Header, ScrollViewer NewScrollViewer = null, bool dynamic = false)
         {
+
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentScrollViewer.Visibility = Visibility.Hidden;
+            if (NewScrollViewer != null)
+            {
+                CurrentScrollViewer = NewScrollViewer;
+                if (CurrentCanvas != NewCanvas)
+                    CurrentScrollViewer.ScrollToHome();
+                CurrentScrollViewer.Visibility = Visibility.Visible;
+            }
             CurrentCanvas = NewCanvas;
             CurrentCanvas.Visibility = Visibility.Visible;
             if (dynamic)
             {
                 CurrentCanvas.Children.Clear(); CurrentCanvas.Height = 100;
-            }
-            if (NewScrollViewer != null)
-            {
-                CurrentScrollViewer = NewScrollViewer;
-                CurrentScrollViewer.ScrollToHome();
-                CurrentScrollViewer.Visibility = Visibility.Visible;
             }
             CurrentPanelName_Label.Content = Header;
         }
@@ -146,21 +148,21 @@ namespace Travelley
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CurrentCurrency = Currency_ComboBox.SelectedItem as Currency;
-            if(CurrentCanvas == TourGuideFullData_Canvas)
+            if (CurrentCanvas == TourGuideFullData_Canvas)
             {
                 ShowTourGuideFullData(ActiveTourGuide);
             }
-            if(CurrentCanvas == TicketsTypes_Canvas)
+            if (CurrentCanvas == TicketsTypes_Canvas)
             {
                 ShowTicketsTypes(ActiveTrip);
             }
-            if(CurrentCanvas == ReserveTicket_Canvas)
+            if (CurrentCanvas == ReserveTicket_Canvas)
             {
                 int num = int.Parse(ReserveTicket_NumberOfSeats_TextBox.Text);
                 ReserveTicket_NumberOfSeats_TextBox.Text = "";
                 ReserveTicket_NumberOfSeats_TextBox.Text = num.ToString();
             }
-            if(CurrentCanvas == Transactions_Canvas)
+            if (CurrentCanvas == Transactions_Canvas)
             {
                 ShowListOfTickets(LastTransactions);
             }
@@ -168,7 +170,7 @@ namespace Travelley
 
         private void Main_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if(Main_Canvas.Visibility == Visibility.Visible)
+            if (Main_Canvas.Visibility == Visibility.Visible)
             {
 
                 int today = DateTime.Today.Day;
@@ -181,14 +183,14 @@ namespace Travelley
                     {
                         int i = 0;
                         index = index + 1 % DataBase.Trips.Count;
-                        while(true)
+                        while (true)
                         {
                             if (i == DataBase.Trips.Count)
                             {
                                 TripOfTheDay = null;
                                 break;
                             }
-                            if( ! DataBase.Trips[index].IsClosed )
+                            if (!DataBase.Trips[index].IsClosed)
                             {
                                 TripOfTheDay = DataBase.Trips[index];
                                 break;
@@ -197,7 +199,7 @@ namespace Travelley
                             index = index + 1 % DataBase.Trips.Count;
                         }
                     }
-                        
+
                 }
                 else
                     TripOfTheDay = null;
@@ -287,7 +289,7 @@ namespace Travelley
             TripFullData_TourGuideName.Content = t.Tour.Name;
             TripFullData_TripId.Content = t.TripId;
             TripFullData_Avaialbleseats_Label.Content = "Available seats: " + ActiveTrip.GetNumberOfAvailableSeats();
-            
+
             if (ActiveTrip.IsClosed)
             {
                 TripFullData_TripStatusClose_Label.Visibility = Visibility.Visible;
@@ -541,7 +543,7 @@ namespace Travelley
 
         private void TripFullData_ReserveTrip_Button_Click(object sender, RoutedEventArgs e)
         {
-            if(ActiveTrip.IsClosed)
+            if (ActiveTrip.IsClosed)
             {
                 MessageBox.Show("Canot reserve a closed trip");
                 return;
@@ -618,19 +620,19 @@ namespace Travelley
 
         private void AddTicketType_Canvas_Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            if(AddTicketType_Type_TextBox.Text == "")
+            if (AddTicketType_Type_TextBox.Text == "")
             {
                 MessageBox.Show("Please enter a ticket type");
                 return;
             }
             int num = 0;
-            if(!int.TryParse(AddTicketType_NumberOfSeats_TextBox.Text, out num))
+            if (!int.TryParse(AddTicketType_NumberOfSeats_TextBox.Text, out num))
             {
                 MessageBox.Show("Please enter a valid number of seats");
                 return;
             }
             double price = 0;
-            if(!double.TryParse(AddTicketType_Price_TextBox.Text, out price))
+            if (!double.TryParse(AddTicketType_Price_TextBox.Text, out price))
             {
                 MessageBox.Show("Please enter a valid price");
                 return;
@@ -663,7 +665,7 @@ namespace Travelley
             else if (ReserveTicket_TripType_ComboxBox.Text == "Friends")
                 tripType = new Friends();
 
-            if(ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
+            if (ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
             {
                 MessageBox.Show("select a ticket type");
                 return;
@@ -715,7 +717,7 @@ namespace Travelley
 
         private void ReserveTicket_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if(ReserveTicket_Canvas.Visibility == Visibility.Hidden && ActiveCustomer.Tickets.Count == 0)
+            if (ReserveTicket_Canvas.Visibility == Visibility.Hidden && ActiveCustomer.Tickets.Count == 0)
             {
                 DataBase.DeleteCustomer(ActiveCustomer);
                 ActiveCustomer = null;
@@ -739,7 +741,7 @@ namespace Travelley
             }
             if (ReserveTicket_TicketType_ComboxBox.Items.Count > 0)
                 ReserveTicket_TicketType_ComboxBox.SelectedItem = ReserveTicket_TicketType_ComboxBox.Items[0];
-            if(ActiveCustomer.Discount == true)
+            if (ActiveCustomer.Discount == true)
             {
                 MessageBox.Show("Customer have 10% discount");
             }
