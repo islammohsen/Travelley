@@ -598,6 +598,7 @@ namespace Travelley
                 MessageBox.Show("Ticket Type already exists");
                 return;
             }
+            price = CurrentCurrency.ToEGP(price);
             DataBase.InsertTripTickets(ActiveTrip.TripId, TicketType, num, price);
             AddTicketType_Type_TextBox.Text = "";
             AddTicketType_NumberOfSeats_TextBox.Text = "";
