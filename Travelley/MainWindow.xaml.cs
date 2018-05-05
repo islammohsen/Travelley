@@ -60,30 +60,6 @@ namespace Travelley
             Currency_ComboBox.Items.Add(new RiyalSaudi());
             Currency_ComboBox.SelectedItem = Currency_ComboBox.Items[0]; 
 
-            int today = DateTime.Today.Day;
-            if (DataBase.Trips.Count != 0)
-                TripOfTheDay = DataBase.Trips[today % DataBase.Trips.Count]; //generate trip based on today's date
-            if (DataBase.TourGuides.Count != 0)
-                TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
-
-
-
-            if (TripOfTheDay != null)
-            {
-                TripOfTheDay_IMG.Source = TripOfTheDay.TripImage.GetImage().Source;
-                TripOfTheDay_Label.Content = TripOfTheDay.Departure + " - " + TripOfTheDay.Destination;
-            }
-
-            if (TourGuideOfTheMonth != null)
-            {
-                Best_TourGuide_IMG.Source = TourGuideOfTheMonth.UserImage.GetImage().Source;
-                Best_TourGuide_Label.Content = TourGuideOfTheMonth.Name;
-            }
-            else
-            {
-                Best_TourGuide_IMG.Source = (new CustomImage("default-user-image.png")).GetImage().Source;
-                Best_TourGuide_Label.Content = "Improve yourself";
-            }
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -136,6 +112,8 @@ namespace Travelley
 
         private void TripOfTheDay_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (TripOfTheDay == null)
+                return;
             ActiveTrip = TripOfTheDay;
             ShowTripFullData(TripOfTheDay);
         }
@@ -188,6 +166,71 @@ namespace Travelley
             }
         }
 
+        private void Main_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(Main_Canvas.Visibility == Visibility.Visible)
+            {
+
+                int today = DateTime.Today.Day;
+                if (DataBase.Trips.Count != 0)
+                {
+                    int index = today % DataBase.Trips.Count;
+                    TripOfTheDay = DataBase.Trips[index]; //generate trip based on today's date
+
+                    if (TripOfTheDay.IsClosed) //trip of the day can't be closed
+                    {
+                        int i = 0;
+                        index = index + 1 % DataBase.Trips.Count;
+                        while(true)
+                        {
+                            if (i == DataBase.Trips.Count)
+                            {
+                                TripOfTheDay = null;
+                                break;
+                            }
+                            if( ! DataBase.Trips[index].IsClosed )
+                            {
+                                TripOfTheDay = DataBase.Trips[index];
+                                break;
+                            }
+                            i++;
+                            index = index + 1 % DataBase.Trips.Count;
+                        }
+                    }
+                        
+                }
+                else
+                    TripOfTheDay = null;
+                if (DataBase.TourGuides.Count != 0)
+                    TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
+                else
+                    TourGuideOfTheMonth = null;
+
+
+
+                if (TripOfTheDay != null)
+                {
+                    TripOfTheDay_IMG.Source = TripOfTheDay.TripImage.GetImage().Source;
+                    TripOfTheDay_Label.Content = TripOfTheDay.Departure + " - " + TripOfTheDay.Destination;
+                }
+                else
+                {
+                    TripOfTheDay_IMG.Source = (new CustomImage("default-Trip-image.png")).GetImage().Source;
+                    TripOfTheDay_Label.Content = "No Open Trips Yet !";
+                }
+                if (TourGuideOfTheMonth != null)
+                {
+                    Best_TourGuide_IMG.Source = TourGuideOfTheMonth.UserImage.GetImage().Source;
+                    Best_TourGuide_Label.Content = TourGuideOfTheMonth.Name;
+                }
+                else
+                {
+                    Best_TourGuide_IMG.Source = (new CustomImage("default-user-image.png")).GetImage().Source;
+                    Best_TourGuide_Label.Content = "Improve yourself";
+                }
+
+            }
+        }
         #endregion Main_Canvas
 
         #region Trips
@@ -598,6 +641,7 @@ namespace Travelley
                 MessageBox.Show("Ticket Type already exists");
                 return;
             }
+            price = CurrentCurrency.ToEGP(price);
             DataBase.InsertTripTickets(ActiveTrip.TripId, TicketType, num, price);
             AddTicketType_Type_TextBox.Text = "";
             AddTicketType_NumberOfSeats_TextBox.Text = "";
@@ -1329,9 +1373,9 @@ namespace Travelley
 
 
 
+
         #endregion Transactions
 
-       
     }
 }
 

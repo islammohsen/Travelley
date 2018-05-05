@@ -19,16 +19,16 @@ namespace Travelley
         }
     }
 
-    public class EGP: Currency
+    public class EGP : Currency
     {
         public override double GetValue(double EGP)
         {
-            return EGP;
+            return Math.Round(EGP, 2);
         }
 
         public override double ToEGP(double EGP)
         {
-            return EGP;
+            return Math.Round(EGP, 2);
         }
 
         public override string ToString()
@@ -42,13 +42,13 @@ namespace Travelley
 
         public override double GetValue(double EGP)
         {
-            double dollar = EGP * 0.057;
+            double dollar = Math.Round(EGP * 0.057, 2);
             return dollar;
         }
 
-        public override double ToEGP(double EGP)
+        public override double ToEGP(double Dollar)
         {
-            return EGP * 17.63;
+            return Math.Round(Dollar * (1 / 0.057), 2);
         }
 
         public override string ToString()
@@ -62,13 +62,13 @@ namespace Travelley
 
         public override double GetValue(double EGP)
         {
-            double euro = EGP * 0.046;
+            double euro = Math.Round(EGP * 0.047, 2);
             return euro;
         }
 
-        public override double ToEGP(double EGP)
+        public override double ToEGP(double Euro)
         {
-            return 21.12 * EGP;
+            return Math.Round(Euro * (1 / 0.047), 2);
         }
 
         public override string ToString()
@@ -80,13 +80,13 @@ namespace Travelley
     {
         public override double GetValue(double EGP)
         {
-            double riyal = EGP * 0.21;
+            double riyal = Math.Round(EGP * 0.21, 2);
             return riyal;
         }
 
-        public override double ToEGP(double EGP)
+        public override double ToEGP(double Riyal)
         {
-            return 4.70 * EGP;
+            return Math.Round(Riyal * (1 / 0.21), 2);
         }
 
         public override string ToString()
