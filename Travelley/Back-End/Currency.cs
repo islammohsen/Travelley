@@ -46,9 +46,9 @@ namespace Travelley
             return dollar;
         }
 
-        public override double ToEGP(double EGP)
+        public override double ToEGP(double Dollar)
         {
-            return EGP * 17.63;
+            return Dollar * (1/0.057);
         }
 
         public override string ToString()
@@ -62,13 +62,13 @@ namespace Travelley
 
         public override double GetValue(double EGP)
         {
-            double euro = EGP * 0.046;
+            double euro = EGP * 0.047;
             return euro;
         }
 
-        public override double ToEGP(double EGP)
+        public override double ToEGP(double Euro)
         {
-            return 21.12 * EGP;
+            return Euro * ( 1/0.047 ) ;
         }
 
         public override string ToString()
@@ -83,10 +83,10 @@ namespace Travelley
             double riyal = EGP * 0.21;
             return riyal;
         }
-
-        public override double ToEGP(double EGP)
+        
+        public override double ToEGP(double Riyal)
         {
-            return 4.70 * EGP;
+            return Riyal * ( 1/0.21 );
         }
 
         public override string ToString()
