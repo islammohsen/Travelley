@@ -23,6 +23,7 @@ namespace Travelley
         Label DepartureAndDestination;
         Label FromStartToEndDate;
         Button MoreInfo;
+        Label Status_Label;
 
        public  TripDisplayCard(Trip t, int index,ref Canvas c, MainWindow m)
         {
@@ -69,6 +70,16 @@ namespace Travelley
             FromStartToEndDate.Content = "From " + t.Start.ToShortDateString() + " to " + t.End.ToShortDateString();
             c.Children.Add(FromStartToEndDate);
 
+            Status_Label = new Label();
+            Canvas.SetLeft(Status_Label, 343);
+            Canvas.SetTop(Status_Label, baseLoc + 120);
+            Status_Label.FontSize = 30;
+            Status_Label.FontWeight = FontWeights.Bold;
+            if (t.IsClosed)
+                Status_Label.Content = "Status: closed";
+            else
+                Status_Label.Content = "Status: Opened";
+            c.Children.Add(Status_Label);
 
             MoreInfo = new Button();
             MoreInfo.Content = "View More";
@@ -83,7 +94,7 @@ namespace Travelley
             MoreInfo.Click += MoreInfo_Click;
             MoreInfo.Cursor = Cursors.Hand;
             c.Children.Add(MoreInfo);
-            
+
             c.Height = baseLoc + 230;
         }
 
