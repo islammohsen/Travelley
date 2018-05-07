@@ -127,7 +127,7 @@ namespace Travelley
 
         public void UpdateCurrentCanvas(Canvas NewCanvas, string Header, ScrollViewer NewScrollViewer = null, bool dynamic = false)
         {
-
+            SelectedPath = "";
             CurrentCanvas.Visibility = Visibility.Hidden;
             CurrentScrollViewer.Visibility = Visibility.Hidden;
             if (NewScrollViewer != null)
@@ -167,7 +167,7 @@ namespace Travelley
             {
                 ShowListOfTickets(LastTransactions);
             }
-            if(CurrentCanvas == TourGuides_Canvas)
+            if (CurrentCanvas == TourGuides_Canvas)
             {
                 ShowListOfTourGuides(LastTourGuides);
             }
@@ -251,7 +251,7 @@ namespace Travelley
             AddTrip_Button.Foreground = new SolidColorBrush(Colors.White);
             AddTrip_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
             AddTrip_Button.Width = 238;
-            AddTrip_Button.Click += Add_Button_Click;
+            AddTrip_Button.Click += Trips_AddTrip_Button_Click;
             Canvas.SetLeft(AddTrip_Button, 771);
             Canvas.SetTop(AddTrip_Button, 10);
             AddTrip_Button.Height = 77;
@@ -266,9 +266,8 @@ namespace Travelley
 
             return;
         }
-
-        //todo edit function name
-        private void Add_Button_Click(object sender, RoutedEventArgs e)
+        
+        private void Trips_AddTrip_Button_Click(object sender, RoutedEventArgs e)
         {
             AddTrip_StTimePicker.SelectedDate = DateTime.Today;
             AddTrip_EnTimePicker.SelectedDate = DateTime.Today;
@@ -313,15 +312,15 @@ namespace Travelley
             UpdateCurrentCanvas(TicketsTypes_Canvas, "Tickets Types", TicketsTypes_ScrollViewr, true);
 
             Button TicketsTypes_Add_Button = new Button();
-            TicketsTypes_Add_Button.Content = "Add Ticket";
+            TicketsTypes_Add_Button.Content = "Add Ticket \n      Type";
             TicketsTypes_Add_Button.Foreground = new SolidColorBrush(Colors.White);
             TicketsTypes_Add_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
-            Canvas.SetLeft(TicketsTypes_Add_Button, 713);
+            Canvas.SetLeft(TicketsTypes_Add_Button, 820);
             Canvas.SetTop(TicketsTypes_Add_Button, 12);
-            TicketsTypes_Add_Button.Height = 77;
+            TicketsTypes_Add_Button.Height = 100;
             TicketsTypes_Add_Button.FontSize = 36;
             TicketsTypes_Add_Button.FontWeight = FontWeights.Bold;
-            TicketsTypes_Add_Button.Width = 300;
+            TicketsTypes_Add_Button.Width = 200;
             TicketsTypes_Add_Button.Click += TicketsTypes_Add_Button_Click;
             CurrentCanvas.Children.Add(TicketsTypes_Add_Button);
 
@@ -346,8 +345,6 @@ namespace Travelley
             EditTrip_EnTimePicker.Text = TripFullData_EndDate.Content.ToString();
             EditTrip_StTimePicker.Text = TripFullData_StartDate.Content.ToString();
 
-            //todo fih moshkla lw ana m4 3aiz a8ir l tourguide
-            // EditTrip_TourCombo.Text = TripFullData_TourGuideName.Content.ToString();
             EditTrip_Discount_ErrorLabel.Content = "";
             EditTrip_TourGuide_ErrorLabel.Content = "";
             EditTrip_TripDep_ErrorLabel.Content = "";
@@ -360,7 +357,7 @@ namespace Travelley
         }
 
         //todo edit function name
-        private void SaveBut_Click(object sender, RoutedEventArgs e)
+        private void AddTrip_Save_Button_Click(object sender, RoutedEventArgs e)
         {
             //todo more error validations
             bool errorfound = false;
@@ -389,14 +386,14 @@ namespace Travelley
                 AddTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
                 errorfound = true;
             }
-            if (AddTrip_StTimePicker.SelectedDate < DateTime.Today)
+            if (AddTrip_StTimePicker.SelectedDate <= DateTime.Today)
             {
-                AddTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
+                AddTrip_TripStTime_ErrorLabel.Content = "Trip can't start today or before!";
                 errorfound = true;
             }
-            if (AddTrip_EnTimePicker.SelectedDate < DateTime.Today)
+            if (AddTrip_EnTimePicker.SelectedDate <= DateTime.Today)
             {
-                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
+                AddTrip_TripEnTime_ErrorLabel.Content = "Trip can't end today or before!";
                 errorfound = true;
             }
             if (AddTrip_EnTimePicker.SelectedDate < AddTrip_StTimePicker.SelectedDate)
@@ -422,12 +419,19 @@ namespace Travelley
                 AddTrip_TripDestTextbox.Text, double.Parse(AddTrip_TripDiscTextbox.Text), AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value);
             T.TripImage = new CustomImage(SelectedPath);
             DataBase.InsertTrip(T);
+            AddTrip_Clear_Canvas();
             ShowTicketsTypes(T);
-            //TODO Insert Trip in data base
-            //TODO Clear all textboxes after saving
         }
 
-        private void BrowseButton_Click(object sender, RoutedEventArgs e)
+        private void AddTrip_Clear_Canvas()
+        {
+            AddTrip_TripIDTextbox.Clear();
+            AddTrip_TripDeptTextbox.Clear();
+            AddTrip_TripDestTextbox.Clear();
+            AddTrip_TripDiscTextbox.Clear();
+        }
+
+        private void Trip_BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
@@ -479,24 +483,19 @@ namespace Travelley
                 EditTrip_Discount_ErrorLabel.Content = "This field can't be empty!";
                 errorfound = true;
             }
-            if (EditTrip_StTimePicker.SelectedDate < DateTime.Today)
+            if (EditTrip_StTimePicker.SelectedDate <= DateTime.Today)
             {
-                EditTrip_TripStTime_ErrorLabel.Content = "Trip can't start before today!";
+                EditTrip_TripStTime_ErrorLabel.Content = "Trip can't start today or before!";
                 errorfound = true;
             }
-            if (EditTrip_EnTimePicker.SelectedDate < DateTime.Today)
+            if (EditTrip_EnTimePicker.SelectedDate <= DateTime.Today)
             {
-                EditTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before today!";
+                EditTrip_TripEnTime_ErrorLabel.Content = "Trip can't end today or before!";
                 errorfound = true;
             }
             if (EditTrip_EnTimePicker.SelectedDate < EditTrip_StTimePicker.SelectedDate)
             {
                 EditTrip_TripEnTime_ErrorLabel.Content = "Trip can't end before start time!";
-                errorfound = true;
-            }
-            if (SelectedPath == "")
-            {
-                EditTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
                 errorfound = true;
             }
             if (EditTrip_EnTimePicker.Text == "")
@@ -519,9 +518,13 @@ namespace Travelley
                 return;
             }
 
+            CustomImage TripImage = ActiveTrip.TripImage;
+            if (SelectedPath != "")
+                TripImage = new CustomImage(SelectedPath);
+
             DataBase.UpdateTrip(ActiveTrip, EditTrip_TripIDTextbox.Text, ((TourGuide)EditTrip_TourCombo.SelectedItem).Id, EditTrip_TripDeptTextbox.Text,
                 EditTrip_TripDestTextbox.Text, double.Parse(EditTrip_TripDiscTextbox.Text), EditTrip_StTimePicker.SelectedDate.Value.Date, EditTrip_EnTimePicker.SelectedDate.Value.Date,
-                new CustomImage(SelectedPath));
+                TripImage);
 
             EditTrip_Discount_ErrorLabel.Content = "";
             EditTrip_TourGuide_ErrorLabel.Content = "";
@@ -731,7 +734,7 @@ namespace Travelley
             }
         }
 
-        private void ReserveTicket()
+        private void ShowReserveTicket()
         {
             UpdateCurrentCanvas(ReserveTicket_Canvas, "Reserve Ticket");
 
@@ -834,7 +837,7 @@ namespace Travelley
             DataBase.InsertCustomer(NewCustomer);
             ActiveCustomer = NewCustomer;
 
-            ReserveTicket();
+            ShowReserveTicket();
         }
 
         private void CustomerFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
@@ -954,13 +957,11 @@ namespace Travelley
                 return;
             }
             ActiveCustomer = SelectedCustomer;
-            ReserveTicket();
-            //TODO show Reserve Ticket Panel   
+            ShowReserveTicket();
         }
 
         private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)
         {
-            //TODO View Add Customer Canvas
             ShowAddCustomerCanvas();
         }
 
@@ -1068,73 +1069,68 @@ namespace Travelley
             string name = t.Name, nationality = t.Nationality, phone_number = t.PhoneNumber, language = t.Language, gender = t.Gender, email = t.Email;
 
             bool tourErrorFound = false;
-            // if (DataBase.CheckUniqueTourGuideId(t.Id) == true)
-            //{
-            //  AddTourGuide_Error_ID.Content = "This id is already found!";
-            //tourErrorFound = true;
 
-            //}
-            //else AddTourGuide_Error_ID.Content = "";
-            //todo check unique id
+           
             if (EditTourGuideFullData_Name.Text == "")
             {
                 EditTourGuide_Name_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else
+            {
                 EditTourGuide_Name_ErrorLabel.Content = "";
-
-
+            }
+           
             if (EditTourGuideFullData_Nationality.Text.Trim() == "")
             {
                 EditTourGuide_Nationality_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else
+            {
                 EditTourGuide_Nationality_ErrorLabel.Content = "";
+            }
             if (EditTourGuideFullData_Email.Text.Trim() == "")
             {
                 EditTourGuide_Email_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else
+            {
                 EditTourGuide_Email_ErrorLabel.Content = "";
+            }
             if (EditTourGuideFullData_Language.Text.Trim() == "")
             {
                 EditTourGuide_Language_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else
+            {
                 EditTourGuide_Language_ErrorLabel.Content = "";
+            }
             if (TourGuideGender_ComboBox.Text == "")
             {
                 EditTourGuide_Gender_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else
+            {
                 EditTourGuide_Gender_ErrorLabel.Content = "";
+            }
             if (EditTourGuideFullData_PhoneNumber.Text == "")
             {
                 EditTourGuide_PhoneNumber_ErrorLabel.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
             else
-                EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
-
-            if (SelectedPath == "")
             {
-                EditTourGuide_Photo_ErrorLabel.Content = "This field can't be empty!";
-                tourErrorFound = true;
-
+                EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
             }
-            else EditTourGuide_Photo_ErrorLabel.Content = "";
+
             if (tourErrorFound == true)
                 return;
 
-
-            //TourGuide temp = new TourGuide(AddTourGuideFullData_Id.Text, AddTourGuideFullData_Name.Text, AddTourGuideFullData_Nationality.Text
-            //     , AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text, AddTourGuideFullData_PhoneNumber.Text);
-            // temp.UserImage = new CustomImage(SelectedPath);
+            
             EditTourGuide_Name_ErrorLabel.Content = "";
             EditTourGuide_Email_ErrorLabel.Content = "";
             EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
@@ -1157,8 +1153,11 @@ namespace Travelley
 
             email = EditTourGuideFullData_Email.Text;
 
+            CustomImage TourGuideImage = t.UserImage;
+            if (SelectedPath != "")
+                TourGuideImage = new CustomImage(SelectedPath);
 
-            DataBase.UpdateTourGuide(t, ActiveTourGuide.Id, name, nationality, language, gender, email, phone_number, new CustomImage(SelectedPath));
+            DataBase.UpdateTourGuide(t, ActiveTourGuide.Id, name, nationality, language, gender, email, phone_number, TourGuideImage);
             MessageBox.Show("TourGuide updated");
             ShowListOfTourGuides(DataBase.TourGuides);
         }
@@ -1276,7 +1275,6 @@ namespace Travelley
 
             MessageBox.Show("TourGuide is Succesfully Added");
             ShowListOfTourGuides(DataBase.TourGuides);
-            //todo Image
 
         }
 
@@ -1306,7 +1304,7 @@ namespace Travelley
             EditTourGuideData(ActiveTourGuide);
         }
 
-        private void Browse_Button_Click(object sender, RoutedEventArgs e)
+        private void TourGuide_BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "JPG Files (*.jpg)|*.jpg|All files (*.*)|*.*";
@@ -1315,12 +1313,7 @@ namespace Travelley
             dlg.FileName.ToString();
         }
 
-        //todo function name
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            ShowAddTourGuideCanvas();
-        }
-
+        
         private void TourGuides_AddTourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowAddTourGuideCanvas();
