@@ -15,6 +15,7 @@ namespace Travelley
 {
     public class Trip
     {
+        public static List<Trip> Trips; 
         private string tripId;
         private TourGuide tour;
         private string departure;
@@ -49,13 +50,13 @@ namespace Travelley
 
         public Trip(string TripId, TourGuide Tour, string Depature, string Destination, Double Discount, DateTime Start, DateTime End)
         {
-            this.tripId = TripId;
-            this.tour = Tour;
-            this.departure = Depature;
-            this.destination = Destination;
-            this.discount = Discount;
-            this.start = Start;
-            this.end = End;
+            tripId = TripId;
+            tour = Tour;
+            departure = Depature;
+            destination = Destination;
+            discount = Discount;
+            start = Start;
+            end = End;
             Tickets = new List<Ticket>();
             NumberOfSeats = new Dictionary<string, int>();
             PriceOfSeat = new Dictionary<string, double>();

@@ -53,7 +53,6 @@ namespace Travelley
             Canvas.SetTop(DepartureAndDestination, baseLoc + 1);
             DepartureAndDestination.FontSize = 30;
             DepartureAndDestination.FontWeight = FontWeights.Bold;
-            //DepartureAndDestination.FontFamily =//todo;
             DepartureAndDestination.HorizontalAlignment = HorizontalAlignment.Left;
             DepartureAndDestination.VerticalAlignment = VerticalAlignment.Center;
             DepartureAndDestination.Content = t.Departure + " - " + t.Destination;
@@ -64,7 +63,6 @@ namespace Travelley
             Canvas.SetTop(FromStartToEndDate, baseLoc + 64);
             FromStartToEndDate.FontSize = 30;
             FromStartToEndDate.FontWeight = FontWeights.Bold;
-            //FromStartToEndDate.FontFamily =//todo;
             FromStartToEndDate.HorizontalAlignment = HorizontalAlignment.Left;
             FromStartToEndDate.VerticalAlignment = VerticalAlignment.Center;
             FromStartToEndDate.Content = "From " + t.Start.ToShortDateString() + " to " + t.End.ToShortDateString();
@@ -89,7 +87,6 @@ namespace Travelley
             MoreInfo.Height = 48;
             MoreInfo.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
             MoreInfo.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-            //MoreInfo.FontFamily = //Todo;
             MoreInfo.FontSize = 20;
             MoreInfo.Click += MoreInfo_Click;
             MoreInfo.Cursor = Cursors.Hand;

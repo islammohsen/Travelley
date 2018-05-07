@@ -93,17 +93,17 @@ namespace Travelley
 
         private void Trips_Button_Click(object sender, RoutedEventArgs e)
         {
-            ShowListOfTrips(DataBase.Trips);
+            ShowListOfTrips(Trip.Trips);
         }
 
         private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
         {
-            ShowListOfCustomers(DataBase.Customers);
+            ShowListOfCustomers(Customer.Customers);
         }
 
         private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
-            ShowListOfTourGuides(DataBase.TourGuides);
+            ShowListOfTourGuides(TourGuide.TourGuides);
         }
 
         public void Transactions_Button_Click(object sender, RoutedEventArgs e)
@@ -179,36 +179,36 @@ namespace Travelley
             {
 
                 int today = DateTime.Today.Day;
-                if (DataBase.Trips.Count != 0)
+                if (Trip.Trips.Count != 0)
                 {
-                    int index = today % DataBase.Trips.Count;
-                    TripOfTheDay = DataBase.Trips[index]; //generate trip based on today's date
+                    int index = today % Trip.Trips.Count;
+                    TripOfTheDay = Trip.Trips[index]; //generate trip based on today's date
 
                     if (TripOfTheDay.IsClosed) //trip of the day can't be closed
                     {
                         int i = 0;
-                        index = index + 1 % DataBase.Trips.Count;
+                        index = index + 1 % Trip.Trips.Count;
                         while (true)
                         {
-                            if (i == DataBase.Trips.Count)
+                            if (i == Trip.Trips.Count)
                             {
                                 TripOfTheDay = null;
                                 break;
                             }
-                            if (!DataBase.Trips[index].IsClosed)
+                            if (!Trip.Trips[index].IsClosed)
                             {
-                                TripOfTheDay = DataBase.Trips[index];
+                                TripOfTheDay = Trip.Trips[index];
                                 break;
                             }
                             i++;
-                            index = index + 1 % DataBase.Trips.Count;
+                            index = index + 1 % Trip.Trips.Count;
                         }
                     }
 
                 }
                 else
                     TripOfTheDay = null;
-                if (DataBase.TourGuides.Count != 0)
+                if (TourGuide.TourGuides.Count != 0)
                     TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
                 else
                     TourGuideOfTheMonth = null;
@@ -355,8 +355,7 @@ namespace Travelley
             EditTrip_TripStTime_ErrorLabel.Content = "";
 
         }
-
-        //todo edit function name
+        
         private void AddTrip_Save_Button_Click(object sender, RoutedEventArgs e)
         {
             //todo more error validations
@@ -535,7 +534,7 @@ namespace Travelley
             EditTrip_TripPhoto_ErrorLabel.Content = "";
             EditTrip_TripStTime_ErrorLabel.Content = "";
 
-            ShowListOfTrips(DataBase.Trips);
+            ShowListOfTrips(Trip.Trips);
         }
 
         private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
@@ -579,7 +578,7 @@ namespace Travelley
             DateTime end = AddTrip_EnTimePicker.SelectedDate.Value.Date;
             if (start > end)
                 return;
-            foreach (TourGuide T in DataBase.TourGuides)
+            foreach (TourGuide T in TourGuide.TourGuides)
             {
                 if (T.CheckAvailability(start, end))
                     AddTrip_TourCombo.Items.Add(T);
@@ -607,7 +606,7 @@ namespace Travelley
             DateTime end = EditTrip_EnTimePicker.SelectedDate.Value.Date;
             if (start > end)
                 return;
-            foreach (TourGuide T in DataBase.TourGuides)
+            foreach (TourGuide T in TourGuide.TourGuides)
             {
                 if (T.CheckAvailability(start, end))
                     EditTrip_TourCombo.Items.Add(T);
@@ -619,7 +618,7 @@ namespace Travelley
         private void TripFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
         {
             DataBase.DeleteTrip(ActiveTrip);
-            ShowListOfTrips(DataBase.Trips);
+            ShowListOfTrips(Trip.Trips);
         }
 
         private void TripFullData_TicketTypes_Button_Click(object sender, RoutedEventArgs e)
@@ -700,7 +699,7 @@ namespace Travelley
             Ticket obj = ActiveCustomer.ReserveTicket(ActiveTrip, tripType, ticketType, NumberOfSeats);
             DataBase.InsertTransactions(obj.SerialNumber, ActiveCustomer.Id, ActiveTrip.TripId, ticketType, ReserveTicket_TripType_ComboxBox.Text, obj.Price, NumberOfSeats);
             MessageBox.Show("Ticket added");
-            ShowListOfTrips(DataBase.Trips);
+            ShowListOfTrips(Trip.Trips);
         }
 
         private void ReserveTicket_NumberOfSeats_TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -935,7 +934,7 @@ namespace Travelley
             DataBase.UpdateCustomer(ActiveCustomer, ActiveCustomer.Id, name, nationality, language, gender, email, phone_number, new CustomImage(SelectedPath));
 
             MessageBox.Show("Customer Updated");
-            ShowListOfCustomers(DataBase.Customers);
+            ShowListOfCustomers(Customer.Customers);
         }
 
         private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
@@ -1006,7 +1005,7 @@ namespace Travelley
         private void CustomerFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
         {
             DataBase.DeleteCustomer(ActiveCustomer);
-            ShowListOfCustomers(DataBase.Customers);
+            ShowListOfCustomers(Customer.Customers);
         }
 
         private void CustomerFullData_ShowTickets_Button_Click(object sender, RoutedEventArgs e)
@@ -1159,7 +1158,7 @@ namespace Travelley
 
             DataBase.UpdateTourGuide(t, ActiveTourGuide.Id, name, nationality, language, gender, email, phone_number, TourGuideImage);
             MessageBox.Show("TourGuide updated");
-            ShowListOfTourGuides(DataBase.TourGuides);
+            ShowListOfTourGuides(TourGuide.TourGuides);
         }
 
         private void ShowAddTourGuideCanvas()
@@ -1274,7 +1273,7 @@ namespace Travelley
 
 
             MessageBox.Show("TourGuide is Succesfully Added");
-            ShowListOfTourGuides(DataBase.TourGuides);
+            ShowListOfTourGuides(TourGuide.TourGuides);
 
         }
 
@@ -1333,7 +1332,7 @@ namespace Travelley
             }
             DataBase.DeleteTourGuide(ActiveTourGuide);
             ActiveTourGuide = null;
-            ShowListOfTourGuides(DataBase.TourGuides);
+            ShowListOfTourGuides(TourGuide.TourGuides);
         }
 
         #endregion TourGuides
@@ -1343,7 +1342,7 @@ namespace Travelley
         public List<Ticket> GetAllTickets()
         {
             List<Ticket> Tickets = new List<Ticket>();
-            foreach (Trip CurrentTrip in DataBase.Trips)
+            foreach (Trip CurrentTrip in Trip.Trips)
             {
                 foreach (Ticket CurrentTicket in CurrentTrip.Tickets)
                 {
@@ -1360,7 +1359,7 @@ namespace Travelley
             for (int i = 0; i < Tickets.Count; i++)
             {
                 Customer CurrentCustomer = null;
-                foreach (Customer cus in DataBase.Customers)
+                foreach (Customer cus in Customer.Customers)
                 {
                     if (cus.Tickets.Contains(Tickets[i]))
                     {

@@ -11,6 +11,7 @@ namespace Travelley
 {
    public class TourGuide : Person
     {
+        public static List<TourGuide> TourGuides;
         private List<Trip> trips;
 
         internal List<Trip> Trips { get => trips; set => trips = value; }
@@ -59,9 +60,9 @@ namespace Travelley
                 Month = 12;
                 year--;
             }
-            TourGuide ret = DataBase.TourGuides[0];
+            TourGuide ret = TourGuide.TourGuides[0];
 
-            foreach (TourGuide t in DataBase.TourGuides)
+            foreach (TourGuide t in TourGuide.TourGuides)
             {
                 if (t.GetSalary(Month, year) > ret.GetSalary(Month, year))
                     ret = t;

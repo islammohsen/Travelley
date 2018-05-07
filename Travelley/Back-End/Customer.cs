@@ -16,6 +16,7 @@ namespace Travelley
     
     public class Customer : Person
     {
+        public static List<Customer> Customers;
         private List<Ticket> tickets;
         private HashSet<Trip> Mark;
         private bool discount;

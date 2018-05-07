@@ -13,9 +13,6 @@ namespace Travelley
 
     static class DataBase
     {
-        public static List<Customer> Customers;
-        public static List<TourGuide> TourGuides;
-        public static List<Trip> Trips;
         private static SqlConnection Connection;
         private static SqlCommand Command = new SqlCommand();
         private static SqlDataReader Reader;
@@ -61,7 +58,7 @@ namespace Travelley
 
         private static void GetCustomers()
         {
-            Customers = new List<Customer>();
+            Customer.Customers = new List<Customer>();
 
 
             //created a command
@@ -83,7 +80,7 @@ namespace Travelley
                 byte[] CustomerImage = (byte[])Reader["Image"];
                 Customer Obj = new Customer(Id, Name, Nationality, Language, Gender, Email, PhoneNumber);
                 Obj.UserImage = new CustomImage(CustomerImage);
-                Customers.Add(Obj);
+                Customer.Customers.Add(Obj);
             }
             Reader.Close();
             return;
@@ -91,7 +88,7 @@ namespace Travelley
 
         private static void GetTourGuides()
         {
-            TourGuides = new List<TourGuide>();
+            TourGuide.TourGuides = new List<TourGuide>();
 
             //created a command
             Command.CommandText = "SELECT * from TourGuide";
@@ -111,7 +108,7 @@ namespace Travelley
                 byte[] TourGuideImage = (byte[])Reader["Image"];
                 TourGuide Obj = new TourGuide(Id, Name, Nationality, Language, Gender, Email, PhoneNumber);
                 Obj.UserImage = new CustomImage(TourGuideImage);
-                TourGuides.Add(Obj);
+                TourGuide.TourGuides.Add(Obj);
             }
             Reader.Close();
             return;
@@ -119,7 +116,7 @@ namespace Travelley
 
         private static void GetTrips()
         {
-            Trips = new List<Trip>();
+            Trip.Trips = new List<Trip>();
 
             //created a command
             Command.CommandText = "SELECT * FROM Trip";
@@ -143,7 +140,7 @@ namespace Travelley
                     continue;
                 Trip Obj = new Trip(TripId, CurrentTourGuide, Depature, Destination, Discount, Start, End);
                 Obj.TripImage = new CustomImage(TripImage);
-                Trips.Add(Obj);
+                Trip.Trips.Add(Obj);
                 CurrentTourGuide.Trips.Add(Obj);
             }
             Reader.Close();
@@ -166,7 +163,7 @@ namespace Travelley
                 int NumberOfSeats = (int)Reader["NumberOfSeats"];
                 double Price = (double)Reader["Price"];
 
-                foreach (Trip C in Trips)
+                foreach (Trip C in Trip.Trips)
                 {
                     if (C.TripId == TripId)
                     {
@@ -330,7 +327,7 @@ namespace Travelley
             Command.Parameters.AddWithValue("@image", CurrentCustomer.UserImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
-            Customers.Add(CurrentCustomer);
+            Customer.Customers.Add(CurrentCustomer);
             return;
         }
 
@@ -342,7 +339,7 @@ namespace Travelley
             Command.Parameters.AddWithValue("@image", CurrentTourGuide.UserImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
-            TourGuides.Add(CurrentTourGuide);
+            TourGuide.TourGuides.Add(CurrentTourGuide);
             return;
         }
 
@@ -354,7 +351,7 @@ namespace Travelley
             Command.Parameters.AddWithValue("@image", CurrentTrip.TripImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
-            Trips.Add(CurrentTrip);
+            Trip.Trips.Add(CurrentTrip);
             CurrentTrip.Tour.Trips.Add(CurrentTrip);
             return;
         }
@@ -388,14 +385,14 @@ namespace Travelley
             Command.CommandText = $"Delete From Customer where Id = '{CurrnetCustomer.Id}'";
             Command.ExecuteNonQuery();
 
-            Customers.Remove(CurrnetCustomer);
+            Customer.Customers.Remove(CurrnetCustomer);
         }
 
         public static void DeleteTourGuide(TourGuide CurrentTourGuide)
         {
             Command.CommandText = $"Delete From TourGuide where Id = '{CurrentTourGuide.Id}'";
             Command.ExecuteNonQuery();
-            TourGuides.Remove(CurrentTourGuide);
+            TourGuide.TourGuides.Remove(CurrentTourGuide);
         }
 
         public static void DeleteTrip(Trip CurrentTrip)
@@ -414,7 +411,7 @@ namespace Travelley
             Command.CommandText = $"Delete From Trip where TripId = '{CurrentTrip.TripId}'";
             Command.ExecuteNonQuery();
 
-            Trips.Remove(CurrentTrip);
+            Trip.Trips.Remove(CurrentTrip);
             CurrentTrip.Tour.Trips.Remove(CurrentTrip);
         }
 
@@ -441,7 +438,7 @@ namespace Travelley
         //select with id
         public static Customer SelectCustomer(string Id)
         {
-            foreach (Customer C in Customers)
+            foreach (Customer C in Customer.Customers)
             {
                 if (C.Id == Id)
                 {
@@ -453,7 +450,7 @@ namespace Travelley
 
         public static Trip SelectTrip(string Id)
         {
-            foreach (Trip C in Trips)
+            foreach (Trip C in Trip.Trips)
             {
                 if (C.TripId == Id)
                 {
@@ -465,7 +462,7 @@ namespace Travelley
 
         public static TourGuide SelectTourGuide(string Id)
         {
-            foreach (TourGuide C in TourGuides)
+            foreach (TourGuide C in TourGuide.TourGuides)
             {
                 if (C.Id == Id)
                 {
@@ -478,7 +475,7 @@ namespace Travelley
         //Return True if the given Id is unique
         public static bool CheckUniqueCustomerId(string Id)
         {
-            foreach (Customer C in Customers)
+            foreach (Customer C in Customer.Customers)
             {
                 if (C.Id == Id)
                     return false;
@@ -489,7 +486,7 @@ namespace Travelley
         public static bool CheckUniqueTourGuideId(string Id)
         {
 
-            foreach (TourGuide T in TourGuides)
+            foreach (TourGuide T in TourGuide.TourGuides)
             {
                 if (T.Id == Id)
                     return false;
@@ -500,7 +497,7 @@ namespace Travelley
 
         public static bool CheckUniqueTripId(string Id)
         {
-            foreach (Trip T in Trips)
+            foreach (Trip T in Trip.Trips)
             {
                 if (T.TripId == Id)
                     return false;
@@ -511,7 +508,7 @@ namespace Travelley
         public static int GetNumberOfAvailableTourGuides()
         {
             int ret = 0;
-            foreach(TourGuide T in TourGuides)
+            foreach(TourGuide T in TourGuide.TourGuides)
             {
                 if (T.CheckAvailability(DateTime.Today, DateTime.Today))
                     ret++;
