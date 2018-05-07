@@ -40,6 +40,7 @@ namespace Travelley.FrontEnd
             CustomerImage = CurrentCustomer.UserImage.GetImage();
             CustomerImage.MaxHeight = 180;
             CustomerImage.MaxWidth = 300;
+            CustomerImage.Loaded += CustomerImage_Loaded;
             Canvas.SetLeft(CustomerImage, 140);
             Canvas.SetTop(CustomerImage, BaseLoc + 20);
             CurrentCanvas.Children.Add(CustomerImage);
@@ -52,7 +53,6 @@ namespace Travelley.FrontEnd
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            Canvas.SetLeft(CustomerName, 450);
             Canvas.SetTop(CustomerName, BaseLoc + 20);
             CurrentCanvas.Children.Add(CustomerName);
 
@@ -64,7 +64,6 @@ namespace Travelley.FrontEnd
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            Canvas.SetLeft(CustomerEmail, 450);
             Canvas.SetTop(CustomerEmail, BaseLoc + 50);
             CurrentCanvas.Children.Add(CustomerEmail);
 
@@ -76,7 +75,7 @@ namespace Travelley.FrontEnd
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            Canvas.SetLeft(Discount, 450);
+            
             Canvas.SetTop(Discount, BaseLoc + 80);
             CurrentCanvas.Children.Add(Discount);
 
@@ -101,6 +100,13 @@ namespace Travelley.FrontEnd
         private void View_More_Click(object sender, RoutedEventArgs e)
         {
             CurrentWindow.ShowCustomerFullData(CurrentCustomer);
+        }
+
+        private void CustomerImage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Canvas.SetLeft(CustomerName, 160 + CustomerImage.ActualWidth);
+            Canvas.SetLeft(CustomerEmail, 160 + CustomerImage.ActualWidth);
+            Canvas.SetLeft(Discount, 160 + CustomerImage.ActualWidth);
         }
     }
 }

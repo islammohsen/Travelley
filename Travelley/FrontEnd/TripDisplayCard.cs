@@ -37,12 +37,13 @@ namespace Travelley
 
             TripImage = new Image
             {
-                Width = 178,
-                Height = 188,
+                MaxWidth = 300,
+                MaxHeight = 180,
                 Source = t.TripImage.GetImage().Source
             };
-            Canvas.SetLeft(TripImage, 154);
-            Canvas.SetTop(TripImage, baseLoc + 1);
+            TripImage.Loaded += TripImage_Loaded;
+            Canvas.SetLeft(TripImage, 140);
+            Canvas.SetTop(TripImage, baseLoc + 15);
             c.Children.Add(TripImage);
 
             DepartureAndDestination = new Label
@@ -53,8 +54,7 @@ namespace Travelley
                 VerticalAlignment = VerticalAlignment.Center,
                 Content = t.Departure + " - " + t.Destination
             };
-            Canvas.SetLeft(DepartureAndDestination, 343);
-            Canvas.SetTop(DepartureAndDestination, baseLoc + 1);
+            Canvas.SetTop(DepartureAndDestination, baseLoc + 10);
             c.Children.Add(DepartureAndDestination);
 
             FromStartToEndDate = new Label
@@ -65,8 +65,7 @@ namespace Travelley
                 VerticalAlignment = VerticalAlignment.Center,
                 Content = "From " + t.Start.ToShortDateString() + " to " + t.End.ToShortDateString()
             };
-            Canvas.SetLeft(FromStartToEndDate, 343);
-            Canvas.SetTop(FromStartToEndDate, baseLoc + 64);
+            Canvas.SetTop(FromStartToEndDate, baseLoc + 74);
             c.Children.Add(FromStartToEndDate);
 
 
@@ -88,8 +87,7 @@ namespace Travelley
                     Content = "Status: opened"
                 };
             }
-            Canvas.SetLeft(Status_Label, 343);
-            Canvas.SetTop(Status_Label, baseLoc + 120);
+            Canvas.SetTop(Status_Label, baseLoc + 130);
             c.Children.Add(Status_Label);
 
             MoreInfo = new Button
@@ -116,5 +114,11 @@ namespace Travelley
             window.ShowTripFullData(FullTripData);
         }
 
+        private void TripImage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Canvas.SetLeft(DepartureAndDestination, 170 + TripImage.ActualWidth);
+            Canvas.SetLeft(FromStartToEndDate, 170 + TripImage.ActualWidth);
+            Canvas.SetLeft(Status_Label, 170 + TripImage.ActualWidth);
+        }
     }
 }

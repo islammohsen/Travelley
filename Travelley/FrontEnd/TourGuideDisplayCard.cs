@@ -41,6 +41,7 @@ namespace Travelley.FrontEnd
             TourGuideImage = CurrentTourGuide.UserImage.GetImage();
             TourGuideImage.MaxHeight = 190;
             TourGuideImage.MaxWidth = 300;
+            TourGuideImage.Loaded += TourGuideImage_Loaded;
             Canvas.SetLeft(TourGuideImage, 140);
             Canvas.SetTop(TourGuideImage, BaseLoc + 20);
             CurrentCanvas.Children.Add(TourGuideImage);
@@ -53,7 +54,6 @@ namespace Travelley.FrontEnd
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            Canvas.SetLeft(TourGuideName, 450);
             Canvas.SetTop(TourGuideName, BaseLoc + 20);
             CurrentCanvas.Children.Add(TourGuideName);
 
@@ -65,7 +65,6 @@ namespace Travelley.FrontEnd
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            Canvas.SetLeft(TourGuideEmail, 450);
             Canvas.SetTop(TourGuideEmail, BaseLoc + 50);
             CurrentCanvas.Children.Add(TourGuideEmail);
 
@@ -78,7 +77,6 @@ namespace Travelley.FrontEnd
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            Canvas.SetLeft(TourGuideSalary, 450);
             Canvas.SetTop(TourGuideSalary, BaseLoc + 80);
             CurrentCanvas.Children.Add(TourGuideSalary);
 
@@ -93,9 +91,9 @@ namespace Travelley.FrontEnd
                 Cursor = Cursors.Hand
             };
             View_More.Click += View_More_Click;
-            Canvas.SetLeft(this.View_More, 750);
-            Canvas.SetTop(this.View_More, BaseLoc + 150);
-            CurrentCanvas.Children.Add(this.View_More);
+            Canvas.SetLeft(View_More, 750);
+            Canvas.SetTop(View_More, BaseLoc + 150);
+            CurrentCanvas.Children.Add(View_More);
 
             CurrentCanvas.Height = BaseLoc + 250;
         }
@@ -103,6 +101,13 @@ namespace Travelley.FrontEnd
         private void View_More_Click(object sender, RoutedEventArgs e)
         {
             CurrentWindow.ShowTourGuideFullData(CurrentTourGuide);
+        }
+
+        private void TourGuideImage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Canvas.SetLeft(TourGuideName, 160 + TourGuideImage.ActualWidth);
+            Canvas.SetLeft(TourGuideEmail, 160 + TourGuideImage.ActualWidth);
+            Canvas.SetLeft(TourGuideSalary, 160 + TourGuideImage.ActualWidth);
         }
     }
 }

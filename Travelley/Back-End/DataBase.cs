@@ -216,81 +216,81 @@ namespace Travelley
             return;
         }
 
-        public static void UpdateCustomer(Customer CurrentCustomer, string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber, CustomImage CustomerImage)
+        public static void UpdateCustomer(Customer CurrentCustomer, Customer NewCustomer)
         {
             //update database
-            Command.CommandText = $"UPDATE Customer set Id = '{Id}', Name = '{Name}', Nationality = '{Nationality}', " +
-                $"Language = '{Language}', Gender = '{Gender}', Email = '{Email}', PhoneNumber = '{PhoneNumber}'," +
+            Command.CommandText = $"UPDATE Customer set Id = '{NewCustomer.Id}', Name = '{NewCustomer.Name}', Nationality = '{NewCustomer.Nationality}', " +
+                $"Language = '{NewCustomer.Language}', Gender = '{NewCustomer.Gender}', Email = '{NewCustomer.Email}', PhoneNumber = '{NewCustomer.PhoneNumber}'," +
                 $"Image = @image where Id = '{CurrentCustomer.Id}'";
-            Command.Parameters.AddWithValue("@image", CustomerImage.GetByteImage());
+            Command.Parameters.AddWithValue("@image", NewCustomer.UserImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
 
             //update object
-            CurrentCustomer.Id = Id;
-            CurrentCustomer.Name = Name;
-            CurrentCustomer.Nationality = Nationality;
-            CurrentCustomer.Language = Language;
-            CurrentCustomer.Gender = Gender;
-            CurrentCustomer.Email = Email;
-            CurrentCustomer.PhoneNumber = PhoneNumber;
-            CurrentCustomer.UserImage = CustomerImage;
+            CurrentCustomer.Id = NewCustomer.Id;
+            CurrentCustomer.Name = NewCustomer.Name;
+            CurrentCustomer.Nationality = NewCustomer.Nationality;
+            CurrentCustomer.Language = NewCustomer.Language;
+            CurrentCustomer.Gender = NewCustomer.Gender;
+            CurrentCustomer.Email = NewCustomer.Email;
+            CurrentCustomer.PhoneNumber = NewCustomer.PhoneNumber;
+            CurrentCustomer.UserImage = NewCustomer.UserImage;
         }
 
-        public static void UpdateTourGuide(TourGuide CurrentTourGuide, string Id, string Name, string Nationality, string Language,string Gender, string Email, string PhoneNumber, CustomImage TourGuideImage)
+        public static void UpdateTourGuide(TourGuide CurrentTourGuide, TourGuide NewTourGuide)
         {
             //update databae
-            Command.CommandText = $"UPDATE TourGuide set Id = '{Id}', Name = '{Name}', Nationality = '{Nationality}', " +
-                $"Language = '{Language}', Gender = '{Gender}', Email = '{Email}', PhoneNumber = '{PhoneNumber}', " +
+            Command.CommandText = $"UPDATE TourGuide set Id = '{NewTourGuide.Id}', Name = '{NewTourGuide.Name}', Nationality = '{NewTourGuide.Nationality}', " +
+                $"Language = '{NewTourGuide.Language}', Gender = '{NewTourGuide.Gender}', Email = '{NewTourGuide.Email}', PhoneNumber = '{NewTourGuide.PhoneNumber}', " +
                 $"Image = @image where Id = '{CurrentTourGuide.Id}'";
-            Command.Parameters.AddWithValue("@image", TourGuideImage.GetByteImage());
+            Command.Parameters.AddWithValue("@image", NewTourGuide.UserImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
 
             //update object
-            CurrentTourGuide.Id = Id;
-            CurrentTourGuide.Name = Name;
-            CurrentTourGuide.Nationality = Nationality;
-            CurrentTourGuide.Gender = Gender;
-            CurrentTourGuide.Email = Email;
-            CurrentTourGuide.PhoneNumber = PhoneNumber;
-            CurrentTourGuide.UserImage = TourGuideImage;
+            CurrentTourGuide.Id = NewTourGuide.Id;
+            CurrentTourGuide.Name = NewTourGuide.Name;
+            CurrentTourGuide.Nationality = NewTourGuide.Nationality;
+            CurrentTourGuide.Language = NewTourGuide.Language;
+            CurrentTourGuide.Gender = NewTourGuide.Gender;
+            CurrentTourGuide.Email = NewTourGuide.Email;
+            CurrentTourGuide.PhoneNumber = NewTourGuide.PhoneNumber;
+            CurrentTourGuide.UserImage = NewTourGuide.UserImage;
         }
 
-        public static void UpdateTrip(Trip CurrentTrip, string TripId, string TourGuideId, string Depature, string Destination, double Discount, DateTime Start, DateTime End, CustomImage TripImage, bool IsClosed)
+        public static void UpdateTrip(Trip CurrentTrip, Trip NewTrip)
         {
             //update database
             //update Trip table
-           Command.CommandText = $"UPDATE Trip set TripId = '{TripId}', TourGuideId = '{TourGuideId}', Depature = '{Depature}', " +
-                $"Destination = '{Destination}', Discount = {Discount} , TripEndDate = '{End.ToString()}' , " +
-                $" TripStartDate = '{Start.ToString()}' , Image = @image, IsClosed = '{IsClosed}' where TripId = '{CurrentTrip.TripId}'";
-            Command.Parameters.AddWithValue("@image", TripImage.GetByteImage());
+           Command.CommandText = $"UPDATE Trip set TripId = '{NewTrip.TripId}', TourGuideId = '{NewTrip.Tour.Id}', Depature = '{NewTrip.Departure}', " +
+                $"Destination = '{NewTrip.Destination}', Discount = {NewTrip.Discount} , TripEndDate = '{NewTrip.End.ToString()}' , " +
+                $" TripStartDate = '{NewTrip.Start.ToString()}' , Image = @image, IsClosed = '{NewTrip.IsClosed}' where TripId = '{CurrentTrip.TripId}'";
+            Command.Parameters.AddWithValue("@image", NewTrip.TripImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
 
             //update TripsTickets Table
-            Command.CommandText = $"UPDATE TripsTickets set TripId = '{TripId}' where TripId = '{CurrentTrip.TripId}'";
+            Command.CommandText = $"UPDATE TripsTickets set TripId = '{NewTrip.TripId}' where TripId = '{CurrentTrip.TripId}'";
             Command.ExecuteNonQuery();
 
             //update Transactions Table
-            Command.CommandText = $"UPDATE Transactions set TripId = '{TripId}' where TripId = '{CurrentTrip.TripId}'";
+            Command.CommandText = $"UPDATE Transactions set TripId = '{NewTrip.TripId}' where TripId = '{CurrentTrip.TripId}'";
             Command.ExecuteNonQuery();
 
             //update objects
-            CurrentTrip.TripId = TripId;
+            CurrentTrip.TripId = NewTrip.TripId;
 
             //remove the trip from the previous TourGuide and add it to the new selected tourguide 
             CurrentTrip.Tour.Trips.Remove(CurrentTrip);
-            TourGuide NewTour = SelectTourGuide(TourGuideId);
-            CurrentTrip.Tour = NewTour;
-            NewTour.Trips.Add(CurrentTrip);
+            CurrentTrip.Tour = NewTrip.Tour;
+            CurrentTrip.Tour.Trips.Add(CurrentTrip);
             
-            CurrentTrip.Departure = Depature;
-            CurrentTrip.Destination = Destination;
-            CurrentTrip.Discount = Discount;
-            CurrentTrip.Start = Start;
-            CurrentTrip.End = End;
-            CurrentTrip.TripImage = TripImage;
+            CurrentTrip.Departure = NewTrip.Departure;
+            CurrentTrip.Destination = NewTrip.Destination;
+            CurrentTrip.Discount = NewTrip.Discount;
+            CurrentTrip.Start = NewTrip.Start;
+            CurrentTrip.End = NewTrip.End;
+            CurrentTrip.TripImage = NewTrip.TripImage;
         }
 
         public static void UpdateTripsTickets(Trip CurrentTrip, string PrevType, string NewType, int NumberOfSeats, double Price)

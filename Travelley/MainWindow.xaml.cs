@@ -29,12 +29,6 @@ namespace Travelley
 
         #region window
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-
-        }
-
         public MainWindow()
         {
 
@@ -177,7 +171,7 @@ namespace Travelley
                     if (TripOfTheDay.IsClosed) //trip of the day can't be closed
                     {
                         int i = 0;
-                        index = index + 1 % Trip.Trips.Count;
+                        index = (index + 1) % Trip.Trips.Count;
                         while (true)
                         {
                             if (i == Trip.Trips.Count)
@@ -518,9 +512,9 @@ namespace Travelley
             if (SelectedPath != "")
                 TripImage = new CustomImage(SelectedPath);
 
-            DataBase.UpdateTrip(ActiveTrip, EditTrip_TripIDTextbox.Text, ((TourGuide)EditTrip_TourCombo.SelectedItem).Id, EditTrip_TripDeptTextbox.Text,
+            DataBase.UpdateTrip(ActiveTrip, new Trip(EditTrip_TripIDTextbox.Text, (TourGuide)EditTrip_TourCombo.SelectedItem, EditTrip_TripDeptTextbox.Text,
                 EditTrip_TripDestTextbox.Text, double.Parse(EditTrip_TripDiscTextbox.Text), EditTrip_StTimePicker.SelectedDate.Value.Date, EditTrip_EnTimePicker.SelectedDate.Value.Date,
-                TripImage, ActiveTrip.IsClosed);
+                TripImage, ActiveTrip.IsClosed));
 
             EditTrip_Discount_ErrorLabel.Content = "";
             EditTrip_TourGuide_ErrorLabel.Content = "";
@@ -769,8 +763,7 @@ namespace Travelley
         private void TripFullData_TripStatusOpen_Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ActiveTrip.IsClosed = true;
-            DataBase.UpdateTrip(ActiveTrip, ActiveTrip.TripId, ActiveTrip.Tour.Id, ActiveTrip.Departure,
-                ActiveTrip.Destination, ActiveTrip.Discount, ActiveTrip.Start, ActiveTrip.End, ActiveTrip.TripImage, true);
+            DataBase.UpdateTrip(ActiveTrip, new Trip(ActiveTrip.TripId, ActiveTrip.Tour, ActiveTrip.Departure, ActiveTrip.Destination, ActiveTrip.Discount, ActiveTrip.Start, ActiveTrip.End, ActiveTrip.TripImage, true));
             TripFullData_TripStatusOpen_Label.Visibility = Visibility.Hidden;
             TripFullData_TripStatusClose_Label.Visibility = Visibility.Visible;
         }
@@ -780,8 +773,8 @@ namespace Travelley
             if (ActiveTrip.Start > DateTime.Today)
             {
                 ActiveTrip.IsClosed = false;
-                DataBase.UpdateTrip(ActiveTrip, ActiveTrip.TripId, ActiveTrip.Tour.Id, ActiveTrip.Departure,
-                ActiveTrip.Destination, ActiveTrip.Discount, ActiveTrip.Start, ActiveTrip.End, ActiveTrip.TripImage, false);
+                DataBase.UpdateTrip(ActiveTrip, new Trip(ActiveTrip.TripId, ActiveTrip.Tour, ActiveTrip.Departure, ActiveTrip.Destination,
+                    ActiveTrip.Discount, ActiveTrip.Start, ActiveTrip.End, ActiveTrip.TripImage, false));
                 TripFullData_TripStatusClose_Label.Visibility = Visibility.Hidden;
                 TripFullData_TripStatusOpen_Label.Visibility = Visibility.Visible;
             }
@@ -917,12 +910,6 @@ namespace Travelley
                 tourErrorFound = true;
             }
             else EditCustomer_Gender_ErrorLabel.Content = "";
-            if (SelectedPath == "")
-            {
-                EditCustomer_Photo_ErrorLabel.Content = "You must choose photo!";
-                tourErrorFound = true;
-            }
-            else EditCustomer_Photo_ErrorLabel.Content = "";
 
 
             if (tourErrorFound == true)
@@ -947,7 +934,11 @@ namespace Travelley
             Gender_ComboBox.Text = "";
             EditCustomerFullData_Email.Text = "";
 
-            DataBase.UpdateCustomer(ActiveCustomer, ActiveCustomer.Id, name, nationality, language, gender, email, phone_number, new CustomImage(SelectedPath));
+            CustomImage UserImage = ActiveCustomer.UserImage;
+            if (SelectedPath != "")
+                UserImage = new CustomImage(SelectedPath);
+
+            DataBase.UpdateCustomer(ActiveCustomer, new Customer(ActiveCustomer.Id, name, nationality, language, gender, email, phone_number, UserImage));
 
             MessageBox.Show("Customer Updated");
             ShowListOfCustomers(Customer.Customers);
@@ -1178,7 +1169,7 @@ namespace Travelley
             if (SelectedPath != "")
                 TourGuideImage = new CustomImage(SelectedPath);
 
-            DataBase.UpdateTourGuide(t, ActiveTourGuide.Id, name, nationality, language, gender, email, phone_number, TourGuideImage);
+            DataBase.UpdateTourGuide(t, new TourGuide(ActiveTourGuide.Id, name, nationality, language, gender, email, phone_number, TourGuideImage));
             MessageBox.Show("TourGuide updated");
             ShowListOfTourGuides(TourGuide.TourGuides);
         }
@@ -1399,9 +1390,8 @@ namespace Travelley
 
 
 
-        #endregion Transactions
 
-        
+        #endregion Transactions
     }
 }
 

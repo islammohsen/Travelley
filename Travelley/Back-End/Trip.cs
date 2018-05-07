@@ -88,7 +88,7 @@ namespace Travelley
         {
             if(IsClosed == false && start <= DateTime.Today)
             {
-                DataBase.UpdateTrip(this, tripId, tour.Id, departure, destination, discount, start, end, TripImage, true);
+                DataBase.UpdateTrip(this, new Trip(tripId, tour, departure, destination, discount, start, end, TripImage, true));
             }
         }
 

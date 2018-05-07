@@ -105,13 +105,13 @@
             <Button x:Name="TripFullData_ReserveTrip_Button" Content="Reserve Trip" Canvas.Left="340" Canvas.Top="607" Width="225" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_ReserveTrip_Button_Click" />
             <Button x:Name="TripFullData_TicketTypes_Button" Content="Ticket Types" Canvas.Left="81" Canvas.Top="607" Width="225" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_TicketTypes_Button_Click" />
             <Label x:Name="TripFullData_Avaialbleseats_Label" Content="Available seats:" FontSize="36" Canvas.Left="531" Canvas.Top="415" FontFamily="Roboto" FontWeight="Bold"/>
-            <Label x:Name="TripFullData_TripStatusOpen_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden" MouseDoubleClick="TripFullData_TripStatusOpen_Label_MouseDoubleClick">
+            <Label x:Name="TripFullData_TripStatusOpen_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden" Cursor="Hand" MouseDoubleClick="TripFullData_TripStatusOpen_Label_MouseDoubleClick">
                 <TextBlock>
                     <Run Text="status: " Foreground="Black"/>
                     <Run Text="open" Foreground="Green"/>
                 </TextBlock>
             </Label>
-            <Label x:Name="TripFullData_TripStatusClose_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden" MouseDoubleClick="TripFullData_TripStatusClose_Label_MouseDoubleClick">
+            <Label x:Name="TripFullData_TripStatusClose_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden" Cursor="Hand" MouseDoubleClick="TripFullData_TripStatusClose_Label_MouseDoubleClick">
                 <TextBlock>
                     <Run Text="status: " Foreground="Black"/>
                     <Run Text="closed" Foreground="Red"/>
