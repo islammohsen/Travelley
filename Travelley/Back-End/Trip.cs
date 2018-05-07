@@ -7,9 +7,9 @@ using Travelley.Back_End;
 //add trip status (closed or opened)
 namespace Travelley
 {
-    public class Trip
+    public class Trip : IComparable<Trip>
     {
-        public static List<Trip> Trips; 
+        public static List<Trip> Trips;
         private string tripId;
         private TourGuide tour;
         private string departure;
@@ -64,7 +64,7 @@ namespace Travelley
             return;
         }
 
-        public Ticket ReserveTicket(TripType tripType,  string TicketType, int NumberOfOrderedSeats, int CustomerDiscount)
+        public Ticket ReserveTicket(TripType tripType, string TicketType, int NumberOfOrderedSeats, int CustomerDiscount)
         {
             string serial = Guid.NewGuid().ToString();
 
@@ -77,7 +77,7 @@ namespace Travelley
         public int GetNumberOfAvailableSeats()
         {
             int ret = 0;
-            foreach(KeyValuePair<string, int> C in NumberOfSeats)
+            foreach (KeyValuePair<string, int> C in NumberOfSeats)
             {
                 ret += C.Value;
             }
@@ -86,11 +86,73 @@ namespace Travelley
 
         public void UpdateTripsStatus()
         {
-            if(IsClosed == false && start <= DateTime.Today)
+            if (IsClosed == false && start <= DateTime.Today)
             {
                 DataBase.UpdateTrip(this, new Trip(tripId, tour, departure, destination, discount, start, end, TripImage, true));
             }
         }
 
+        public static int GetNumberOfOpenTrips()
+        {
+            int ret = 0;
+            foreach (Trip T in Trips)
+            {
+                if (!T.isClosed)
+                    ret++;
+            }
+            return ret;
+        }
+
+        public static Trip operator <(Trip obj1, Trip obj2)
+        {
+            if (!obj1.isClosed && obj2.isClosed)
+            {
+                return obj1;
+            }
+            else if (obj1.isClosed && !obj2.isClosed)
+            {
+                return obj2;
+            }
+            else
+            {
+                if (obj1.tripId.CompareTo(obj2) < 0)
+                    return obj1;
+                else
+                    return obj2;
+            }
+        }
+        public static Trip operator >(Trip obj1, Trip obj2)
+        {
+            if (!obj1.isClosed && obj2.isClosed)
+            {
+                return obj2;
+            }
+            else if (obj1.isClosed && !obj2.isClosed)
+            {
+                return obj1;
+            }
+            else
+            {
+                if (obj1.tripId.CompareTo(obj2) < 0)
+                    return obj2;
+                else
+                    return obj1;
+            }
+        }
+
+        public int CompareTo(Trip obj)
+        {
+            if (obj == null)
+                return 1;
+            if (!isClosed && (obj).isClosed)
+            {
+                return -1;
+            }
+            else if (isClosed && !(obj).isClosed)
+            {
+                return 1;
+            }
+            return tripId.CompareTo((obj).TripId);
+        }
     }
 }

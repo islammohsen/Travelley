@@ -11,6 +11,7 @@ namespace Travelley.FrontEnd
         Rectangle BackGround;
         Label CustomerName;
         Label CustomerEmail;
+        Label NumberOfTrips;
         Label Discount;
         Image CustomerImage;
         Button View_More;
@@ -67,6 +68,19 @@ namespace Travelley.FrontEnd
             Canvas.SetTop(CustomerEmail, BaseLoc + 50);
             CurrentCanvas.Children.Add(CustomerEmail);
 
+
+
+            NumberOfTrips = new Label
+            {
+                Content = "Number of trips: " + CurrentCustomer.numberOfTrips,
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            Canvas.SetTop(NumberOfTrips, BaseLoc + 80);
+            CurrentCanvas.Children.Add(NumberOfTrips);
+
             Discount = new Label
             {
                 Content = "Discount: " + CurrentCustomer.Discount,
@@ -75,8 +89,7 @@ namespace Travelley.FrontEnd
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            
-            Canvas.SetTop(Discount, BaseLoc + 80);
+            Canvas.SetTop(Discount, BaseLoc + 110);
             CurrentCanvas.Children.Add(Discount);
 
             View_More = new Button
@@ -106,6 +119,7 @@ namespace Travelley.FrontEnd
         {
             Canvas.SetLeft(CustomerName, 160 + CustomerImage.ActualWidth);
             Canvas.SetLeft(CustomerEmail, 160 + CustomerImage.ActualWidth);
+            Canvas.SetLeft(NumberOfTrips, 160 + CustomerImage.ActualWidth);
             Canvas.SetLeft(Discount, 160 + CustomerImage.ActualWidth);
         }
     }

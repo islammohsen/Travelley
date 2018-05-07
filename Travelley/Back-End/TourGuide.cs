@@ -82,5 +82,11 @@ namespace Travelley
         {
             return Name;
         }
+
+        public override int CompareTo(object obj)
+        {
+            return -1 * GetSalary(DateTime.Today.Month, DateTime.Today.Year).CompareTo(
+                ((TourGuide)obj).GetSalary(DateTime.Today.Month, DateTime.Today.Year));
+        }
     }
 }

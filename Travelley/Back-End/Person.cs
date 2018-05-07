@@ -8,7 +8,7 @@ using Travelley.Back_End;
 
 namespace Travelley
 {
-    public abstract class Person
+    public abstract class Person: IComparable
     {
         private string id;
         private string name;
@@ -27,5 +27,9 @@ namespace Travelley
         public string Language { get => language; set => language = value; }
 
         public CustomImage UserImage;
+        public virtual int CompareTo(object obj)
+        {
+            return id.CompareTo(((Person)obj).id);
+        }
     }
 }

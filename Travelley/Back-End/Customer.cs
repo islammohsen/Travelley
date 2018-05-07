@@ -90,5 +90,10 @@ namespace Travelley
         {
             return Name;
         }
+
+        public int CompareTo(Customer obj)
+        {
+            return -1 * numberOfTrips.CompareTo(obj.numberOfTrips);
+        }
     }
 }

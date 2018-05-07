@@ -161,7 +161,6 @@ namespace Travelley
         {
             if (Main_Canvas.Visibility == Visibility.Visible)
             {
-
                 int today = DateTime.Today.Day;
                 if (Trip.Trips.Count != 0)
                 {
@@ -229,6 +228,7 @@ namespace Travelley
         private void ShowListOfTrips(List<Trip> list)
         {
             UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer, true);
+            Trip.Trips.Sort();
 
             Button AddTrip_Button = new Button
             {
@@ -245,12 +245,21 @@ namespace Travelley
             Canvas.SetTop(AddTrip_Button, 10);
             CurrentCanvas.Children.Add(AddTrip_Button);
 
+            Label Trips_NumberOfOpenTrips_Label = new Label
+            {
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                Content = "Number of open trips: " + Trip.GetNumberOfOpenTrips(),
+            };
+            Canvas.SetLeft(Trips_NumberOfOpenTrips_Label, 111);
+            Canvas.SetTop(Trips_NumberOfOpenTrips_Label, 20);
+            CurrentCanvas.Children.Add(Trips_NumberOfOpenTrips_Label);
+
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].UpdateTripsStatus();
                 TripDisplayCard t = new TripDisplayCard(list[i], i, ref CurrentCanvas, this);
             }
-
             return;
         }
 
@@ -787,6 +796,7 @@ namespace Travelley
         private void ShowListOfCustomers(List<Customer> Customers)
         {
             UpdateCurrentCanvas(Customers_Canvas, "Customers", Customers_ScrollViewer, true);
+            Customer.Customers.Sort();
             for (int i = 0; i < Customers.Count; i++)
                 new CustomerDisplayCard(i, CurrentCanvas, Customers[i], this);
         }
@@ -1030,6 +1040,7 @@ namespace Travelley
         {
             LastTourGuides = TourGuides;
             UpdateCurrentCanvas(TourGuides_Canvas, "Tour Guides", TourGuides_ScrollViewer, true);
+            TourGuide.TourGuides.Sort();
 
             Button TourGuides_AddTourGuide_Button = new Button
             {
@@ -1385,11 +1396,6 @@ namespace Travelley
                 new TicketDisplayCard(i, CurrentCanvas, this, CurrentCustomer, Tickets[i].CurrentTrip, Tickets[i]);
             }
         }
-
-
-
-
-
 
         #endregion Transactions
     }
