@@ -426,7 +426,8 @@
             <Label x:Name="LabelCustomerFullData_Email" Content="Email :" Canvas.Left="256" Canvas.Top="226" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="LabelCustomerFullData_PhoneNumber" Content="Phone number : " Canvas.Left="256" Canvas.Top="290" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
             <Label x:Name="LabelCustomerFullData_Language" Content="Language: " Canvas.Left="10" Canvas.Top="475" FontSize="36" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-
+            <Label x:Name="CustomerFullData_NumberOfTrips_Label" Content="Number Of Trips:" Canvas.Left="468" Canvas.Top="402" FontSize="36" FontWeight="Bold" FontFamily="Roboto"/>
+            <Label x:Name="CustomerFullData_Discount_Label" Content="Discount:" FontSize="36" FontFamily="Roboto" FontWeight="Bold" Canvas.Left="468" Canvas.Top="475"/>
         </Canvas>
         <Canvas x:Name="AddCustomer_Canvas" Height="560" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="114" Canvas.Left="305" Background="#E1DDDF" ForceCursor="True"  Visibility="Hidden">
             <Label Content="Name" FontWeight="Bold" FontFamily="Roboto" Canvas.Left="49" Canvas.Top="67" FontSize="36"/>

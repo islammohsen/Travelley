@@ -42,7 +42,7 @@ namespace Travelley
             PriceOfSeat[Type] = Price;
         }
 
-        public Trip(string TripId, TourGuide Tour, string Depature, string Destination, Double Discount, DateTime Start, DateTime End)
+        public Trip(string TripId, TourGuide Tour, string Depature, string Destination, Double Discount, DateTime Start, DateTime End, CustomImage TripImage)
         {
             tripId = TripId;
             tour = Tour;
@@ -51,6 +51,7 @@ namespace Travelley
             discount = Discount;
             start = Start;
             end = End;
+            this.TripImage = TripImage;
             Tickets = new List<Ticket>();
             NumberOfSeats = new Dictionary<string, int>();
             PriceOfSeat = new Dictionary<string, double>();

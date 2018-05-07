@@ -38,102 +38,119 @@ namespace Travelley.FrontEnd
             double BaseLoc = (index * 340) + 40;
 
             //creating BackGroung
-            BackGround = new Rectangle();
-            BackGround.Width = 800;
-            BackGround.Height = 300;
+            BackGround = new Rectangle
+            {
+                Width = 800,
+                Height = 300,
+                Fill = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                Stroke = new SolidColorBrush(Color.FromRgb(0, 0, 0)),
+                StrokeThickness = 3
+            };
             Canvas.SetLeft(BackGround, 111);
             Canvas.SetTop(BackGround, BaseLoc);
-            BackGround.Fill = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-            BackGround.Stroke = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-            BackGround.StrokeThickness = 3;
             CurrentCanvas.Children.Add(BackGround);
 
-            CustomerName = new Label();
-            CustomerName.Content = "Customer Name: " + CurrentCustomer.Name;
-            CustomerName.FontSize = 25;
-            CustomerName.FontWeight = FontWeights.Bold;
-            CustomerName.HorizontalAlignment = HorizontalAlignment.Left;
-            CustomerName.VerticalAlignment = VerticalAlignment.Center;
+            CustomerName = new Label
+            {
+                Content = "Customer Name: " + CurrentCustomer.Name,
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center,
+                Cursor = Cursors.Hand
+            };
             CustomerName.MouseDoubleClick += CustomerName_DoubleClick;
-            CustomerName.Cursor = Cursors.Hand;
             Canvas.SetLeft(CustomerName, 120);
             Canvas.SetTop(CustomerName, BaseLoc + 10);
             CurrentCanvas.Children.Add(CustomerName);
 
-            TripName = new Label();
-            TripName.Content = "Trip: " + CurrentTrip.Departure + " - " + CurrentTrip.Destination;
-            TripName.FontSize = 25;
-            TripName.FontWeight = FontWeights.Bold;
-            TripName.HorizontalAlignment = HorizontalAlignment.Left;
-            TripName.VerticalAlignment = VerticalAlignment.Center;
+            TripName = new Label
+            {
+                Content = "Trip: " + CurrentTrip.Departure + " - " + CurrentTrip.Destination,
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center,
+                Cursor = Cursors.Hand
+            };
             TripName.MouseDoubleClick += TripName_DoubleClick;
-            TripName.Cursor = Cursors.Hand;
             Canvas.SetLeft(TripName, 120);
             Canvas.SetTop(TripName, BaseLoc + 50);
             CurrentCanvas.Children.Add(TripName);
 
-            TypeOfTicket = new Label();
-            TypeOfTicket.Content = "Ticket Type: " + CurrentTicket.TicketType;
-            TypeOfTicket.FontSize = 25;
-            TypeOfTicket.FontWeight = FontWeights.Bold;
-            TypeOfTicket.HorizontalAlignment = HorizontalAlignment.Left;
-            TypeOfTicket.VerticalAlignment = VerticalAlignment.Center;
+            TypeOfTicket = new Label
+            {
+                Content = "Ticket Type: " + CurrentTicket.TicketType,
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
             Canvas.SetLeft(TypeOfTicket, 120);
             Canvas.SetTop(TypeOfTicket, BaseLoc + 90);
             CurrentCanvas.Children.Add(TypeOfTicket);
 
-            TypeOfTrip = new Label();
-            TypeOfTrip.Content = "Trip Type: " + CurrentTicket.TripType.ToString();
-            TypeOfTrip.FontSize = 25;
-            TypeOfTrip.FontWeight = FontWeights.Bold;
-            TypeOfTrip.HorizontalAlignment = HorizontalAlignment.Left;
-            TypeOfTrip.VerticalAlignment = VerticalAlignment.Center;
+            TypeOfTrip = new Label
+            {
+                Content = "Trip Type: " + CurrentTicket.TripType.ToString(),
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
             Canvas.SetLeft(TypeOfTrip, 120);
             Canvas.SetTop(TypeOfTrip, BaseLoc + 130);
             CurrentCanvas.Children.Add(TypeOfTrip);
 
-            NumberOfSeats = new Label();
-            NumberOfSeats.Content = "Reserved Seats: " + CurrentTicket.NumberOfSeats;
-            NumberOfSeats.FontSize = 25;
-            NumberOfSeats.FontWeight = FontWeights.Bold;
-            NumberOfSeats.HorizontalAlignment = HorizontalAlignment.Left;
-            NumberOfSeats.VerticalAlignment = VerticalAlignment.Center;
+            NumberOfSeats = new Label
+            {
+                Content = "Reserved Seats: " + CurrentTicket.NumberOfSeats,
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
             Canvas.SetLeft(NumberOfSeats, 120);
             Canvas.SetTop(NumberOfSeats, BaseLoc + 170);
             CurrentCanvas.Children.Add(NumberOfSeats);
 
-            Price = new Label();
-            Price.Content = "Price: " + MainWindow.CurrentCurrency.GetValue(CurrentTicket.Price);
-            Price.FontSize = 25;
-            Price.FontWeight = FontWeights.Bold;
-            Price.HorizontalAlignment = HorizontalAlignment.Left;
-            Price.VerticalAlignment = VerticalAlignment.Center;
-            
+            Price = new Label
+            {
+                Content = "Price: " + MainWindow.CurrentCurrency.GetValue(CurrentTicket.Price),
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
             Canvas.SetLeft(Price, 120);
             Canvas.SetTop(Price, BaseLoc + 210);
             CurrentCanvas.Children.Add(Price);
 
-            SerialNumber = new Label();
-            SerialNumber.Content = "SerialNumber: " + CurrentTicket.SerialNumber;
-            SerialNumber.FontSize = 25;
-            SerialNumber.FontWeight = FontWeights.Bold;
-            SerialNumber.HorizontalAlignment = HorizontalAlignment.Left;
-            SerialNumber.VerticalAlignment = VerticalAlignment.Center;
+            SerialNumber = new Label
+            {
+                Content = "SerialNumber: " + CurrentTicket.SerialNumber,
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
             Canvas.SetLeft(SerialNumber, 120);
             Canvas.SetTop(SerialNumber, BaseLoc + 250);
             CurrentCanvas.Children.Add(SerialNumber);
 
-            Delete_Button = new Button();
-            Delete_Button.Content = "Delete";
+            Delete_Button = new Button
+            {
+                Content = "Delete",
+                Width = 152,
+                Height = 48,
+                Background = new SolidColorBrush(Color.FromRgb(232, 126, 49)),
+                Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                FontSize = 20,
+                Cursor = Cursors.Hand
+            };
+            Delete_Button.Click += Delete_Button_Click;
             Canvas.SetLeft(Delete_Button, 750);
             Canvas.SetTop(Delete_Button, BaseLoc + 20);
-            Delete_Button.Width = 152;
-            Delete_Button.Height = 48;
-            Delete_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
-            Delete_Button.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-            Delete_Button.FontSize = 20;
-            Delete_Button.Click += Delete_Button_Click;
-            Delete_Button.Cursor = Cursors.Hand;
             CurrentCanvas.Children.Add(Delete_Button);
 
             CurrentCanvas.Height = BaseLoc + 330;

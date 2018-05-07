@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Travelley.Back_End;
 
 namespace Travelley
@@ -8,13 +9,14 @@ namespace Travelley
     {
         public static List<Customer> Customers;
         private List<Ticket> tickets;
-        private HashSet<Trip> Mark;
+        private HashSet<Trip> Trips;
         private bool discount;
-        public int NumberOfTrips { get; }
+        public int numberOfTrips;
+        public int NumberOfTrips { get { return GetNumberOfMadeTrips(); } }
         public bool Discount { get => discount; }
         public List<Ticket> Tickets { get => tickets; set => tickets = value; }
 
-        public Customer(string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber)
+        public Customer(string Id, string Name, string Nationality, string Language, string Gender, string Email, string PhoneNumber, CustomImage UserImage)
         {
             this.Id = Id;
             this.Name = Name;
@@ -23,21 +25,36 @@ namespace Travelley
             this.Gender = Gender;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
+            this.UserImage = UserImage;
             discount = false;
             Tickets = new List<Ticket>();
-            Mark = new HashSet<Trip>();
+            Trips = new HashSet<Trip>();
         }
 
         public void AddTicket(Ticket obj)
         {
             Tickets.Add(obj);
-            Mark.Add(obj.CurrentTrip);
-            if (Mark.Count >= 2)
+            Trips.Add(obj.CurrentTrip);
+            if (numberOfTrips >= 2)
                 discount = true;
             else
                 discount = false;
             return;
 
+        }
+
+        private int GetNumberOfMadeTrips()
+        {
+            int Ret = 0;
+            foreach(Trip T in Trips)
+            {
+                if (T.Start <= DateTime.Today)
+                {
+                    Ret++;
+                }
+            }
+            numberOfTrips = Ret;
+            return numberOfTrips;
         }
 
         public Ticket ReserveTicket(Trip CurrentTrip, TripType tripType, string TicketType, int NumberOfOrderedSeats)
@@ -47,8 +64,8 @@ namespace Travelley
                 CustomerDiscount = 10;
             Ticket obj = CurrentTrip.ReserveTicket(tripType, TicketType, NumberOfOrderedSeats, CustomerDiscount);
             Tickets.Add(obj);
-            Mark.Add(CurrentTrip);
-            if (Mark.Count >= 2)
+            Trips.Add(CurrentTrip);
+            if (numberOfTrips >= 2)
                 discount = true;
             else
                 discount = false;
@@ -57,26 +74,16 @@ namespace Travelley
 
         public void UpdateTripMarking()
         {
-            Mark.Clear();
+            Trips.Clear();
             foreach(Ticket T in Tickets)
             {
-                Mark.Add(T.CurrentTrip);
+                Trips.Add(T.CurrentTrip);
             }
-            if (Mark.Count >= 2)
+            if (numberOfTrips >= 2)
                 discount = true;
             else
                 discount = false;
             return;
-        }
-
-        public List<Ticket> GetTickets()
-        {
-            List<Ticket> Ret = new List<Ticket>();
-            foreach (Ticket c in Tickets)
-            {
-                Ret.Add(c);
-            }
-            return Ret;
         }
 
         public override string ToString()

@@ -48,8 +48,10 @@ namespace Travelley.Back_End
                 bi.CacheOption = BitmapCacheOption.Default;
                 bi.StreamSource = new MemoryStream(ByteImage);
                 bi.EndInit();
-                Image img = new Image();
-                img.Source = bi;
+                Image img = new Image
+                {
+                    Source = bi
+                };
 
                 return img;
             }

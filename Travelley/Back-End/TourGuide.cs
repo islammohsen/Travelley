@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Travelley.Back_End;
 
 namespace Travelley
 {
@@ -10,7 +11,7 @@ namespace Travelley
 
         internal List<Trip> Trips { get => trips; set => trips = value; }
 
-        public TourGuide(string Id, string Name, string Nationality, string Language,string Gender, string Email, string PhoneNumber)
+        public TourGuide(string Id, string Name, string Nationality, string Language,string Gender, string Email, string PhoneNumber, CustomImage UserImage)
         {
             this.Id = Id;
             this.Name = Name;
@@ -19,6 +20,7 @@ namespace Travelley
             this.Gender = Gender;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
+            this.UserImage = UserImage;
             Trips = new List<Trip>();
         }
 

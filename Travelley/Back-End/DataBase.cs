@@ -74,8 +74,7 @@ namespace Travelley
                 string Email = (string)Reader["Email"];
                 string PhoneNumber = (string)Reader["PhoneNumber"];
                 byte[] CustomerImage = (byte[])Reader["Image"];
-                Customer Obj = new Customer(Id, Name, Nationality, Language, Gender, Email, PhoneNumber);
-                Obj.UserImage = new CustomImage(CustomerImage);
+                Customer Obj = new Customer(Id, Name, Nationality, Language, Gender, Email, PhoneNumber, new CustomImage(CustomerImage));
                 Customer.Customers.Add(Obj);
             }
             Reader.Close();
@@ -102,8 +101,7 @@ namespace Travelley
                 string Email = (string)Reader["Email"];
                 string PhoneNumber = (string)Reader["PhoneNumber"];
                 byte[] TourGuideImage = (byte[])Reader["Image"];
-                TourGuide Obj = new TourGuide(Id, Name, Nationality, Language, Gender, Email, PhoneNumber);
-                Obj.UserImage = new CustomImage(TourGuideImage);
+                TourGuide Obj = new TourGuide(Id, Name, Nationality, Language, Gender, Email, PhoneNumber, new CustomImage(TourGuideImage));
                 TourGuide.TourGuides.Add(Obj);
             }
             Reader.Close();
@@ -134,8 +132,7 @@ namespace Travelley
                 TourGuide CurrentTourGuide = SelectTourGuide(TourGuideId);
                 if (CurrentTourGuide == null)
                     continue;
-                Trip Obj = new Trip(TripId, CurrentTourGuide, Depature, Destination, Discount, Start, End);
-                Obj.TripImage = new CustomImage(TripImage);
+                Trip Obj = new Trip(TripId, CurrentTourGuide, Depature, Destination, Discount, Start, End, new CustomImage(TripImage));
                 Trip.Trips.Add(Obj);
                 CurrentTourGuide.Trips.Add(Obj);
             }

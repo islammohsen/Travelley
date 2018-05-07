@@ -17,71 +17,94 @@ namespace Travelley
         Button MoreInfo;
         Label Status_Label;
 
-       public  TripDisplayCard(Trip t, int index,ref Canvas c, MainWindow m)
+        public TripDisplayCard(Trip t, int index, ref Canvas c, MainWindow m)
         {
             FullTripData = t;
             window = m;
-            double baseLoc = (index * 215)+100;
-            BackGround = new Rectangle();
-            BackGround.Width = 808;
-            BackGround.Height = 210;
+            double baseLoc = (index * 215) + 100;
+
+            BackGround = new Rectangle
+            {
+                Width = 808,
+                Height = 210,
+                Fill = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                Stroke = new SolidColorBrush(Color.FromRgb(0, 0, 0)),
+                StrokeThickness = 3
+            };
             Canvas.SetLeft(BackGround, 111);
             Canvas.SetTop(BackGround, baseLoc);
-            BackGround.Fill = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-            BackGround.Stroke = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-            BackGround.StrokeThickness = 3;
             c.Children.Add(BackGround);
 
-            TripImage = new Image();
-            TripImage.Width = 178;
-            TripImage.Height = 188;
+            TripImage = new Image
+            {
+                Width = 178,
+                Height = 188,
+                Source = t.TripImage.GetImage().Source
+            };
             Canvas.SetLeft(TripImage, 154);
             Canvas.SetTop(TripImage, baseLoc + 1);
-            TripImage.Source = t.TripImage.GetImage().Source;
             c.Children.Add(TripImage);
 
-            DepartureAndDestination = new Label();
+            DepartureAndDestination = new Label
+            {
+                FontSize = 30,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center,
+                Content = t.Departure + " - " + t.Destination
+            };
             Canvas.SetLeft(DepartureAndDestination, 343);
             Canvas.SetTop(DepartureAndDestination, baseLoc + 1);
-            DepartureAndDestination.FontSize = 30;
-            DepartureAndDestination.FontWeight = FontWeights.Bold;
-            DepartureAndDestination.HorizontalAlignment = HorizontalAlignment.Left;
-            DepartureAndDestination.VerticalAlignment = VerticalAlignment.Center;
-            DepartureAndDestination.Content = t.Departure + " - " + t.Destination;
             c.Children.Add(DepartureAndDestination);
 
-            FromStartToEndDate = new Label();
+            FromStartToEndDate = new Label
+            {
+                FontSize = 30,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center,
+                Content = "From " + t.Start.ToShortDateString() + " to " + t.End.ToShortDateString()
+            };
             Canvas.SetLeft(FromStartToEndDate, 343);
             Canvas.SetTop(FromStartToEndDate, baseLoc + 64);
-            FromStartToEndDate.FontSize = 30;
-            FromStartToEndDate.FontWeight = FontWeights.Bold;
-            FromStartToEndDate.HorizontalAlignment = HorizontalAlignment.Left;
-            FromStartToEndDate.VerticalAlignment = VerticalAlignment.Center;
-            FromStartToEndDate.Content = "From " + t.Start.ToShortDateString() + " to " + t.End.ToShortDateString();
             c.Children.Add(FromStartToEndDate);
 
-            Status_Label = new Label();
+
+            if (t.IsClosed)
+            {
+                Status_Label = new Label
+                {
+                    FontSize = 30,
+                    FontWeight = FontWeights.Bold,
+                    Content = "Status: closed"
+                };
+            }
+            else
+            {
+                Status_Label = new Label
+                {
+                    FontSize = 30,
+                    FontWeight = FontWeights.Bold,
+                    Content = "Status: opened"
+                };
+            }
             Canvas.SetLeft(Status_Label, 343);
             Canvas.SetTop(Status_Label, baseLoc + 120);
-            Status_Label.FontSize = 30;
-            Status_Label.FontWeight = FontWeights.Bold;
-            if (t.IsClosed)
-                Status_Label.Content = "Status: closed";
-            else
-                Status_Label.Content = "Status: Opened";
             c.Children.Add(Status_Label);
 
-            MoreInfo = new Button();
-            MoreInfo.Content = "View More";
+            MoreInfo = new Button
+            {
+                Content = "View More",
+                Width = 152,
+                Height = 48,
+                Background = new SolidColorBrush(Color.FromRgb(232, 126, 49)),
+                Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                FontSize = 20,
+                Cursor = Cursors.Hand
+            };
+            MoreInfo.Click += MoreInfo_Click;
             Canvas.SetLeft(MoreInfo, 750);
             Canvas.SetTop(MoreInfo, baseLoc + 153);
-            MoreInfo.Width = 152;
-            MoreInfo.Height = 48;
-            MoreInfo.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
-            MoreInfo.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-            MoreInfo.FontSize = 20;
-            MoreInfo.Click += MoreInfo_Click;
-            MoreInfo.Cursor = Cursors.Hand;
             c.Children.Add(MoreInfo);
 
             c.Height = baseLoc + 230;
@@ -92,6 +115,6 @@ namespace Travelley
             window.ActiveTrip = FullTripData;
             window.ShowTripFullData(FullTripData);
         }
-        
+
     }
 }

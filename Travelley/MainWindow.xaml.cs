@@ -236,17 +236,19 @@ namespace Travelley
         {
             UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer, true);
 
-            Button AddTrip_Button = new Button();
-            AddTrip_Button.Content = "Add Trip";
-            AddTrip_Button.Foreground = new SolidColorBrush(Colors.White);
-            AddTrip_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
-            AddTrip_Button.Width = 238;
+            Button AddTrip_Button = new Button
+            {
+                Content = "Add Trip",
+                Foreground = new SolidColorBrush(Colors.White),
+                Background = new SolidColorBrush(Color.FromRgb(232, 126, 49)),
+                Width = 238,
+                Height = 77,
+                FontSize = 36,
+                FontWeight = FontWeights.Bold
+            };
             AddTrip_Button.Click += Trips_AddTrip_Button_Click;
             Canvas.SetLeft(AddTrip_Button, 771);
             Canvas.SetTop(AddTrip_Button, 10);
-            AddTrip_Button.Height = 77;
-            AddTrip_Button.FontSize = 36;
-            AddTrip_Button.FontWeight = FontWeights.Bold;
             CurrentCanvas.Children.Add(AddTrip_Button);
 
             for (int i = 0; i < list.Count; i++)
@@ -256,7 +258,7 @@ namespace Travelley
 
             return;
         }
-        
+
         private void Trips_AddTrip_Button_Click(object sender, RoutedEventArgs e)
         {
             AddTrip_StTimePicker.SelectedDate = DateTime.Today;
@@ -301,17 +303,19 @@ namespace Travelley
             ActiveTrip = CurrentTrip;
             UpdateCurrentCanvas(TicketsTypes_Canvas, "Tickets Types", TicketsTypes_ScrollViewr, true);
 
-            Button TicketsTypes_Add_Button = new Button();
-            TicketsTypes_Add_Button.Content = "Add Ticket \n      Type";
-            TicketsTypes_Add_Button.Foreground = new SolidColorBrush(Colors.White);
-            TicketsTypes_Add_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            Button TicketsTypes_Add_Button = new Button
+            {
+                Content = "Add Ticket \n      Type",
+                Foreground = new SolidColorBrush(Colors.White),
+                Background = new SolidColorBrush(Color.FromRgb(232, 126, 49)),
+                Height = 100,
+                FontSize = 36,
+                FontWeight = FontWeights.Bold,
+                Width = 200
+            };
+            TicketsTypes_Add_Button.Click += TicketsTypes_Add_Button_Click;
             Canvas.SetLeft(TicketsTypes_Add_Button, 820);
             Canvas.SetTop(TicketsTypes_Add_Button, 12);
-            TicketsTypes_Add_Button.Height = 100;
-            TicketsTypes_Add_Button.FontSize = 36;
-            TicketsTypes_Add_Button.FontWeight = FontWeights.Bold;
-            TicketsTypes_Add_Button.Width = 200;
-            TicketsTypes_Add_Button.Click += TicketsTypes_Add_Button_Click;
             CurrentCanvas.Children.Add(TicketsTypes_Add_Button);
 
             int index = 0;
@@ -345,7 +349,7 @@ namespace Travelley
             EditTrip_TripStTime_ErrorLabel.Content = "";
 
         }
-        
+
         private void AddTrip_Save_Button_Click(object sender, RoutedEventArgs e)
         {
             //todo more error validations
@@ -405,8 +409,8 @@ namespace Travelley
                 return;
             }
             Trip T = new Trip(AddTrip_TripIDTextbox.Text, (TourGuide)AddTrip_TourCombo.SelectedItem, AddTrip_TripDeptTextbox.Text,
-                AddTrip_TripDestTextbox.Text, double.Parse(AddTrip_TripDiscTextbox.Text), AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value);
-            T.TripImage = new CustomImage(SelectedPath);
+                AddTrip_TripDestTextbox.Text, double.Parse(AddTrip_TripDiscTextbox.Text),
+                AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value, new CustomImage(SelectedPath));
             DataBase.InsertTrip(T);
             AddTrip_Clear_Canvas();
             ShowTicketsTypes(T);
@@ -422,9 +426,11 @@ namespace Travelley
 
         private void Trip_BrowseButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
-            dlg.Title = "Select Trip Photo";
+            OpenFileDialog dlg = new OpenFileDialog
+            {
+                Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png",
+                Title = "Select Trip Photo"
+            };
             dlg.ShowDialog();
             SelectedPath = dlg.FileName.ToString();
         }
@@ -623,14 +629,12 @@ namespace Travelley
                 MessageBox.Show("Please enter a ticket type");
                 return;
             }
-            int num = 0;
-            if (!int.TryParse(AddTicketType_NumberOfSeats_TextBox.Text, out num))
+            if (!int.TryParse(AddTicketType_NumberOfSeats_TextBox.Text, out int num))
             {
                 MessageBox.Show("Please enter a valid number of seats");
                 return;
             }
-            double price = 0;
-            if (!double.TryParse(AddTicketType_Price_TextBox.Text, out price))
+            if (!double.TryParse(AddTicketType_Price_TextBox.Text, out double price))
             {
                 MessageBox.Show("Please enter a valid price");
                 return;
@@ -670,8 +674,7 @@ namespace Travelley
             }
             string ticketType = (string)ReserveTicket_TicketType_ComboxBox.SelectedItem;
 
-            int NumberOfSeats = 0;
-            if (!(int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out NumberOfSeats) || NumberOfSeats <= 0))
+            if (!(int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out int NumberOfSeats) || NumberOfSeats <= 0))
             {
                 MessageBox.Show("Invalid Number of seats!!");
                 return;
@@ -696,8 +699,7 @@ namespace Travelley
         {
             if (ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
                 return;
-            int num = 0;
-            int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out num);
+            int.TryParse(ReserveTicket_NumberOfSeats_TextBox.Text, out int num);
             num = Math.Max(num, 0);
             double discount = 1;
             discount -= ActiveTrip.Discount / 100;
@@ -787,6 +789,8 @@ namespace Travelley
             CustomerFullData_Language.Content = c.Language;
             CustomerFullData_IMG.Source = c.UserImage.GetImage().Source;
             CustomerFullData_PhoneNumber.Content = c.PhoneNumber;
+            CustomerFullData_NumberOfTrips_Label.Content = "Number Of Trips: " + c.numberOfTrips;
+            CustomerFullData_Discount_Label.Content = "Discount: " + c.Discount;
         }
 
         private void AddCustomer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
@@ -819,9 +823,9 @@ namespace Travelley
                 AddCustomer_Language_TextBox.Text,
                 AddCustomer_Gender_ComboBox.Text,
                 AddCustomer_Email_TextBox.Text,
-                AddCustomer_Phone_TextBox.Text
+                AddCustomer_Phone_TextBox.Text,
+                new CustomImage(SelectedPath)
                 );
-            NewCustomer.UserImage = new CustomImage(SelectedPath);
 
             DataBase.InsertCustomer(NewCustomer);
             ActiveCustomer = NewCustomer;
@@ -980,9 +984,11 @@ namespace Travelley
 
         private void AddCustomer_Browse_Button_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png";
-            dlg.Title = "Select Customer Photo";
+            OpenFileDialog dlg = new OpenFileDialog
+            {
+                Filter = "JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|PNG Files (*.png)|*.png",
+                Title = "Select Customer Photo"
+            };
             dlg.ShowDialog();
             SelectedPath = dlg.FileName.ToString();
         }
@@ -1012,22 +1018,26 @@ namespace Travelley
             LastTourGuides = TourGuides;
             UpdateCurrentCanvas(TourGuides_Canvas, "Tour Guides", TourGuides_ScrollViewer, true);
 
-            Button TourGuides_AddTourGuide_Button = new Button();
-            TourGuides_AddTourGuide_Button.Content = "Add TourGuide";
-            TourGuides_AddTourGuide_Button.Foreground = new SolidColorBrush(Colors.White);
-            TourGuides_AddTourGuide_Button.Background = new SolidColorBrush(Color.FromRgb(232, 126, 49));
+            Button TourGuides_AddTourGuide_Button = new Button
+            {
+                Content = "Add TourGuide",
+                Foreground = new SolidColorBrush(Colors.White),
+                Background = new SolidColorBrush(Color.FromRgb(232, 126, 49)),
+                Height = 77,
+                FontSize = 36,
+                FontWeight = FontWeights.Bold,
+                Width = 300,
+            };
+            TourGuides_AddTourGuide_Button.Click += TourGuides_AddTourGuide_Button_Click;
             Canvas.SetLeft(TourGuides_AddTourGuide_Button, 713);
             Canvas.SetTop(TourGuides_AddTourGuide_Button, 12);
-            TourGuides_AddTourGuide_Button.Height = 77;
-            TourGuides_AddTourGuide_Button.FontSize = 36;
-            TourGuides_AddTourGuide_Button.FontWeight = FontWeights.Bold;
-            TourGuides_AddTourGuide_Button.Width = 300;
-            TourGuides_AddTourGuide_Button.Click += TourGuides_AddTourGuide_Button_Click;
             CurrentCanvas.Children.Add(TourGuides_AddTourGuide_Button);
 
-            Label AvailableTourGuides_Label = new Label();
-            AvailableTourGuides_Label.FontSize = 25;
-            AvailableTourGuides_Label.Content = "Available: " + DataBase.GetNumberOfAvailableTourGuides().ToString();
+            Label AvailableTourGuides_Label = new Label
+            {
+                FontSize = 25,
+                Content = "Available: " + DataBase.GetNumberOfAvailableTourGuides().ToString()
+            };
             Canvas.SetLeft(AvailableTourGuides_Label, 111);
             Canvas.SetTop(AvailableTourGuides_Label, 12);
             CurrentCanvas.Children.Add(AvailableTourGuides_Label);
@@ -1059,7 +1069,7 @@ namespace Travelley
 
             bool tourErrorFound = false;
 
-           
+
             if (EditTourGuideFullData_Name.Text == "")
             {
                 EditTourGuide_Name_ErrorLabel.Content = "This field can't be empty!";
@@ -1069,7 +1079,7 @@ namespace Travelley
             {
                 EditTourGuide_Name_ErrorLabel.Content = "";
             }
-           
+
             if (EditTourGuideFullData_Nationality.Text.Trim() == "")
             {
                 EditTourGuide_Nationality_ErrorLabel.Content = "This field can't be empty!";
@@ -1119,7 +1129,7 @@ namespace Travelley
             if (tourErrorFound == true)
                 return;
 
-            
+
             EditTourGuide_Name_ErrorLabel.Content = "";
             EditTourGuide_Email_ErrorLabel.Content = "";
             EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
@@ -1243,8 +1253,8 @@ namespace Travelley
                 return;
 
             TourGuide temp = new TourGuide(AddTourGuideFullData_Id.Text, AddTourGuideFullData_Name.Text, AddTourGuideFullData_Nationality.Text
-                 , AddTourGuideFullData_language.Text, AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text, AddTourGuideFullData_PhoneNumber.Text);
-            temp.UserImage = new CustomImage(SelectedPath);
+                 , AddTourGuideFullData_language.Text, AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text,
+                 AddTourGuideFullData_PhoneNumber.Text, new CustomImage(SelectedPath));
             DataBase.InsertTourGuide(temp);
             AddTourGuide_Error__Natinaity.Content = "";
             AddTourGuide_Error_PhoneNumber.Content = "";
@@ -1295,14 +1305,16 @@ namespace Travelley
 
         private void TourGuide_BrowseButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "JPG Files (*.jpg)|*.jpg|All files (*.*)|*.*";
-            dlg.Title = "Select TourGuide Image";
+            OpenFileDialog dlg = new OpenFileDialog
+            {
+                Filter = "JPG Files (*.jpg)|*.jpg|All files (*.*)|*.*",
+                Title = "Select TourGuide Image"
+            };
             dlg.ShowDialog();
             dlg.FileName.ToString();
         }
 
-        
+
         private void TourGuides_AddTourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowAddTourGuideCanvas();
