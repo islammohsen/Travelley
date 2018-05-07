@@ -1,14 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Media;
-using System.IO;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+﻿using System.Collections.Generic;
 using Travelley.Back_End;
 
 namespace Travelley
