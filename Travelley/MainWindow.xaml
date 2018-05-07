@@ -84,6 +84,7 @@
         <ScrollViewer x:Name="TripsScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
             <Canvas x:Name="Trips_Canvas" Height="180" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" ScrollViewer.CanContentScroll="True"/>
         </ScrollViewer>
+        
         <Canvas x:Name="TripFullData_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="0.8" Canvas.Left="304.4" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden">
 
             <Image x:Name="TripFullData_IMG" Height="210" Canvas.Left="52" Canvas.Top="166" Width="221" Stretch="Fill" Cursor="None"/>
@@ -104,13 +105,13 @@
             <Button x:Name="TripFullData_ReserveTrip_Button" Content="Reserve Trip" Canvas.Left="340" Canvas.Top="607" Width="225" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_ReserveTrip_Button_Click" />
             <Button x:Name="TripFullData_TicketTypes_Button" Content="Ticket Types" Canvas.Left="81" Canvas.Top="607" Width="225" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="TripFullData_TicketTypes_Button_Click" />
             <Label x:Name="TripFullData_Avaialbleseats_Label" Content="Available seats:" FontSize="36" Canvas.Left="531" Canvas.Top="415" FontFamily="Roboto" FontWeight="Bold"/>
-            <Label x:Name="TripFullData_TripStatusOpen_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden">
+            <Label x:Name="TripFullData_TripStatusOpen_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden" MouseDoubleClick="TripFullData_TripStatusOpen_Label_MouseDoubleClick">
                 <TextBlock>
                     <Run Text="status: " Foreground="Black"/>
                     <Run Text="open" Foreground="Green"/>
                 </TextBlock>
             </Label>
-            <Label x:Name="TripFullData_TripStatusClose_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden">
+            <Label x:Name="TripFullData_TripStatusClose_Label" FontSize="36" Canvas.Left="531" Canvas.Top="479" FontFamily="Roboto" FontWeight="Bold" Visibility="Hidden" MouseDoubleClick="TripFullData_TripStatusClose_Label_MouseDoubleClick">
                 <TextBlock>
                     <Run Text="status: " Foreground="Black"/>
                     <Run Text="closed" Foreground="Red"/>

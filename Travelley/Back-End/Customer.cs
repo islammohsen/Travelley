@@ -35,7 +35,7 @@ namespace Travelley
         {
             Tickets.Add(obj);
             Trips.Add(obj.CurrentTrip);
-            if (numberOfTrips >= 2)
+            if (Trips.Count >= 2)
                 discount = true;
             else
                 discount = false;
@@ -65,7 +65,7 @@ namespace Travelley
             Ticket obj = CurrentTrip.ReserveTicket(tripType, TicketType, NumberOfOrderedSeats, CustomerDiscount);
             Tickets.Add(obj);
             Trips.Add(CurrentTrip);
-            if (numberOfTrips >= 2)
+            if (Trips.Count >= 2)
                 discount = true;
             else
                 discount = false;
@@ -79,7 +79,7 @@ namespace Travelley
             {
                 Trips.Add(T.CurrentTrip);
             }
-            if (numberOfTrips >= 2)
+            if (Trips.Count >= 2)
                 discount = true;
             else
                 discount = false;

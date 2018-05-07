@@ -47,6 +47,8 @@ namespace Travelley
         {
             if (IsIntialized)
             {
+                foreach (Trip T in Trip.Trips)
+                    T.UpdateTripsStatus();
                 Connection.Close();
                 IsIntialized = false;
             }
@@ -129,10 +131,11 @@ namespace Travelley
                 DateTime Start = (DateTime)Reader["TripStartDate"];
                 DateTime End = (DateTime)Reader["TripEndDate"];
                 Byte[] TripImage = (Byte[])Reader["Image"];
+                bool IsClosed = (bool)Reader["IsClosed"];
                 TourGuide CurrentTourGuide = SelectTourGuide(TourGuideId);
                 if (CurrentTourGuide == null)
                     continue;
-                Trip Obj = new Trip(TripId, CurrentTourGuide, Depature, Destination, Discount, Start, End, new CustomImage(TripImage));
+                Trip Obj = new Trip(TripId, CurrentTourGuide, Depature, Destination, Discount, Start, End, new CustomImage(TripImage), IsClosed);
                 Trip.Trips.Add(Obj);
                 CurrentTourGuide.Trips.Add(Obj);
             }
@@ -254,13 +257,13 @@ namespace Travelley
             CurrentTourGuide.UserImage = TourGuideImage;
         }
 
-        public static void UpdateTrip(Trip CurrentTrip, string TripId, string TourGuideId, string Depature, string Destination, double Discount, DateTime Start, DateTime End, CustomImage TripImage)
+        public static void UpdateTrip(Trip CurrentTrip, string TripId, string TourGuideId, string Depature, string Destination, double Discount, DateTime Start, DateTime End, CustomImage TripImage, bool IsClosed)
         {
             //update database
             //update Trip table
            Command.CommandText = $"UPDATE Trip set TripId = '{TripId}', TourGuideId = '{TourGuideId}', Depature = '{Depature}', " +
                 $"Destination = '{Destination}', Discount = {Discount} , TripEndDate = '{End.ToString()}' , " +
-                $" TripStartDate = '{Start.ToString()}' , Image = @image where TripId = '{CurrentTrip.TripId}'";
+                $" TripStartDate = '{Start.ToString()}' , Image = @image, IsClosed = '{IsClosed}' where TripId = '{CurrentTrip.TripId}'";
             Command.Parameters.AddWithValue("@image", TripImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();
@@ -340,7 +343,7 @@ namespace Travelley
         {
             Command.CommandText = $"INSERT INTO Trip values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Departure}', " +
                 $"'{CurrentTrip.Destination}', {CurrentTrip.Discount}, '{CurrentTrip.Start.ToString()}', '{CurrentTrip.End.ToString()}'," +
-                $"@image)";
+                $"@image, '{CurrentTrip.IsClosed}')";
             Command.Parameters.AddWithValue("@image", CurrentTrip.TripImage.GetByteImage());
             Command.ExecuteNonQuery();
             Command.Parameters.Clear();

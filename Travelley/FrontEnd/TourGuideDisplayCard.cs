@@ -39,7 +39,7 @@ namespace Travelley.FrontEnd
             CurrentCanvas.Children.Add(BackGround);
 
             TourGuideImage = CurrentTourGuide.UserImage.GetImage();
-            TourGuideImage.MaxHeight = 200;
+            TourGuideImage.MaxHeight = 190;
             TourGuideImage.MaxWidth = 300;
             Canvas.SetLeft(TourGuideImage, 140);
             Canvas.SetTop(TourGuideImage, BaseLoc + 20);

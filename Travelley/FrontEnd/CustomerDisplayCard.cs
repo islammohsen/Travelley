@@ -11,6 +11,7 @@ namespace Travelley.FrontEnd
         Rectangle BackGround;
         Label CustomerName;
         Label CustomerEmail;
+        Label Discount;
         Image CustomerImage;
         Button View_More;
         Customer CurrentCustomer;
@@ -29,7 +30,7 @@ namespace Travelley.FrontEnd
                 Width = 800,
                 Height = 220,
                 Fill = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
-                Stroke = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                Stroke = new SolidColorBrush(Color.FromRgb(0, 0, 0)),
                 StrokeThickness = 3
             };
             Canvas.SetLeft(BackGround, 111);
@@ -51,9 +52,9 @@ namespace Travelley.FrontEnd
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            Canvas.SetLeft(this.CustomerName, 450);
-            Canvas.SetTop(this.CustomerName, BaseLoc + 20);
-            CurrentCanvas.Children.Add(this.CustomerName);
+            Canvas.SetLeft(CustomerName, 450);
+            Canvas.SetTop(CustomerName, BaseLoc + 20);
+            CurrentCanvas.Children.Add(CustomerName);
 
             CustomerEmail = new Label
             {
@@ -63,9 +64,21 @@ namespace Travelley.FrontEnd
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            Canvas.SetLeft(this.CustomerEmail, 450);
-            Canvas.SetTop(this.CustomerEmail, BaseLoc + 50);
-            CurrentCanvas.Children.Add(this.CustomerEmail);
+            Canvas.SetLeft(CustomerEmail, 450);
+            Canvas.SetTop(CustomerEmail, BaseLoc + 50);
+            CurrentCanvas.Children.Add(CustomerEmail);
+
+            Discount = new Label
+            {
+                Content = "Discount: " + CurrentCustomer.Discount,
+                FontSize = 25,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            Canvas.SetLeft(Discount, 450);
+            Canvas.SetTop(Discount, BaseLoc + 80);
+            CurrentCanvas.Children.Add(Discount);
 
             View_More = new Button
             {

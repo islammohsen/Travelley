@@ -42,7 +42,7 @@ namespace Travelley
             PriceOfSeat[Type] = Price;
         }
 
-        public Trip(string TripId, TourGuide Tour, string Depature, string Destination, Double Discount, DateTime Start, DateTime End, CustomImage TripImage)
+        public Trip(string TripId, TourGuide Tour, string Depature, string Destination, Double Discount, DateTime Start, DateTime End, CustomImage TripImage, bool IsClosed)
         {
             tripId = TripId;
             tour = Tour;
@@ -55,10 +55,7 @@ namespace Travelley
             Tickets = new List<Ticket>();
             NumberOfSeats = new Dictionary<string, int>();
             PriceOfSeat = new Dictionary<string, double>();
-            if (Start <= DateTime.Today)
-                IsClosed = true;
-            else
-                IsClosed = false;
+            this.IsClosed = IsClosed;
         }
 
         public void AddTicket(Ticket obj)
@@ -71,7 +68,7 @@ namespace Travelley
         {
             string serial = Guid.NewGuid().ToString();
 
-            double TicketPrice = PriceOfSeat[TicketType] * NumberOfOrderedSeats * (100 - discount - CustomerDiscount) / 100;
+            double TicketPrice = PriceOfSeat[TicketType] * NumberOfOrderedSeats * Math.Max(0, (100 - discount - CustomerDiscount) / 100);
             Ticket T = new Ticket(serial, this, TicketType, tripType, TicketPrice, NumberOfOrderedSeats);
             tickets.Add(T);
             return T;
@@ -86,5 +83,14 @@ namespace Travelley
             }
             return ret;
         }
+
+        public void UpdateTripsStatus()
+        {
+            if(IsClosed == false && start <= DateTime.Today)
+            {
+                DataBase.UpdateTrip(this, tripId, tour.Id, departure, destination, discount, start, end, TripImage, true);
+            }
+        }
+
     }
 }

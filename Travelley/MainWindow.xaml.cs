@@ -253,6 +253,7 @@ namespace Travelley
 
             for (int i = 0; i < list.Count; i++)
             {
+                list[i].UpdateTripsStatus();
                 TripDisplayCard t = new TripDisplayCard(list[i], i, ref CurrentCanvas, this);
             }
 
@@ -410,7 +411,7 @@ namespace Travelley
             }
             Trip T = new Trip(AddTrip_TripIDTextbox.Text, (TourGuide)AddTrip_TourCombo.SelectedItem, AddTrip_TripDeptTextbox.Text,
                 AddTrip_TripDestTextbox.Text, double.Parse(AddTrip_TripDiscTextbox.Text),
-                AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value, new CustomImage(SelectedPath));
+                AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value, new CustomImage(SelectedPath), false);
             DataBase.InsertTrip(T);
             AddTrip_Clear_Canvas();
             ShowTicketsTypes(T);
@@ -519,7 +520,7 @@ namespace Travelley
 
             DataBase.UpdateTrip(ActiveTrip, EditTrip_TripIDTextbox.Text, ((TourGuide)EditTrip_TourCombo.SelectedItem).Id, EditTrip_TripDeptTextbox.Text,
                 EditTrip_TripDestTextbox.Text, double.Parse(EditTrip_TripDiscTextbox.Text), EditTrip_StTimePicker.SelectedDate.Value.Date, EditTrip_EnTimePicker.SelectedDate.Value.Date,
-                TripImage);
+                TripImage, ActiveTrip.IsClosed);
 
             EditTrip_Discount_ErrorLabel.Content = "";
             EditTrip_TourGuide_ErrorLabel.Content = "";
@@ -705,7 +706,7 @@ namespace Travelley
             discount -= ActiveTrip.Discount / 100;
             if (ActiveCustomer.Discount)
                 discount -= 0.1;
-            ReserveTicket_Price_TextBox.Text = CurrentCurrency.GetValue(((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * discount)).ToString();
+            ReserveTicket_Price_TextBox.Text = CurrentCurrency.GetValue(((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * Math.Max(0, discount))).ToString();
         }
 
         private void ReserveTicket_TicketType_ComboxBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -762,6 +763,27 @@ namespace Travelley
             if (CurrentCanvas.Visibility == Visibility.Hidden && ActiveTrip.Tour == ActiveTourGuide && !ActiveTourGuide.Trips.Contains(ActiveTrip))
             {
                 ActiveTourGuide.Trips.Add(ActiveTrip);
+            }
+        }
+
+        private void TripFullData_TripStatusOpen_Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ActiveTrip.IsClosed = true;
+            DataBase.UpdateTrip(ActiveTrip, ActiveTrip.TripId, ActiveTrip.Tour.Id, ActiveTrip.Departure,
+                ActiveTrip.Destination, ActiveTrip.Discount, ActiveTrip.Start, ActiveTrip.End, ActiveTrip.TripImage, true);
+            TripFullData_TripStatusOpen_Label.Visibility = Visibility.Hidden;
+            TripFullData_TripStatusClose_Label.Visibility = Visibility.Visible;
+        }
+
+        private void TripFullData_TripStatusClose_Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ActiveTrip.Start > DateTime.Today)
+            {
+                ActiveTrip.IsClosed = false;
+                DataBase.UpdateTrip(ActiveTrip, ActiveTrip.TripId, ActiveTrip.Tour.Id, ActiveTrip.Departure,
+                ActiveTrip.Destination, ActiveTrip.Discount, ActiveTrip.Start, ActiveTrip.End, ActiveTrip.TripImage, false);
+                TripFullData_TripStatusClose_Label.Visibility = Visibility.Hidden;
+                TripFullData_TripStatusOpen_Label.Visibility = Visibility.Visible;
             }
         }
 
@@ -1379,6 +1401,7 @@ namespace Travelley
 
         #endregion Transactions
 
+        
     }
 }
 
