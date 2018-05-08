@@ -9,11 +9,14 @@ namespace Travelley
 
     static class DataBase
     {
-        private static SqlConnection Connection;
-        private static SqlCommand Command = new SqlCommand();
-        private static SqlDataReader Reader;
-        private static bool IsIntialized = false;
+        private static SqlConnection Connection; // sql connection to connect with database
+        private static SqlCommand Command = new SqlCommand(); //sql commant to run sql queries
+        private static SqlDataReader Reader; //sql data reader to read data from sql tables
+        private static bool IsIntialized = false; //Boolen to check if database is initialized or not
         
+        /// <summary>
+        /// Function that return the path of Travelley database on user computer
+        /// </summary>
         private static string GetPath()
         {
             string path = Directory.GetCurrentDirectory();
@@ -26,7 +29,11 @@ namespace Travelley
             return path;
         }
 
-        public static void Intialize()
+        /// <summary>
+        /// intializes the databases
+        /// and call functions to initializes static lists (Customers, TourGuides, Trips) and objects
+        /// </summary>
+        public static void Initialize()
         {
             if (!IsIntialized)
             {
@@ -43,6 +50,9 @@ namespace Travelley
             Transactions();
         }
 
+        /// <summary>
+        /// Shuts down database at the end of the project and updates trips status
+        /// </summary>
         public static void ShutDown()
         {
             if (IsIntialized)
@@ -54,11 +64,14 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// initializes static list customers
+        /// reads all customers from database and creates objects
+        /// </summary>
         private static void GetCustomers()
         {
             Customer.Customers = new List<Customer>();
-
-
+            
             //created a command
             Command.CommandText = "Select * From Customer";
 
@@ -83,6 +96,10 @@ namespace Travelley
             return;
         }
 
+        /// <summary>
+        /// initializes static list TourGuides
+        /// reads all TourGuides from database and creates objects
+        /// </summary>
         private static void GetTourGuides()
         {
             TourGuide.TourGuides = new List<TourGuide>();
@@ -110,6 +127,10 @@ namespace Travelley
             return;
         }
 
+        /// <summary>
+        /// initializes static list Trips
+        /// reads all Trips from database and creates objects
+        /// </summary>
         private static void GetTrips()
         {
             Trip.Trips = new List<Trip>();
@@ -143,6 +164,9 @@ namespace Travelley
             return;
         }
 
+        /// <summary>
+        /// Read all TripTickets from the database to initialize trip objects
+        /// </summary>
         private static void TripsTickets()
         {
 
@@ -172,6 +196,9 @@ namespace Travelley
             return;
         }
 
+        /// <summary>
+        /// Read all transactions from database and creates tickets objects
+        /// </summary>
         private static void Transactions()
         {
 
@@ -210,12 +237,15 @@ namespace Travelley
 
                 Ticket CurrentTicket = new Ticket(SerialNumber, CurrentTrip, TypeOfTicket, tripType, Price, NumberOfSeats);
                 CurrentCustomer.AddTicket(CurrentTicket);
-                CurrentTrip.AddTicket(CurrentTicket);
+                CurrentTrip.Tickets.Add(CurrentTicket);
             }
             Reader.Close();
             return;
         }
 
+        /// <summary>
+        /// updates old custmer in database first then updates the object
+        /// </summary>
         public static void UpdateCustomer(Customer CurrentCustomer, Customer NewCustomer)
         {
             //update database
@@ -237,6 +267,9 @@ namespace Travelley
             CurrentCustomer.UserImage = NewCustomer.UserImage;
         }
 
+        /// <summary>
+        /// updates old TourGuide in database first then updates the object
+        /// </summary>
         public static void UpdateTourGuide(TourGuide CurrentTourGuide, TourGuide NewTourGuide)
         {
             //update databae
@@ -258,6 +291,9 @@ namespace Travelley
             CurrentTourGuide.UserImage = NewTourGuide.UserImage;
         }
 
+        /// <summary>
+        /// updates old Trip in database first then updates the object
+        /// </summary>
         public static void UpdateTrip(Trip CurrentTrip, Trip NewTrip)
         {
             //update database
@@ -293,6 +329,9 @@ namespace Travelley
             CurrentTrip.TripImage = NewTrip.TripImage;
         }
 
+        /// <summary>
+        /// updates old TripTickets in database first then updates the objects
+        /// </summary>
         public static void UpdateTripsTickets(Trip CurrentTrip, string PrevType, string NewType, int NumberOfSeats, double Price)
         {
             Command.CommandText = $"UPDATE TripsTickets set Type = '{NewType}', NumberOfSeats = {NumberOfSeats}, Price = {Price} where TripId = '{CurrentTrip.TripId}' And Type = '{PrevType}'";
@@ -306,6 +345,9 @@ namespace Travelley
             CurrentTrip.PriceOfSeat.Add(NewType, Price);
         }
 
+        /// <summary>
+        /// updates tickets object in the current trip
+        /// </summary>
         private static void UpdateTickets(Trip CurrentTrip, string PrevType, string NewType)
         {
             foreach(Ticket T in CurrentTrip.Tickets)
@@ -315,6 +357,9 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// Insert new customer into database
+        /// </summary>
         public static void InsertCustomer(Customer CurrentCustomer)
         {
             Command.CommandText = $"INSERT INTO Customer values('{ CurrentCustomer.Id }','{CurrentCustomer.Name }' ," +
@@ -327,6 +372,9 @@ namespace Travelley
             return;
         }
 
+        /// <summary>
+        /// insert new tourguide in database
+        /// </summary>
         public static void InsertTourGuide(TourGuide CurrentTourGuide)
         {
             Command.CommandText = $"INSERT INTO TourGuide values('{ CurrentTourGuide.Id }','{CurrentTourGuide.Name }' ," +
@@ -339,6 +387,9 @@ namespace Travelley
             return;
         }
 
+        /// <summary>
+        /// insert new trip in database
+        /// </summary>
         public static void InsertTrip(Trip CurrentTrip)
         {
             Command.CommandText = $"INSERT INTO Trip values('{CurrentTrip.TripId}', '{CurrentTrip.Tour.Id}', '{CurrentTrip.Departure}', " +
@@ -352,6 +403,9 @@ namespace Travelley
             return;
         }
 
+        /// <summary>
+        /// insert new trip ticket in database using the given tripid to link tables
+        /// </summary>
         public static void InsertTripTickets(string TripId, string Type, int NumbrOfSeats, double Price)
         {
             Command.CommandText = $"INSERT INTO TripsTickets values( '{TripId}', '{Type}', {NumbrOfSeats}, {Price} )";
@@ -362,6 +416,9 @@ namespace Travelley
             return;
         }
 
+        /// <summary>
+        /// insert ticket inside database using the given customer and trip id to link tables
+        /// </summary>
         public static void InsertTransactions(string SerialNumber, string CustomerId, string TripId, string TypeOfTicket, string TypeOfTrip, double Price, int NumberOfSeats)
         {
             Command.CommandText = $"INSERT INTO Transactions values( '{SerialNumber}', '{CustomerId}', '{TripId}'," +
@@ -372,6 +429,9 @@ namespace Travelley
             return;
         }
 
+        /// <summary>
+        /// delete the customer from database and deletes the tickets reserved by the custommer
+        /// </summary>
         public static void DeleteCustomer(Customer CurrnetCustomer)
         {
             while (CurrnetCustomer.Tickets.Count != 0)
@@ -384,6 +444,9 @@ namespace Travelley
             Customer.Customers.Remove(CurrnetCustomer);
         }
 
+        /// <summary>
+        /// Deletes The TourGuide from the database
+        /// </summary>
         public static void DeleteTourGuide(TourGuide CurrentTourGuide)
         {
             Command.CommandText = $"Delete From TourGuide where Id = '{CurrentTourGuide.Id}'";
@@ -391,6 +454,9 @@ namespace Travelley
             TourGuide.TourGuides.Remove(CurrentTourGuide);
         }
 
+        /// <summary>
+        /// Delete the Trip and its tickets from the database
+        /// </summary>
         public static void DeleteTrip(Trip CurrentTrip)
         {
             //Delete TripsTickets of the Current Trip
@@ -411,6 +477,10 @@ namespace Travelley
             CurrentTrip.Tour.Trips.Remove(CurrentTrip);
         }
 
+
+        /// <summary>
+        /// delete a ticket from the database
+        /// </summary>
         public static void DeleteTicket(Ticket t)
         {
             Command.CommandText = $"Select * From Transactions where serialnumber = '{t.SerialNumber}'";
@@ -431,7 +501,11 @@ namespace Travelley
             Command.ExecuteNonQuery();
         }
 
-        //select with id
+        /// <summary>
+        /// selects a customer by id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public static Customer SelectCustomer(string Id)
         {
             foreach (Customer C in Customer.Customers)
@@ -444,6 +518,9 @@ namespace Travelley
             return null;
         }
 
+        /// <summary>
+        /// selects a trip by id
+        /// </summary>
         public static Trip SelectTrip(string Id)
         {
             foreach (Trip C in Trip.Trips)
@@ -456,6 +533,9 @@ namespace Travelley
             return null;
         }
 
+        /// <summary>
+        /// select a tourguide by id
+        /// </summary>
         public static TourGuide SelectTourGuide(string Id)
         {
             foreach (TourGuide C in TourGuide.TourGuides)
@@ -468,7 +548,9 @@ namespace Travelley
             return null;
         }
 
-        //Return True if the given Id is unique
+        /// <summary>
+        /// Return True if the given Id is unique for customer
+        /// </summary>
         public static bool CheckUniqueCustomerId(string Id)
         {
             foreach (Customer C in Customer.Customers)
@@ -479,6 +561,9 @@ namespace Travelley
             return true;
         }
 
+        /// <summary>
+        /// Return True if the given Id is unique for tourguide
+        /// </summary>
         public static bool CheckUniqueTourGuideId(string Id)
         {
 
@@ -491,6 +576,9 @@ namespace Travelley
             return true;
         }
 
+        /// <summary>
+        /// Return True if the given Id is unique for trip
+        /// </summary>
         public static bool CheckUniqueTripId(string Id)
         {
             foreach (Trip T in Trip.Trips)
@@ -499,17 +587,6 @@ namespace Travelley
                     return false;
             }
             return true;
-        }
-
-        public static int GetNumberOfAvailableTourGuides()
-        {
-            int ret = 0;
-            foreach(TourGuide T in TourGuide.TourGuides)
-            {
-                if (T.CheckAvailability(DateTime.Today, DateTime.Today))
-                    ret++;
-            }
-            return ret;
         }
     }
 }

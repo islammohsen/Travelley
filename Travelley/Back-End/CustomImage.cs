@@ -7,34 +7,52 @@ namespace Travelley.Back_End
 {
     public class CustomImage
     {
-        private byte[] ByteImage;
+        private byte[] ByteImage; //contains the byte array of the image
 
+        /// <summary>
+        /// Initialize the ByteImage Using the given path to read from file
+        /// </summary>
         public CustomImage(string path)
         {
             ByteImage = File.ReadAllBytes(path);
         }
 
+        /// <summary>
+        /// initialize the ByteImage using the give byte array
+        /// </summary>
         public CustomImage(byte[] obj)
         {
             ByteImage = (byte[])obj.Clone();
         }
 
+        /// <summary>
+        /// sets the byte image using the file to read the byte array of the given path
+        /// </summary>
         public void SetImage(string path)
         {
             ByteImage = File.ReadAllBytes(path);
         }
 
+        /// <summary>
+        /// Sets the byteimage using another byte array
+        /// </summary>
         public void SetImage(byte[] obj)
         {
             ByteImage = (byte[])obj.Clone();
         }
 
+        /// <summary>
+        /// return the byteimage array
+        /// </summary>
         public Byte[] GetByteImage()
         {
             Byte[] Ret = (Byte[])ByteImage.Clone();
             return Ret;
         }
 
+        /// <summary>
+        /// converts the byteimage array into an image object
+        /// </summary>
         public Image GetImage()
         {
             if (ByteImage == null)

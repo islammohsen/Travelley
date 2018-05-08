@@ -10,6 +10,7 @@ using Travelley.FrontEnd;
 
 namespace Travelley
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -27,14 +28,16 @@ namespace Travelley
         public static List<TourGuide> LastTourGuides;
         string SelectedPath = "";
 
+        /// <summary>
+        /// Contains window relative functions
+        /// </summary>
         #region window
 
         public MainWindow()
         {
-
             InitializeComponent();
 
-            DataBase.Intialize();
+            DataBase.Initialize();
 
             CurrentScrollViewer = Customers_ScrollViewer;
             CurrentCanvas = Main_Canvas;
@@ -68,33 +71,55 @@ namespace Travelley
 
         #endregion window
 
+        /// <summary>
+        /// Contains main canvas relative functions
+        /// </summary>
         #region Main_Canvas
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Loads home page
+        /// </summary>
+        private void Home_Button_Click(object sender, RoutedEventArgs e)
         {
             UpdateCurrentCanvas(Main_Canvas, "Home Page");
         }
 
+        /// <summary>
+        /// Loads Trips canvas which shows all trips
+        /// </summary>
         private void Trips_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowListOfTrips(Trip.Trips);
         }
 
-        private void Customer_Button_Copy_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Loads Customer canvas which shows all customers
+        /// </summary>
+        private void Customer_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowListOfCustomers(Customer.Customers);
         }
 
+        /// <summary>
+        /// Loads TrourGuide Canvas which shows all tourguides
+        /// </summary>
         private void TourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowListOfTourGuides(TourGuide.TourGuides);
         }
 
+        /// <summary>
+        /// Loads Transactions Canvas which shows all tourguides
+        /// </summary>
         public void Transactions_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowListOfTickets(GetAllTickets());
         }
 
+        /// <summary>
+        /// Excuted when pressing on trip of the day photo.
+        /// Shows full data of trip of the day.
+        /// </summary>
         private void TripOfTheDay_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (TripOfTheDay == null)
@@ -103,12 +128,21 @@ namespace Travelley
             ShowTripFullData(TripOfTheDay);
         }
 
+
+        /// <summary>
+        /// Excuted when pressing on Tourguide of the month photo.
+        /// Shows full data of Tourguide of the month.
+        /// </summary>
         private void Best_TourGuide_IMG_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (TourGuideOfTheMonth != null)
                 ShowTourGuideFullData(TourGuideOfTheMonth);
         }
 
+        /// <summary>
+        /// Updates and changes the current viewed canvas and scroll viewers.
+        /// Used on making transitions between Canvases.
+        /// </summary>
         public void UpdateCurrentCanvas(Canvas NewCanvas, string Header, ScrollViewer NewScrollViewer = null, bool dynamic = false)
         {
             SelectedPath = "";
@@ -130,7 +164,10 @@ namespace Travelley
             CurrentPanelName_Label.Content = Header;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Updates the prices (if exists) of the displayed canvas.
+        /// </summary>
+        private void Currency_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CurrentCurrency = Currency_ComboBox.SelectedItem as Currency;
             if (CurrentCanvas == TourGuideFullData_Canvas)
@@ -157,6 +194,9 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// Recalculates trip of the day, tourguide of the month when entering the main canvas 
+        /// </summary>
         private void Main_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Main_Canvas.Visibility == Visibility.Visible)
@@ -192,7 +232,7 @@ namespace Travelley
                 else
                     TripOfTheDay = null;
                 if (TourGuide.TourGuides.Count != 0)
-                    TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month - 1); //returns tour guide with maximum salary in the past month
+                    TourGuideOfTheMonth = TourGuide.GetBestTourGuide(DateTime.Today.Month); //returns tour guide with maximum salary in the past month
                 else
                     TourGuideOfTheMonth = null;
 
@@ -223,9 +263,16 @@ namespace Travelley
         }
         #endregion Main_Canvas
 
+        /// <summary>
+        /// Contains Trips Canvas relative functions
+        /// </summary>
         #region Trips
 
-        private void ShowListOfTrips(List<Trip> list)
+        ///<summary>
+        ///Shows list of trips given in Trips canvas
+        /// </summary>
+        /// <param name="Trips">given list of trips to be displayed </param>
+        private void ShowListOfTrips(List<Trip> Trips)
         {
             UpdateCurrentCanvas(Trips_Canvas, "Trips", TripsScrollViewer, true);
             Trip.Trips.Sort();
@@ -255,14 +302,18 @@ namespace Travelley
             Canvas.SetTop(Trips_NumberOfOpenTrips_Label, 20);
             CurrentCanvas.Children.Add(Trips_NumberOfOpenTrips_Label);
 
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < Trips.Count; i++)
             {
-                list[i].UpdateTripsStatus();
-                TripDisplayCard t = new TripDisplayCard(list[i], i, ref CurrentCanvas, this);
+                Trips[i].UpdateTripsStatus();
+                TripDisplayCard t = new TripDisplayCard(Trips[i], i, ref CurrentCanvas, this);
             }
             return;
         }
 
+        /// <summary>
+        /// Excuted on clicking add trip button.
+        /// shows add trips canvas.
+        /// </summary>
         private void Trips_AddTrip_Button_Click(object sender, RoutedEventArgs e)
         {
             AddTrip_StTimePicker.SelectedDate = DateTime.Today;
@@ -271,11 +322,19 @@ namespace Travelley
             ShowAddTripCanvas();
         }
 
+        /// <summary>
+        /// Chnages current canvas into add trip canvas
+        /// </summary>
         private void ShowAddTripCanvas()
         {
             UpdateCurrentCanvas(AddTrip_Canvas, "Add Trip");
         }
 
+        /// <summary>
+        /// Shows full data of given trip.
+        /// Chnages current canvas into trip full data canvas.
+        /// </summary>
+        /// <param name="t">Trip to be shown</param>
         public void ShowTripFullData(Trip t)
         {
             ActiveTrip = t;
@@ -302,6 +361,11 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// Shows list of ticket types for a given trip.
+        /// Chnages current canvas into ticket types canvas.
+        /// </summary>
+        /// <param name="CurrentTrip">Trip to view it's ticket types</param>
         private void ShowTicketsTypes(Trip CurrentTrip)
         {
             ActiveTrip = CurrentTrip;
@@ -330,6 +394,11 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// Makes the user edit a given trip.
+        /// Changes current canvas into edit trip canvas
+        /// </summary>
+        /// <param name="t">Trip to be edited</param>
         private void ShowEditTrip_Canvas(Trip t)
         {
             ActiveTrip = t;
@@ -354,6 +423,10 @@ namespace Travelley
 
         }
 
+        /// <summary>
+        /// Checks if data entered is valid
+        /// if valid creates a new trip and insert the trip in database
+        /// </summary>
         private void AddTrip_Save_Button_Click(object sender, RoutedEventArgs e)
         {
             //todo more error validations
@@ -403,7 +476,7 @@ namespace Travelley
                 AddTrip_TripPhoto_ErrorLabel.Content = "You must choose photo!";
                 errorfound = true;
             }
-            if (AddTrip_TourCombo.SelectedItem == null)
+            if (AddTrip_TourGuides_ComboBox.SelectedItem == null)
             {
                 MessageBox.Show("You must choose a tourguide");
                 errorfound = true;
@@ -412,7 +485,7 @@ namespace Travelley
             {
                 return;
             }
-            Trip T = new Trip(AddTrip_TripIDTextbox.Text, (TourGuide)AddTrip_TourCombo.SelectedItem, AddTrip_TripDeptTextbox.Text,
+            Trip T = new Trip(AddTrip_TripIDTextbox.Text, (TourGuide)AddTrip_TourGuides_ComboBox.SelectedItem, AddTrip_TripDeptTextbox.Text,
                 AddTrip_TripDestTextbox.Text, double.Parse(AddTrip_TripDiscTextbox.Text),
                 AddTrip_StTimePicker.SelectedDate.Value.Date, AddTrip_EnTimePicker.SelectedDate.Value, new CustomImage(SelectedPath), false);
             DataBase.InsertTrip(T);
@@ -420,6 +493,9 @@ namespace Travelley
             ShowTicketsTypes(T);
         }
 
+        /// <summary>
+        /// Function after adding a trip to clear textboxes
+        /// </summary>
         private void AddTrip_Clear_Canvas()
         {
             AddTrip_TripIDTextbox.Clear();
@@ -428,6 +504,9 @@ namespace Travelley
             AddTrip_TripDiscTextbox.Clear();
         }
 
+        /// <summary>
+        /// open File dialog to choose a photo
+        /// </summary>
         private void Trip_BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog
@@ -439,11 +518,36 @@ namespace Travelley
             SelectedPath = dlg.FileName.ToString();
         }
 
+        /// <summary>
+        /// Load AddTicketTypes canvas
+        /// </summary>
         private void TicketsTypes_Add_Button_Click(object sender, RoutedEventArgs e)
         {
             UpdateCurrentCanvas(AddTicketType_Canvas, "Add Ticket", null, false);
         }
 
+        /// <summary>
+        /// Checks Tripstatus if closed returns (can't edit a closed trip)
+        /// else
+        /// Load EditTrip canvas
+        /// </summary>
+        private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActiveTrip.IsClosed)
+            {
+                MessageBox.Show("Can't edit a closed trip");
+                return;
+            }
+            ActiveTourGuide = ActiveTrip.Tour;
+            ActiveTourGuide.Trips.Remove(ActiveTrip);
+            ShowEditTrip_Canvas(ActiveTrip);
+        }
+
+        /// <summary>
+        /// Checks if user entered data is valid
+        /// if valid
+        /// calls updatetrip in class database to update the database and the activetrip
+        /// </summary>
         private void EditTrip_SaveButton_Click(object sender, RoutedEventArgs e)
         {
             EditTrip_Discount_ErrorLabel.Content = "";
@@ -537,18 +641,11 @@ namespace Travelley
             ShowListOfTrips(Trip.Trips);
         }
 
-        private void TripFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (ActiveTrip.IsClosed)
-            {
-                MessageBox.Show("Can't edit a closed trip");
-                return;
-            }
-            ActiveTourGuide = ActiveTrip.Tour;
-            ActiveTourGuide.Trips.Remove(ActiveTrip);
-            ShowEditTrip_Canvas(ActiveTrip);
-        }
-
+        /// <summary>
+        /// checks tripsstatus
+        /// if closed returns (canot reserve in a closed trip)
+        /// else loads NewOrExistingCustomerCanvas to choose between reserving for an existing or a new customer
+        /// </summary>
         private void TripFullData_ReserveTrip_Button_Click(object sender, RoutedEventArgs e)
         {
             if (ActiveTrip.IsClosed)
@@ -559,21 +656,32 @@ namespace Travelley
             ShowNewOrExistingCustomerCanvas();
         }
 
+        /// <summary>
+        /// updates tourguide combobox if startdate changed
+        /// </summary>
         private void AddTrip_StTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             AddTrip_Canvas_UpdateTourGuide_ComboBox();
         }
 
+        /// <summary>
+        /// updates tourguide combobox if enddate changed
+        /// </summary>
         private void AddTrip_EnTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             AddTrip_Canvas_UpdateTourGuide_ComboBox();
         }
 
+        /// <summary>
+        /// updates tourguide combobox
+        /// looks for availble tourguides in the given time interval [start,end]
+        /// and adds them to the combobox
+        /// </summary>
         private void AddTrip_Canvas_UpdateTourGuide_ComboBox()
         {
             if (AddTrip_StTimePicker.SelectedDate == null || AddTrip_EnTimePicker.SelectedDate == null)
                 return;
-            AddTrip_TourCombo.Items.Clear();
+            AddTrip_TourGuides_ComboBox.Items.Clear();
             DateTime start = AddTrip_StTimePicker.SelectedDate.Value.Date;
             DateTime end = AddTrip_EnTimePicker.SelectedDate.Value.Date;
             if (start > end)
@@ -581,22 +689,33 @@ namespace Travelley
             foreach (TourGuide T in TourGuide.TourGuides)
             {
                 if (T.CheckAvailability(start, end))
-                    AddTrip_TourCombo.Items.Add(T);
+                    AddTrip_TourGuides_ComboBox.Items.Add(T);
             }
-            if (AddTrip_TourCombo.Items.Count > 0)
-                AddTrip_TourCombo.SelectedItem = AddTrip_TourCombo.Items[0];
+            if (AddTrip_TourGuides_ComboBox.Items.Count > 0)
+                AddTrip_TourGuides_ComboBox.SelectedItem = AddTrip_TourGuides_ComboBox.Items[0];
         }
 
+        /// <summary>
+        /// updates tourguide combobox when start time changes
+        /// </summary>
         private void EditTrip_StTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             EditTrip_Canvas_UpdateTourGuide_ComboBox();
         }
 
+        /// <summary>
+        /// updates tourguide combobox when end time changes
+        /// </summary>
         private void EditTrip_EnTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             EditTrip_Canvas_UpdateTourGuide_ComboBox();
         }
 
+        /// <summary>
+        /// updates tourguide combobox
+        /// looks for availble tourguides in the given time interval [start,end]
+        /// and adds them to the combobox
+        /// </summary>
         private void EditTrip_Canvas_UpdateTourGuide_ComboBox()
         {
             if (EditTrip_StTimePicker.SelectedDate == null || EditTrip_EnTimePicker.SelectedDate == null)
@@ -615,18 +734,31 @@ namespace Travelley
                 EditTrip_TourCombo.SelectedItem = EditTrip_TourCombo.Items[0];
         }
 
+        /// <summary>
+        /// Function is called when delete button is clicked in trip full data
+        /// removes active trip from database and objects
+        /// </summary>
         private void TripFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
         {
             DataBase.DeleteTrip(ActiveTrip);
             ShowListOfTrips(Trip.Trips);
         }
 
+        /// <summary>
+        /// Shows list of ticket types for the active trip.
+        /// </summary>
         private void TripFullData_TicketTypes_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowTicketsTypes(ActiveTrip);
         }
 
-        private void AddTicketType_Canvas_Add_Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Function called when add button clicked in AddTicketType canvas
+        /// checks user data is valid
+        /// if valid
+        /// add tickettype in database
+        /// </summary>
+        private void AddTicketType_Add_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AddTicketType_Type_TextBox.Text == "")
             {
@@ -657,6 +789,10 @@ namespace Travelley
             ShowTicketsTypes(ActiveTrip);
         }
 
+        /// <summary>
+        /// Checks if userdata is valid
+        /// if valid creates a ticket and add to database
+        /// </summary>
         private void ReserveTicket_Reserve_Button_Click(object sender, RoutedEventArgs e)
         {
             TripType tripType = null;
@@ -699,6 +835,9 @@ namespace Travelley
             ShowListOfTrips(Trip.Trips);
         }
 
+        /// <summary>
+        /// Function to calculate price of ticket if number of seats changed
+        /// </summary>
         private void ReserveTicket_NumberOfSeats_TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (ReserveTicket_TicketType_ComboxBox.SelectedItem == null)
@@ -712,6 +851,9 @@ namespace Travelley
             ReserveTicket_Price_TextBox.Text = CurrentCurrency.GetValue(((ActiveTrip.PriceOfSeat[ReserveTicket_TicketType_ComboxBox.SelectedItem.ToString()]) * num * Math.Max(0, discount))).ToString();
         }
 
+        /// <summary>
+        /// Updates Price label
+        /// </summary>
         private void ReserveTicket_TicketType_ComboxBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string number = ReserveTicket_NumberOfSeats_TextBox.Text;
@@ -719,6 +861,9 @@ namespace Travelley
             ReserveTicket_NumberOfSeats_TextBox.Text = number;
         }
 
+        /// <summary>
+        /// Removes customer if he didn't reserve a ticket
+        /// </summary>
         private void ReserveTicket_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (ReserveTicket_Canvas.Visibility == Visibility.Hidden && ActiveCustomer.Tickets.Count == 0)
@@ -729,6 +874,9 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// Loads ReserveTicket canvas
+        /// </summary>
         private void ShowReserveTicket()
         {
             UpdateCurrentCanvas(ReserveTicket_Canvas, "Reserve Ticket");
@@ -751,16 +899,25 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// Load TourGuideFullData canvas
+        /// </summary>
         private void TripFullData_TourGuideName_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ShowTourGuideFullData(ActiveTrip.Tour);
         }
 
+        /// <summary>
+        /// Loads Tickets Canvas which show the tickets of the active trip
+        /// </summary>
         private void TripFullData_ShowTickets_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowListOfTickets(ActiveTrip.Tickets);
         }
 
+        /// <summary>
+        /// add tourguide to activetrip if no edit occurs
+        /// </summary>
         private void EditTrip_Canvas_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (CurrentCanvas.Visibility == Visibility.Hidden && ActiveTrip.Tour == ActiveTourGuide && !ActiveTourGuide.Trips.Contains(ActiveTrip))
@@ -769,14 +926,23 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// Excuted on double click on opened trip status label
+        /// changes this trip status into closed
+        /// </summary>
         private void TripFullData_TripStatusOpen_Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ActiveTrip.IsClosed = true;
-            DataBase.UpdateTrip(ActiveTrip, new Trip(ActiveTrip.TripId, ActiveTrip.Tour, ActiveTrip.Departure, ActiveTrip.Destination, ActiveTrip.Discount, ActiveTrip.Start, ActiveTrip.End, ActiveTrip.TripImage, true));
+            DataBase.UpdateTrip(ActiveTrip, new Trip(ActiveTrip.TripId, ActiveTrip.Tour, ActiveTrip.Departure, ActiveTrip.Destination,
+                ActiveTrip.Discount, ActiveTrip.Start, ActiveTrip.End, ActiveTrip.TripImage, true));
             TripFullData_TripStatusOpen_Label.Visibility = Visibility.Hidden;
             TripFullData_TripStatusClose_Label.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Excuted on double click on Closes trip status label
+        /// changes this trip status into Opened if it can be opened
+        /// </summary>
         private void TripFullData_TripStatusClose_Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (ActiveTrip.Start > DateTime.Today)
@@ -787,12 +953,20 @@ namespace Travelley
                 TripFullData_TripStatusClose_Label.Visibility = Visibility.Hidden;
                 TripFullData_TripStatusOpen_Label.Visibility = Visibility.Visible;
             }
+            MessageBox.Show("You can't Open an ended Trip !");
         }
 
         #endregion Trips
 
+        /// <summary>
+        /// Contains Customer Canvas relative functions
+        /// </summary>
         #region customers
 
+        ///<summary>
+        ///Shows list of Customers given, in Customers canvas
+        /// </summary>
+        /// <param name="Customers">given list of Customers to be displayed </param>
         private void ShowListOfCustomers(List<Customer> Customers)
         {
             UpdateCurrentCanvas(Customers_Canvas, "Customers", Customers_ScrollViewer, true);
@@ -801,6 +975,10 @@ namespace Travelley
                 new CustomerDisplayCard(i, CurrentCanvas, Customers[i], this);
         }
 
+        /// <summary>
+        /// Prints full data of a given customer
+        /// </summary>
+        /// <param name="c">Customer to print his data</param>
         public void ShowCustomerFullData(Customer c)
         {
             ActiveCustomer = c;
@@ -818,6 +996,11 @@ namespace Travelley
             CustomerFullData_Discount_Label.Content = "Discount: " + c.Discount;
         }
 
+        /// <summary>
+        /// Excuted when user presses add button in add customer canvas.
+        /// Validate the given user, and if validated it adds it to database 
+        /// then displays reserve ticket canvas.
+        /// </summary>
         private void AddCustomer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
         {
             bool NationalId = String.IsNullOrEmpty(AddCustomer_National_Id_TextBox.Text);
@@ -858,6 +1041,12 @@ namespace Travelley
             ShowReserveTicket();
         }
 
+        /// <summary>
+        /// Excuted when user press edit button in Customer full data canvas.
+        /// it initalises edit customer textboxes with data.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CustomerFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
         {
             UpdateCurrentCanvas(EditCustomerFullDetails_Canvas, "Edit Customer Data");
@@ -872,6 +1061,11 @@ namespace Travelley
             EditCustomerFullData_PhoneNumber.Text = CustomerFullData_PhoneNumber.Content.ToString();
         }
 
+        /// <summary>
+        /// Function called when save button clicked in editcustomer canvas
+        /// checks if user entered data is valid
+        /// if valid updates database
+        /// </summary>
         private void EditCustomerDetails(Customer c)
         {
             string name = c.Name, nationality = c.Nationality, phone_number = c.PhoneNumber,
@@ -954,16 +1148,29 @@ namespace Travelley
             ShowListOfCustomers(Customer.Customers);
         }
 
+        /// <summary>
+        /// called when save button clicked
+        /// calls function editcustomerdetails to update ActiveCustomer
+        /// </summary>
         private void EditCustomerData_Save_Button_Click(object sender, RoutedEventArgs e)
         {
             EditCustomerDetails(ActiveCustomer);
         }
 
+        /// <summary>
+        /// Loads NewOrExistingCustomer_Canvas
+        /// whhen reserve button is clicked and asks user if he wants to reserve for a new or existing customer
+        /// </summary>
         private void ShowNewOrExistingCustomerCanvas()
         {
             UpdateCurrentCanvas(NewOrExistingCustomer_Canvas, "Set Customer Status");
         }
 
+        /// <summary>
+        /// Check Entered id if selectedcustomer exists or not
+        /// if exists loads reserveTicket canvas
+        /// else show error message
+        /// </summary>
         private void GetCustomerById_Done_Button_Click(object sender, RoutedEventArgs e)
         {
             Customer SelectedCustomer = DataBase.SelectCustomer(GetCustomerById_CustomerId_TextBox.Text.ToString());
@@ -976,22 +1183,34 @@ namespace Travelley
             ShowReserveTicket();
         }
 
+        /// <summary>
+        /// Load addcustomer Canvas
+        /// </summary>
         private void NewOrExistingCustomer_New_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowAddCustomerCanvas();
         }
 
+        /// <summary>
+        /// Load GetCustomerById canvas
+        /// </summary>
         private void NewOrExistingCustomer_Existing_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowGetCustomerById();
         }
 
+        /// <summary>
+        /// shows GetCustomerById Canvas
+        /// </summary>
         private void ShowGetCustomerById()
         {
             UpdateCurrentCanvas(GetCustomerById_Canvas, "Get Customer By Id");
             GetCustomerById_CustomerId_TextBox.Text = "";
         }
 
+        /// <summary>
+        /// Load Add Customer Canvas and resets the textboxes
+        /// </summary>
         private void ShowAddCustomerCanvas()
         {
             UpdateCurrentCanvas(AddCustomer_Canvas, "Add Customer");
@@ -1005,6 +1224,9 @@ namespace Travelley
             AddCustomer_Language_TextBox.Text = "";
         }
 
+        /// <summary>
+        /// show a file dialog to select customer image
+        /// </summary>
         private void AddCustomer_Browse_Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog
@@ -1016,17 +1238,18 @@ namespace Travelley
             SelectedPath = dlg.FileName.ToString();
         }
 
-        private void Customer_AddCustomer_Button_Click(object sender, RoutedEventArgs e)
-        {
-            ShowAddCustomerCanvas();
-        }
-
+        /// <summary>
+        /// Delete Active Customer From database and show all customers
+        /// </summary>
         private void CustomerFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
         {
             DataBase.DeleteCustomer(ActiveCustomer);
             ShowListOfCustomers(Customer.Customers);
         }
 
+        /// <summary>
+        /// show list of tickets of the active customer
+        /// </summary>
         private void CustomerFullData_ShowTickets_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowListOfTickets(ActiveCustomer.Tickets);
@@ -1034,8 +1257,14 @@ namespace Travelley
 
         #endregion customers
 
+        /// <summary>
+        /// Contains TourGuides Canvas relative functions
+        /// </summary>
         #region TourGuides
 
+        /// <summary>
+        /// view the given list of tourguides sorted based on their salary and id
+        /// </summary>
         private void ShowListOfTourGuides(List<TourGuide> TourGuides)
         {
             LastTourGuides = TourGuides;
@@ -1060,7 +1289,7 @@ namespace Travelley
             Label AvailableTourGuides_Label = new Label
             {
                 FontSize = 25,
-                Content = "Available: " + DataBase.GetNumberOfAvailableTourGuides().ToString()
+                Content = "Available: " + TourGuide.GetNumberOfAvailableTourGuides().ToString()
             };
             Canvas.SetLeft(AvailableTourGuides_Label, 111);
             Canvas.SetTop(AvailableTourGuides_Label, 12);
@@ -1070,6 +1299,9 @@ namespace Travelley
                 new TourGuideDisplayCard(i, CurrentCanvas, TourGuides[i], this);
         }
 
+        /// <summary>
+        /// Function called when user wants to see tour guide full data
+        /// </summary>
         public void ShowTourGuideFullData(TourGuide t)
         {
             ActiveTourGuide = t;
@@ -1087,6 +1319,10 @@ namespace Travelley
 
         }
 
+        /// <summary>
+        /// Checks if user entered data is valid
+        /// if valid update activetourguide in database and view all tourguides
+        /// </summary>
         private void EditTourGuideData(TourGuide t)
         {
             string name = t.Name, nationality = t.Nationality, phone_number = t.PhoneNumber, language = t.Language, gender = t.Gender, email = t.Email;
@@ -1113,6 +1349,7 @@ namespace Travelley
             {
                 EditTourGuide_Nationality_ErrorLabel.Content = "";
             }
+
             if (EditTourGuideFullData_Email.Text.Trim() == "")
             {
                 EditTourGuide_Email_ErrorLabel.Content = "This field can't be empty!";
@@ -1122,6 +1359,7 @@ namespace Travelley
             {
                 EditTourGuide_Email_ErrorLabel.Content = "";
             }
+
             if (EditTourGuideFullData_Language.Text.Trim() == "")
             {
                 EditTourGuide_Language_ErrorLabel.Content = "This field can't be empty!";
@@ -1131,6 +1369,7 @@ namespace Travelley
             {
                 EditTourGuide_Language_ErrorLabel.Content = "";
             }
+
             if (TourGuideGender_ComboBox.Text == "")
             {
                 EditTourGuide_Gender_ErrorLabel.Content = "This field can't be empty!";
@@ -1140,6 +1379,7 @@ namespace Travelley
             {
                 EditTourGuide_Gender_ErrorLabel.Content = "";
             }
+
             if (EditTourGuideFullData_PhoneNumber.Text == "")
             {
                 EditTourGuide_PhoneNumber_ErrorLabel.Content = "This field can't be empty!";
@@ -1153,16 +1393,12 @@ namespace Travelley
             if (tourErrorFound == true)
                 return;
 
-
             EditTourGuide_Name_ErrorLabel.Content = "";
             EditTourGuide_Email_ErrorLabel.Content = "";
             EditTourGuide_PhoneNumber_ErrorLabel.Content = "";
             EditTourGuide_Language_ErrorLabel.Content = "";
             EditTourGuide_Gender_ErrorLabel.Content = "";
             EditTourGuide_Nationality_ErrorLabel.Content = "";
-
-
-
 
             name = EditTourGuideFullData_Name.Text;
 
@@ -1185,37 +1421,22 @@ namespace Travelley
             ShowListOfTourGuides(TourGuide.TourGuides);
         }
 
+        /// <summary>
+        /// Loads AddNewTourGuide Canvas
+        /// </summary>
         private void ShowAddTourGuideCanvas()
         {
             UpdateCurrentCanvas(AddNewTourGuide_Canvas, "Add New TourGuide");
         }
 
-        private void AddTourGuide(TourGuide t)
-        {
-            string name = t.Name, nationality = t.Nationality, phone_number = t.PhoneNumber,
-               language = t.Language, gender = t.Gender, email = t.Email;
-
-            if (AddTourGuideFullData_Name.Text != "")
-                name = AddTourGuideFullData_Name.Text;
-            if (AddTourGuideFullData_Nationality.Text != "")
-                nationality = AddTourGuideFullData_Nationality.Text;
-            if (AddTourGuideFullData_PhoneNumber.Text != "")
-                phone_number = AddTourGuideFullData_PhoneNumber.Text;
-            if (AddTourGuideFullData_language.Text != "")
-                language = AddTourGuideFullData_language.Text;
-            if (AddTourGuideGender_ComboBox.Text != "")
-                gender = AddTourGuideGender_ComboBox.Text;
-            if (AddTourGuideFullData_Email.Text != "")
-                email = AddTourGuideFullData_Email.Text;
-
-
-
-        }
-
+        /// <summary>
+        /// check if userentered data is valid
+        /// if valid add new tourguide into database
+        /// and then shows list of tourguides
+        /// </summary>
         private void AddTourGuide_Add_Button_Click(object sender, RoutedEventArgs e)
         {
             bool tourErrorFound = false;
-
 
             if (AddTourGuideFullData_Id.Text == "")
             {
@@ -1223,11 +1444,18 @@ namespace Travelley
                 tourErrorFound = true;
             }
             else
+            {
                 AddTourGuide_Error_ID.Content = "";
+            }
+
             if (!DataBase.CheckUniqueTourGuideId(AddTourGuideFullData_Id.Text))
             {
                 AddTourGuide_Error_ID.Content = "Id not unique";
                 tourErrorFound = true;
+            }
+            else
+            {
+                AddTourGuide_Error_ID.Content = "";
             }
 
             if (AddTourGuideFullData_Name.Text.Trim() == "")
@@ -1235,44 +1463,72 @@ namespace Travelley
                 AddTourGuide_Error_Name.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else AddTourGuide_Error_Name.Content = "";
+            else
+            {
+                AddTourGuide_Error_Name.Content = "";
+            }
+
             if (AddTourGuideFullData_Email.Text.Trim() == "")
             {
                 AddTourGuide_Error_Email.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else AddTourGuide_Error_Email.Content = "";
+            else
+            {
+                AddTourGuide_Error_Email.Content = "";
+            }
+
             if (AddTourGuideFullData_language.Text.Trim() == "")
             {
                 AddTourGuide_Error_Language.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else AddTourGuide_Error_Language.Content = "";
+            else
+            {
+                AddTourGuide_Error_Language.Content = "";
+            }
+
             if (AddTourGuideGender_ComboBox.Text == "")
             {
                 AddTourGuide_Error_Gender.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else AddTourGuide_Error_Gender.Content = "";
+            else
+            {
+                AddTourGuide_Error_Gender.Content = "";
+            }
+
             if (AddTourGuideFullData_Nationality.Text == "")
             {
                 AddTourGuide_Error__Natinaity.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else AddTourGuide_Error__Natinaity.Content = "";
+            else
+            {
+                AddTourGuide_Error__Natinaity.Content = "";
+            }
+
             if (AddTourGuideFullData_PhoneNumber.Text == "")
             {
                 AddTourGuide_Error_PhoneNumber.Content = "This field can't be empty!";
                 tourErrorFound = true;
             }
-            else AddTourGuide_Error_PhoneNumber.Content = "";
+            else
+            {
+                AddTourGuide_Error_PhoneNumber.Content = "";
+            }
+
             if (SelectedPath == "")
             {
                 AddTourGuide_Error__Image.Content = "This field can't be empty!";
                 tourErrorFound = true;
 
             }
-            else AddTourGuide_Error__Image.Content = "";
+            else
+            {
+                AddTourGuide_Error__Image.Content = "";
+            }
+
             if (tourErrorFound == true)
                 return;
 
@@ -1280,6 +1536,7 @@ namespace Travelley
                  , AddTourGuideFullData_language.Text, AddTourGuideGender_ComboBox.Text, AddTourGuideFullData_Email.Text,
                  AddTourGuideFullData_PhoneNumber.Text, new CustomImage(SelectedPath));
             DataBase.InsertTourGuide(temp);
+
             AddTourGuide_Error__Natinaity.Content = "";
             AddTourGuide_Error_PhoneNumber.Content = "";
             AddTourGuide_Error_ID.Content = "";
@@ -1294,13 +1551,15 @@ namespace Travelley
             AddTourGuideFullData_language.Text = "";
             AddTourGuideFullData_PhoneNumber.Text = "";
             AddTourGuideGender_ComboBox.Text = "";
-
-
+            
             MessageBox.Show("TourGuide is Succesfully Added");
             ShowListOfTourGuides(TourGuide.TourGuides);
 
         }
 
+        /// <summary>
+        /// Loads EditTourGuideData canvas
+        /// </summary>
         public void TourGuideFullData_Edit_Button_Click(object sender, RoutedEventArgs e)
         {
             UpdateCurrentCanvas(EditTourGuideData_Canvas, "Edit TourGuide Data");
@@ -1321,12 +1580,18 @@ namespace Travelley
             EditTourGuideFullData_PhoneNumber.Text = TourGuideFullData_PhoneNumber.Content.ToString();
         }
 
+            /// <summary>
+            /// Excuted when user press save button in Edit TourGuide data Canvas
+            /// </summary>
         private void EditTourGuideData_Save_Button_Click(object sender, RoutedEventArgs e)
         {
-
             EditTourGuideData(ActiveTourGuide);
         }
 
+        /// <summary>
+        /// Excuted when user press on add image browse button
+        /// it opens file dialog to make user pick a photo and updates selected path global variable
+        /// </summary>
         private void TourGuide_BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog
@@ -1338,17 +1603,26 @@ namespace Travelley
             dlg.FileName.ToString();
         }
 
-
+        /// <summary>
+        /// Excuted when usere press on Add tourguide Button in TourGuides Canvas
+        /// </summary
         private void TourGuides_AddTourGuide_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowAddTourGuideCanvas();
         }
 
+        /// <summary>
+        /// Excuted when usere press on show trips Button in TourGuides Canvas
+        /// </summary
         private void TourGuideFullData_ShowTrips_Button_Click(object sender, RoutedEventArgs e)
         {
             ShowListOfTrips(ActiveTourGuide.Trips);
         }
 
+        /// <summary>
+        /// Excuted when user press in delete tourguide button in tourguide full data Canvas.
+        /// It validates that the tour guides has no trips.
+        /// </summary>
         private void TourGuideFullData_Delete_Button_Click(object sender, RoutedEventArgs e)
         {
             if (ActiveTourGuide.Trips.Count > 0)
@@ -1363,8 +1637,14 @@ namespace Travelley
 
         #endregion TourGuides
 
+        /// <summary>
+        /// Contains Transactions Canvas relative functions
+        /// </summary>
         #region Transactions
 
+        /// <summary>
+        /// Returns a list containing all tickets
+        /// </summary>
         public List<Ticket> GetAllTickets()
         {
             List<Ticket> Tickets = new List<Ticket>();
@@ -1378,6 +1658,9 @@ namespace Travelley
             return Tickets;
         }
 
+        /// <summary>
+        /// Loads Transactions canvas and show list of tickets
+        /// </summary>
         public void ShowListOfTickets(List<Ticket> Tickets)
         {
             UpdateCurrentCanvas(Transactions_Canvas, "Transactions", Transactions_ScrollViewer, true);

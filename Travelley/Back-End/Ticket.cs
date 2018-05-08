@@ -7,14 +7,17 @@ using Travelley.Back_End;
 
 namespace Travelley
 {
+    /// <summary>
+    /// Class representing the ticket
+    /// </summary>
    public class Ticket
     {
-        private string serialNumber;
-        private string ticketType;
-        private double price;
-        private Trip ticketTrip;
-        private int numberOfSeats;
-        private TripType tripType;
+        private string serialNumber; //Generated Id for the ticket
+        private string ticketType;  //Ticket Type of the Ticket (Vip,Gold,Silver,...etc) (user added)
+        private double price;      //Price of the ticket
+        private Trip Trip;        //Trip concerned with the ticket 
+        private int numberOfSeats; //Number of Seats reserved for the ticket
+        private TripType tripType; //The type of the trip (Family,Friends,Lonely,...etc)
 
         public Ticket(string SerialNumber, Trip TicketTrip, string TicketType, TripType tripType, double Price, int NumberOfSeats)
         {
@@ -27,7 +30,7 @@ namespace Travelley
         }
 
         public string SerialNumber { get => serialNumber; set => serialNumber = value; }
-        internal Trip CurrentTrip { get => ticketTrip; set => ticketTrip = value; }
+        internal Trip CurrentTrip { get => Trip; set => Trip = value; }
         public string TicketType { get => ticketType; set => ticketType = value; }
         public double Price { get => price; set => price = value; }
         public int NumberOfSeats { get => numberOfSeats; set => numberOfSeats = value; }

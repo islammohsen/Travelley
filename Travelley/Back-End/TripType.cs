@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Travelley.Back_End
 {
+    /// <summary>
+    /// Abstract Type for Trip Types
+    /// </summary>
     public abstract class TripType
     {
         protected string name;
@@ -23,6 +26,11 @@ namespace Travelley.Back_End
         }
     }
 
+    /// <summary>
+    ///Family type
+    ///Minimum number of seats to reserve : 3 .
+    ///Maximum number of seats to reserve : Inf .
+    /// </summary>
     public class Family: TripType
     {
         public Family()
@@ -33,6 +41,12 @@ namespace Travelley.Back_End
         }
     }
 
+    /// <summary>
+    ///Couple type
+    ///Minimum number of seats to reserve : 2 .
+    ///Maximum number of seats to reserve : 2 .
+    /// *Can only reserve 2 seats
+    /// </summary>
     public class Couple: TripType
     {
         public Couple()
@@ -43,6 +57,12 @@ namespace Travelley.Back_End
         }
     }
 
+    /// <summary>
+    ///General type
+    ///Minimum number of seats to reserve : 1 .
+    ///Maximum number of seats to reserve : Inf .
+    /// *Can reserve any number of seats .
+    /// </summary>
     public class General: TripType
     {
         public General()
@@ -53,6 +73,11 @@ namespace Travelley.Back_End
         }
     }
 
+    /// <summary>
+    ///Friends type
+    ///Minimum number of seats to reserve : 2 .
+    ///Maximum number of seats to reserve : Inf .
+    /// </summary>
     public class Friends: TripType
     {
         public Friends()
@@ -63,6 +88,12 @@ namespace Travelley.Back_End
         }
     }
 
+    /// <summary>
+    ///Lonely type
+    ///Minimum number of seats to reserve : 1 .
+    ///Maximum number of seats to reserve : 1 .
+    /// *Can only reserve 1 seat
+    /// </summary>
     public class Lonely: TripType
     {
         public Lonely()

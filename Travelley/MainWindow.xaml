@@ -132,7 +132,7 @@
             <TextBox x:Name="AddTrip_TripDestTextbox" Height="41" TextWrapping="Wrap" Text="" Width="265" Canvas.Left="230" Canvas.Top="277" RenderTransformOrigin="1.232,0.374" FontWeight="Bold" FontSize="24"/>
             <DatePicker x:Name="AddTrip_StTimePicker" Canvas.Left="200" Canvas.Top="339" Width="265" Height="45" FontSize="24" SelectedDateChanged="AddTrip_StTimePicker_SelectedDateChanged"/>
             <DatePicker x:Name="AddTrip_EnTimePicker" Canvas.Left="200" Canvas.Top="399" Width="265" Height="45" RenderTransformOrigin="0.492,2.346" FontSize="24" SelectedDateChanged="AddTrip_EnTimePicker_SelectedDateChanged"/>
-            <ComboBox x:Name="AddTrip_TourCombo" Width="267" RenderTransformOrigin="2.881,8.404" Canvas.Left="150" Canvas.Top="465" Height="42" FontSize="24"/>
+            <ComboBox x:Name="AddTrip_TourGuides_ComboBox" Width="267" RenderTransformOrigin="2.881,8.404" Canvas.Left="150" Canvas.Top="465" Height="42" FontSize="24"/>
             <TextBox x:Name="AddTrip_TripDiscTextbox" Height="41" TextWrapping="Wrap" Text="" Width="95" Canvas.Left="150" Canvas.Top="520" RenderTransformOrigin="1.232,0.374" FontSize="24"/>
             <Button x:Name="AddTrip_BrowseButton" Content="Browse"  Canvas.Left="150" Canvas.Top="580" Width="103" Height="49" FontSize="24" FontWeight="Bold" Click="Trip_BrowseButton_Click"/>
             <Button x:Name="AddTrip_SaveButton" Content="Save" Foreground="White" Background="#e87e31" Canvas.Left="870" Canvas.Top="575" Width="149" Height="85" FontSize="36" FontWeight="Bold" Click="AddTrip_Save_Button_Click"/>
@@ -296,7 +296,7 @@
                     <TextBox x:Name="AddTicketType_Price_TextBox" FontSize="25" Grid.Column="1" Width="100" Margin="60 0 0 0" TextAlignment="Center"/>
                 </Grid>
             </StackPanel>
-            <Button x:Name="AddTicketType_Canvas_Add_Button" Content="Add Ticket" Canvas.Left="750" Canvas.Top="450" Width="243" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="AddTicketType_Canvas_Add_Button_Click"/>
+            <Button x:Name="AddTicketType_Canvas_Add_Button" Content="Add Ticket" Canvas.Left="750" Canvas.Top="450" Width="243" Height="53" FontSize="36" FontFamily="Roboto" Background="#FFE87E31" Foreground="White" Click="AddTicketType_Add_Button_Click"/>
         </Canvas>
         <Canvas x:Name="Tickets_Canvas"  Height="673" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1038" Canvas.Top="1" Canvas.Left="304" Background="#E1DDDF" ForceCursor="True" Visibility="Hidden"/>
         <ScrollViewer x:Name="TourGuides_ScrollViewer" Height="560" Canvas.Top="114" Width="1030" Canvas.Left="304" CanContentScroll="True" Visibility="Hidden">
@@ -499,13 +499,13 @@
         <Rectangle Fill="#293541" Height="565" Canvas.Top="114" Width="305" Canvas.Left="-3"/>
         <Button x:Name="Trip_Button" HorizontalContentAlignment="Left"  Foreground="White" Background="#293541" Content=" Trips" Canvas.Top="114" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Click="Trips_Button_Click" Canvas.Left="-4" RenderTransformOrigin="-1.435,0.143" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
         <Button x:Name="TourGuide_Button" HorizontalContentAlignment="Left" Foreground="White" Background="#293541" Content=" Tour Guides" Canvas.Top="232" Width="303" Height="108" BorderThickness="0" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Canvas.Left="-2" RenderTransformOrigin="-2.399,3.528" Click="TourGuide_Button_Click" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
-        <Button x:Name="Customer_Button" HorizontalContentAlignment="Left" Foreground="White" Background="#293541" Content=" Customers" Canvas.Top="338" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Canvas.Left="-3" Click="Customer_Button_Copy_Click" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
+        <Button x:Name="Customer_Button" HorizontalContentAlignment="Left" Foreground="White" Background="#293541" Content=" Customers" Canvas.Top="338" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Canvas.Left="-3" Click="Customer_Button_Click" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
         <Button  x:Name="Transactions_Button" HorizontalContentAlignment="Left"  Foreground="White" Background="#293541" Content=" Transactions" Canvas.Top="451" Width="305" Height="113" BorderThickness="0" FontSize="30" FontFamily="Roboto" FontWeight="Bold" Canvas.Left="-5" RenderTransformOrigin="-4.734,5.751" Click="Transactions_Button_Click" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
         <Rectangle Fill="LightGray" Height="116" Canvas.Left="237" Canvas.Top="-2" Width="1102" Stroke="Black"/>
-        <Button x:Name="Home_Button" Foreground="White" Background="#e87e31" Width="305" Height="116" BorderThickness="0" FontSize="30" FontFamily="Comic Sans MS" FontWeight="Bold" Click="Button_Click" Canvas.Top="-2" Cursor="Hand" Canvas.Left="-3">
+        <Button x:Name="Home_Button" Foreground="White" Background="#e87e31" Width="305" Height="116" BorderThickness="0" FontSize="30" FontFamily="Comic Sans MS" FontWeight="Bold" Click="Home_Button_Click" Canvas.Top="-2" Cursor="Hand" Canvas.Left="-3">
             <Image Height="116" Width="296" Source="FrontEnd/Images/White.png"/>
         </Button>
         <Label x:Name="CurrentPanelName_Label" Content="Home Page" Canvas.Left="311" Canvas.Top="25" Height="89" Width="491" FontSize="45" FontWeight="Bold" FontFamily="Roboto" Foreground="Black"/>
-        <ComboBox x:Name="Currency_ComboBox" Canvas.Left="1200" Width="100"   Height="40" Canvas.Top="30" FontSize="25" SelectionChanged="ComboBox_SelectionChanged"/>
+        <ComboBox x:Name="Currency_ComboBox" Canvas.Left="1200" Width="100"   Height="40" Canvas.Top="30" FontSize="25" SelectionChanged="Currency_ComboBox_SelectionChanged"/>
     </Canvas>
 </Window>

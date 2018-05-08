@@ -8,6 +8,9 @@ using Travelley.Back_End;
 
 namespace Travelley
 {
+    /// <summary>
+    /// abstract class inhereted by customer and tourguide classes
+    /// </summary>
     public abstract class Person: IComparable
     {
         private string id;

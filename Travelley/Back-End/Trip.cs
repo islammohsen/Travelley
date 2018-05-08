@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using Travelley.Back_End;
 
-//ticket include type --> update price according to type.
-//number of seats constant per trip (no specific number of seats per type).
-//add trip status (closed or opened)
 namespace Travelley
 {
     public class Trip : IComparable<Trip>
     {
-        public static List<Trip> Trips;
+        public static List<Trip> Trips; //static list containing all trips objects
         private string tripId;
         private TourGuide tour;
         private string departure;
@@ -17,10 +14,11 @@ namespace Travelley
         private Double discount;
         private DateTime start;
         private DateTime end;
+        //dictionaries containing tickettypes ex: Gold, Silver, Bronze
         private Dictionary<string, int> numberOfSeats;
         private Dictionary<string, double> priceOfSeat;
-        private List<Ticket> tickets;
-        private bool isClosed;
+        private List<Ticket> tickets; //List of tickets reserved for this trip
+        private bool isClosed; //boolen indicating if the trip is closed or not
 
         public DateTime Start { get => start; set => start = value; }
         public DateTime End { get => end; set => end = value; }
@@ -36,6 +34,10 @@ namespace Travelley
 
         public CustomImage TripImage;
 
+        /// <summary>
+        /// Function is called in the begining of the program when reading data from database
+        /// Initializes The Two Dictionaries NumberOfSeats and PriceofSeat
+        /// </summary>
         public void AddSeats(string Type, int Number, double Price)
         {
             NumberOfSeats[Type] = Number;
@@ -58,12 +60,10 @@ namespace Travelley
             this.IsClosed = IsClosed;
         }
 
-        public void AddTicket(Ticket obj)
-        {
-            Tickets.Add(obj);
-            return;
-        }
-
+        /// <summary>
+        /// Function called when a customer tries to reserve a ticket
+        /// Create an object from class ticket and adds it in the tickets list
+        /// </summary>
         public Ticket ReserveTicket(TripType tripType, string TicketType, int NumberOfOrderedSeats, int CustomerDiscount)
         {
             string serial = Guid.NewGuid().ToString();
@@ -74,6 +74,9 @@ namespace Travelley
             return T;
         }
 
+        /// <summary>
+        /// Function Return the number of available seats to view it in the Trips view
+        /// </summary>
         public int GetNumberOfAvailableSeats()
         {
             int ret = 0;
@@ -84,6 +87,10 @@ namespace Travelley
             return ret;
         }
 
+        /// <summary>
+        /// Checks if the Trip status is correct
+        /// ifnot updates Trip status
+        /// </summary>
         public void UpdateTripsStatus()
         {
             if (IsClosed == false && start <= DateTime.Today)
@@ -92,6 +99,9 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// Static function calculates the number of open trips
+        /// </summary>
         public static int GetNumberOfOpenTrips()
         {
             int ret = 0;
@@ -140,6 +150,9 @@ namespace Travelley
             }
         }
 
+        /// <summary>
+        /// Function to sort a list of trips according to tripstatus and trip id
+        /// </summary>
         public int CompareTo(Trip obj)
         {
             if (obj == null)
